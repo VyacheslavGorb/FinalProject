@@ -7,34 +7,45 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
     private static ConnectionPool instance;
     private static AtomicBoolean isInitialised = new AtomicBoolean(false);
     private static final int DEFAULT_POOL_SIZE = 32;
-    private BlockingDeque<ProxyConnection> freeConnections;
-    private BlockingDeque<ProxyConnection> givenAwayConnections;
+    private Deque<ProxyConnection> freeConnections;
+    private Deque<ProxyConnection> givenAwayConnections;
+    private Lock connectionLock;
+    private Condition freeConnectionCondition;
 
     private ConnectionPool() {
-        freeConnections = new LinkedBlockingDeque<>();
-        givenAwayConnections = new LinkedBlockingDeque<>();
+        connectionLock = new ReentrantLock(true);
+        freeConnectionCondition = connectionLock.newCondition();
+        freeConnections = new ArrayDeque<>();
+        givenAwayConnections = new ArrayDeque<>();
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 Connection connection = ConnectionFactory.createConnection();
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
                 freeConnections.offer(proxyConnection);
-            } catch (SQLException throwables) {
-                logger.warn("Error while creating connection");
+            } catch (SQLException e) {
+                logger.log(Level.WARN, "Error while creating connection: {}", e.getMessage());
             }
 
             if (freeConnections.isEmpty()) {
                 logger.fatal("Unable to create connections");
                 throw new RuntimeException("Unable to create connections");
             }
+
+            setValidationTask();
         }
     }
 
@@ -48,38 +59,45 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() {
-        ProxyConnection connection = null;
+        connectionLock.lock();
+        ProxyConnection connection;
         try {
-            connection = freeConnections.take();
-            givenAwayConnections.put(connection);
+            if (freeConnections.isEmpty()) {
+                freeConnectionCondition.await();
+            }
+            connection = freeConnections.getLast();
+            givenAwayConnections.addLast(connection);
         } catch (InterruptedException e) {
-            logger.log(Level.ERROR, "Error while getting connection: {}", e.getMessage());
             Thread.currentThread().interrupt();
+            throw new RuntimeException("Thread is interrupted" + e.getMessage()); // FIXME how ? | logs
+        } finally {
+            connectionLock.unlock();
         }
         return connection;
     }
 
     public void releaseConnection(Connection connection) {
-        if (connection.getClass() != ProxyConnection.class) {
+        if (!(connection instanceof ProxyConnection)) {
             logger.log(Level.ERROR, "Illegal connection type");
-            return; // TODO????? or throw
+            return; // FIXME  |  or throw
         }
+        connectionLock.lock();
         try {
             givenAwayConnections.remove(connection);
-            freeConnections.put((ProxyConnection) connection);
-        } catch (InterruptedException e) {
-            logger.log(Level.ERROR, "Error while releasing connection: {}", e.getMessage());
-            Thread.currentThread().interrupt();
+            freeConnections.addLast((ProxyConnection) connection);
+        } finally {
+            freeConnectionCondition.signal();
+            connectionLock.unlock();
         }
     }
 
     public void destroyPool() {
-        for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
-            try {
-                freeConnections.take().reallyClose();
-            } catch (SQLException | InterruptedException e) {
-                logger.log(Level.ERROR, "Connection is not destroyed: {}", e.getMessage());
-            }
+        connectionLock.lock();
+        try {
+            freeConnections.forEach(ProxyConnection::reallyClose);
+            givenAwayConnections.forEach(ProxyConnection::reallyClose);
+        } finally {
+            connectionLock.unlock();
         }
         deregisterDrivers();
     }
@@ -95,4 +113,27 @@ public class ConnectionPool {
     }
 
 
+    private void setValidationTask() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                connectionLock.lock();
+                try {
+                    int connectionAmount = freeConnections.size() + givenAwayConnections.size();
+                    for (int i = 0; i < DEFAULT_POOL_SIZE - connectionAmount; i++) {
+                        try {
+                            Connection connection = ConnectionFactory.createConnection();
+                            ProxyConnection proxyConnection = new ProxyConnection(connection);
+                            freeConnections.addLast(proxyConnection);
+                        } catch (SQLException e) {
+                            logger.log(Level.WARN, "Error while creating connection: {}", e.getMessage());
+                        }
+                    }
+                } finally {
+                    connectionLock.unlock();
+                }
+            }
+        }, 1000, 1000);
+    }
 }
