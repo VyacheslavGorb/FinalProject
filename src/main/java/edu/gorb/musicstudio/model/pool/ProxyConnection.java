@@ -13,7 +13,7 @@ public class ProxyConnection implements Connection {
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
 
-    ProxyConnection (Connection connection){
+    ProxyConnection(Connection connection) {
         this.connection = connection;
     }
 

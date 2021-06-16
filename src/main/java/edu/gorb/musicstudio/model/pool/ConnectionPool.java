@@ -1,5 +1,6 @@
 package edu.gorb.musicstudio.model.pool;
 
+import edu.gorb.musicstudio.exception.DatabaseConnectionException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +43,6 @@ public class ConnectionPool {
 
 
     private ConnectionPool() {
-
         try (InputStream inputStream = ConnectionPool.class.getResourceAsStream(PROPERTY_FILE_PATH)) {
             Properties properties = new Properties();
             properties.load(inputStream);
@@ -69,7 +69,7 @@ public class ConnectionPool {
                 logger.log(Level.WARN, "Error while creating connection: {}", e.getMessage());
             }
 
-            if (freeConnections.isEmpty()) {
+            if (freeConnections.isEmpty()) { // FIXME is required?
                 logger.fatal("Unable to create connections");
                 throw new RuntimeException("Unable to create connections");
             }
@@ -86,7 +86,7 @@ public class ConnectionPool {
         return instance;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws DatabaseConnectionException {
         connectionLock.lock();
         ProxyConnection connection;
         try {
@@ -97,7 +97,7 @@ public class ConnectionPool {
             givenAwayConnections.addLast(connection);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException("Thread is interrupted" + e.getMessage()); // FIXME | how to handle | logs
+            throw new DatabaseConnectionException("Thread is interrupted" + e.getMessage());
         } finally {
             connectionLock.unlock();
         }
@@ -107,7 +107,7 @@ public class ConnectionPool {
     public void releaseConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
             logger.log(Level.ERROR, "Illegal connection type");
-            return; // FIXME  |  or throw
+            return; // FIXME  |  or throw exception
         }
         connectionLock.lock();
         try {
@@ -139,7 +139,6 @@ public class ConnectionPool {
             }
         });
     }
-
 
     private void setValidationTask() {
         Timer timer = new Timer();
