@@ -124,6 +124,8 @@ public class ConnectionPool {
         try {
             freeConnections.forEach(ProxyConnection::reallyClose);
             givenAwayConnections.forEach(ProxyConnection::reallyClose);
+            freeConnections.clear();
+            givenAwayConnections.clear();
         } finally {
             connectionLock.unlock();
         }
