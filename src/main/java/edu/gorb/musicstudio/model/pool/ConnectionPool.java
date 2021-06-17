@@ -16,7 +16,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ConnectionPool {
+public class ConnectionPool { // TODO fix work with queue
     private static final Logger logger = LogManager.getLogger();
 
     private static ConnectionPool instance;
@@ -47,8 +47,8 @@ public class ConnectionPool {
             Properties properties = new Properties();
             properties.load(inputStream);
             poolSize = Integer.parseInt(properties.getProperty(POOL_SIZE_PROPERTY));
-            poolSize = Integer.parseInt(properties.getProperty(TASK_DELAY_PROPERTY));
-            poolSize = Integer.parseInt(properties.getProperty(TASK_INTERVAL_PROPERTY));
+            timerDelay = Integer.parseInt(properties.getProperty(TASK_DELAY_PROPERTY));
+            timerInterval = Integer.parseInt(properties.getProperty(TASK_INTERVAL_PROPERTY));
         } catch (IOException | NumberFormatException e) {
             logger.log(Level.ERROR, "Error while reading pool properties");
             poolSize = DEFAULT_POOL_SIZE;
@@ -68,13 +68,12 @@ public class ConnectionPool {
             } catch (SQLException e) {
                 logger.log(Level.WARN, "Error while creating connection: {}", e.getMessage());
             }
-
-            if (freeConnections.isEmpty()) { // FIXME is required?
-                logger.fatal("Unable to create connections");
-                throw new RuntimeException("Unable to create connections");
-            }
-            setValidationTask();
         }
+        if (freeConnections.isEmpty()) {
+            logger.fatal("Unable to create connections");
+            throw new RuntimeException("Unable to create connections");
+        }
+        setConnectionAmountValidationTask();
     }
 
     public static ConnectionPool getInstance() {
@@ -104,10 +103,10 @@ public class ConnectionPool {
         return connection;
     }
 
-    public void releaseConnection(Connection connection) {
+    public boolean releaseConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
             logger.log(Level.ERROR, "Illegal connection type");
-            return; // FIXME  |  or throw exception
+            return false;
         }
         connectionLock.lock();
         try {
@@ -117,6 +116,7 @@ public class ConnectionPool {
             freeConnectionCondition.signal();
             connectionLock.unlock();
         }
+        return true;
     }
 
     public void destroyPool() {
@@ -142,9 +142,9 @@ public class ConnectionPool {
         });
     }
 
-    private void setValidationTask() {
+    private void setConnectionAmountValidationTask() {
         Timer timer = new Timer();
-        timer.schedule(new TimerTask() { // TODO Move to separate file ???
+        timer.schedule(new TimerTask() { // TODO Move to separate file
             @Override
             public void run() {
                 connectionLock.lock();

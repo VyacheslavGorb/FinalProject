@@ -27,7 +27,7 @@ class ConnectionFactory {
             Class.forName(driver);
         } catch (IOException e) {
             logger.log(Level.FATAL, "Error while reading property file");
-            throw new RuntimeException("Error while reading property file"); // FIXME default values ???
+            throw new RuntimeException("Error while reading property file");
         } catch (ClassNotFoundException e) {
             logger.log(Level.FATAL, "Driver class not found: {}", e.getMessage());
             throw new RuntimeException("Driver class not found: " + e.getMessage());
