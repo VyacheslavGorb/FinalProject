@@ -10,13 +10,16 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Properties;
+import java.util.Timer;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ConnectionPool { // TODO fix work with queue
+public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
 
     private static ConnectionPool instance;
@@ -25,8 +28,10 @@ public class ConnectionPool { // TODO fix work with queue
     private static final int DEFAULT_POOL_SIZE = 32;
     private static final int DEFAULT_MILLISECONDS_DELAY = 1000;
     private static final int DEFAULT_MILLISECONDS_INTERVAL = 1000;
+    private static final boolean DEFAULT_IS_VALIDATION_TASK_USED = false;
 
     private static final String PROPERTY_FILE_PATH = "properties/pool.properties";
+    private static final String IS_VALIDATION_TASK_USED_PROPERTY = "is_connection_amount_validation_task_used";
     private static final String TASK_DELAY_PROPERTY = "task_delay";
     private static final String TASK_INTERVAL_PROPERTY = "task_interval";
     private static final String POOL_SIZE_PROPERTY = "pool_size";
@@ -40,40 +45,54 @@ public class ConnectionPool { // TODO fix work with queue
     private int poolSize;
     private int timerDelay;
     private int timerInterval;
+    private boolean isValidationTaskUsed;
 
-
+    // FIXME may throw NullPointerException if resource doesn't exist (catch NullPointerException or if else??)
     private ConnectionPool() {
-        try (InputStream inputStream = ConnectionPool.class.getResourceAsStream(PROPERTY_FILE_PATH)) {
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            poolSize = Integer.parseInt(properties.getProperty(POOL_SIZE_PROPERTY));
-            timerDelay = Integer.parseInt(properties.getProperty(TASK_DELAY_PROPERTY));
-            timerInterval = Integer.parseInt(properties.getProperty(TASK_INTERVAL_PROPERTY));
-        } catch (IOException | NumberFormatException e) {
-            logger.log(Level.ERROR, "Error while reading pool properties");
-            poolSize = DEFAULT_POOL_SIZE;
-            timerDelay = DEFAULT_MILLISECONDS_DELAY;
-            timerInterval = DEFAULT_MILLISECONDS_INTERVAL;
+        try (InputStream inputStream = ConnectionPool.class.getClassLoader().getResourceAsStream(PROPERTY_FILE_PATH)) {
+            if (inputStream == null) {
+                logger.log(Level.WARN, "Pool properties file not found. Default values are used.");
+                assignDefaultValues();
+            } else {
+                Properties properties = new Properties();
+                properties.load(inputStream);
+                poolSize = Integer.parseInt(properties.getProperty(POOL_SIZE_PROPERTY));
+                timerDelay = Integer.parseInt(properties.getProperty(TASK_DELAY_PROPERTY));
+                timerInterval = Integer.parseInt(properties.getProperty(TASK_INTERVAL_PROPERTY));
+                isValidationTaskUsed = Boolean.parseBoolean(properties.getProperty(IS_VALIDATION_TASK_USED_PROPERTY));
+            }
+        } catch (IOException e) {
+            logger.log(Level.WARN, "Error while closing properties file");
+            assignDefaultValues();
+        } catch (NumberFormatException e) {
+            logger.log(Level.WARN, "Error while converting pool properties. Default values are used.");
+            assignDefaultValues();
         }
 
         connectionLock = new ReentrantLock(true);
         freeConnectionCondition = connectionLock.newCondition();
-        freeConnections = new ArrayDeque<>();
-        givenAwayConnections = new ArrayDeque<>();
+        freeConnections = new ArrayDeque<>(poolSize);
+        givenAwayConnections = new ArrayDeque<>(poolSize);
         for (int i = 0; i < poolSize; i++) {
             try {
                 Connection connection = ConnectionFactory.createConnection();
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
-                freeConnections.offer(proxyConnection);
+                freeConnections.addLast(proxyConnection);
             } catch (SQLException e) {
                 logger.log(Level.WARN, "Error while creating connection: {}", e.getMessage());
             }
         }
+
         if (freeConnections.isEmpty()) {
             logger.fatal("Unable to create connections");
             throw new RuntimeException("Unable to create connections");
         }
-        setConnectionAmountValidationTask();
+
+        logger.debug("{} connections created", freeConnections.size());
+
+        if (isValidationTaskUsed) {
+            setConnectionAmountValidationTask();
+        }
     }
 
     public static ConnectionPool getInstance() {
@@ -89,10 +108,10 @@ public class ConnectionPool { // TODO fix work with queue
         connectionLock.lock();
         ProxyConnection connection;
         try {
-            if (freeConnections.isEmpty()) {
+            while (freeConnections.isEmpty()) {
                 freeConnectionCondition.await();
             }
-            connection = freeConnections.getLast();
+            connection = freeConnections.pollFirst();
             givenAwayConnections.addLast(connection);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -112,8 +131,8 @@ public class ConnectionPool { // TODO fix work with queue
         try {
             givenAwayConnections.remove(connection);
             freeConnections.addLast((ProxyConnection) connection);
-        } finally {
             freeConnectionCondition.signal();
+        } finally {
             connectionLock.unlock();
         }
         return true;
@@ -132,6 +151,13 @@ public class ConnectionPool { // TODO fix work with queue
         deregisterDrivers();
     }
 
+    private void assignDefaultValues() {
+        poolSize = DEFAULT_POOL_SIZE;
+        timerDelay = DEFAULT_MILLISECONDS_DELAY;
+        timerInterval = DEFAULT_MILLISECONDS_INTERVAL;
+        isValidationTaskUsed = DEFAULT_IS_VALIDATION_TASK_USED;
+    }
+
     private void deregisterDrivers() {
         DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
             try {
@@ -144,25 +170,8 @@ public class ConnectionPool { // TODO fix work with queue
 
     private void setConnectionAmountValidationTask() {
         Timer timer = new Timer();
-        timer.schedule(new TimerTask() { // TODO Move to separate file
-            @Override
-            public void run() {
-                connectionLock.lock();
-                try {
-                    int connectionAmount = freeConnections.size() + givenAwayConnections.size();
-                    for (int i = 0; i < poolSize - connectionAmount; i++) {
-                        try {
-                            Connection connection = ConnectionFactory.createConnection();
-                            ProxyConnection proxyConnection = new ProxyConnection(connection);
-                            freeConnections.addLast(proxyConnection);
-                        } catch (SQLException e) {
-                            logger.log(Level.WARN, "Error while creating connection: {}", e.getMessage());
-                        }
-                    }
-                } finally {
-                    connectionLock.unlock();
-                }
-            }
-        }, timerDelay, timerInterval);
+        ConnectionAmountValidationTask validationTask =
+                new ConnectionAmountValidationTask(connectionLock, freeConnections, givenAwayConnections, poolSize);
+        timer.schedule(validationTask, timerDelay, timerInterval);
     }
 }

@@ -20,10 +20,26 @@ class ConnectionFactory {
     private static final String DB_URL;
 
     static {
-        try (InputStream inputStream = ConnectionFactory.class.getResourceAsStream(DB_PROPERTY_FILE)) {
+        try (InputStream inputStream = ConnectionFactory.class.getClassLoader().getResourceAsStream(DB_PROPERTY_FILE)) {
+            if (inputStream == null) {
+                logger.log(Level.FATAL, "Database property file doesn't exist");
+                throw new RuntimeException("Database property file doesn't exist");
+            }
+
             dbProperties.load(inputStream);
             DB_URL = dbProperties.getProperty(DB_URL_PROPERTY);
             String driver = dbProperties.getProperty(DB_DRIVER_PROPERTY);
+
+            if (DB_URL == null) {
+                logger.log(Level.FATAL, "Database url property doesn't exist.");
+                throw new RuntimeException("Database url property doesn't exist.");
+            }
+
+            if (driver == null) {
+                logger.log(Level.FATAL, "Driver property doesn't exist.");
+                throw new RuntimeException("Driver property doesn't exist.");
+            }
+
             Class.forName(driver);
         } catch (IOException e) {
             logger.log(Level.FATAL, "Error while reading property file");
