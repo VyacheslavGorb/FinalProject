@@ -1,3 +1,5 @@
 .idea
 target
 *.iml
+src/main/java/_main
+logs
