@@ -1,5 +1,5 @@
 .idea
 target
 *.iml
-src/main/java/_main/Main.java
+sql
 logs

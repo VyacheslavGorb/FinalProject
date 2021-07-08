@@ -1,4 +1,4 @@
-package edu.gorb.musicstudio.model.pool;
+package edu.gorb.musicstudio.pool;
 
 import edu.gorb.musicstudio.exception.DatabaseConnectionException;
 import org.apache.logging.log4j.Level;
