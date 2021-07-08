@@ -1,9 +1,11 @@
 package edu.gorb.musicstudio.command;
 
-public class CommandResult{
-    public enum RoutingType{
+public class CommandResult {
+
+    public enum RoutingType {
         FORWARD, REDIRECT
     }
+
     private RoutingType routingType;
     private String page;
 
@@ -11,11 +13,12 @@ public class CommandResult{
         this.routingType = routingType;
         this.page = page;
     }
-    public boolean isRedirect(){
+
+    public boolean isRedirect() {
         return routingType == RoutingType.REDIRECT;
     }
 
-    public boolean isForward(){
+    public boolean isForward() {
         return routingType == RoutingType.FORWARD;
     }
 

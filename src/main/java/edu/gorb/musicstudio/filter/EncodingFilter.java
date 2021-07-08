@@ -1,12 +1,8 @@
 package edu.gorb.musicstudio.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/*"},
-        initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding Param")})
 public class EncodingFilter implements Filter {
     private String encoding;
 
@@ -15,18 +11,14 @@ public class EncodingFilter implements Filter {
         encoding = fConfig.getInitParameter("encoding");
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
-        String codeRequest = request.getCharacterEncoding();
+        String codeRequest = servletRequest.getCharacterEncoding();
 
         if (encoding != null && !encoding.equalsIgnoreCase(codeRequest)) {
-            request.setCharacterEncoding(encoding);
-            response.setCharacterEncoding(encoding);
+            servletRequest.setCharacterEncoding(encoding);
+            servletResponse.setCharacterEncoding(encoding);
         }
-        chain.doFilter(request, response);
-    }
-
-    public void destroy() {
-        encoding = null;
+        chain.doFilter(servletRequest, servletResponse);
     }
 }

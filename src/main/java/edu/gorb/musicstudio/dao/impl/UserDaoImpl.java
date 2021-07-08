@@ -1,14 +1,13 @@
 package edu.gorb.musicstudio.dao.impl;
 
+import edu.gorb.musicstudio.dao.JdbcHelper;
+import edu.gorb.musicstudio.dao.UserDao;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.mapper.impl.UserRowMapperImpl;
-import edu.gorb.musicstudio.dao.JdbcHelper;
-import edu.gorb.musicstudio.dao.UserDao;
 import edu.gorb.musicstudio.pool.ConnectionPool;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 

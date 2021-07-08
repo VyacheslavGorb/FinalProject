@@ -1,5 +1,5 @@
 package edu.gorb.musicstudio.command;
 
 public enum CommandType {
-    LOGIN, LOGOUT, PERSONAL_PAGE
+    LOGIN, LOGOUT, PERSONAL_PAGE, DEFAULT
 }

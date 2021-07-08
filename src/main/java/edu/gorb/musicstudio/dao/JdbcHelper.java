@@ -27,9 +27,8 @@ public class JdbcHelper<T extends AbstractEntity> {
         List<T> result = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            for (int i = 1; i <= parameters.length; i++) {
-                statement.setObject(i, parameters[i]);
-            }
+
+            fillPreparedStatement(statement, parameters);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 T entity = mapper.mapRow(resultSet);
@@ -48,13 +47,18 @@ public class JdbcHelper<T extends AbstractEntity> {
 
     public void executeUpdate(String query, Object... parameters) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
-            for (int i = 1; i <= parameters.length; i++) {
-                statement.setObject(i, parameters[i]);
-            }
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            fillPreparedStatement(statement, parameters);
             statement.executeUpdate();
         } catch (SQLException | DatabaseConnectionException e) {
             throw new DaoException(e);
+        }
+    }
+
+    private void fillPreparedStatement(PreparedStatement statement, Object... parameters) throws SQLException {
+        for (int i = 1; i <= parameters.length; i++) {
+            statement.setObject(i, parameters[i]);
         }
     }
 }

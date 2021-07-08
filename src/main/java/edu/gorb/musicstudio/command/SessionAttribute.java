@@ -1,5 +1,5 @@
 package edu.gorb.musicstudio.command;
 
-public class RequestAttribute {
+public class SessionAttribute { // TODO Move classes
     public static final String USER = "user";
 }

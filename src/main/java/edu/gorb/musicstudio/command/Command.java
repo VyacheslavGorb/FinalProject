@@ -1,7 +1,9 @@
 package edu.gorb.musicstudio.command;
 
-import java.net.http.HttpRequest;
+import edu.gorb.musicstudio.exception.ServiceException;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface Command {
-    String execute(HttpRequest request);
+    CommandResult execute(HttpServletRequest request) throws ServiceException;
 }
