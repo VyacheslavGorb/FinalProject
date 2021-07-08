@@ -5,8 +5,8 @@ import edu.gorb.musicstudio.dao.JdbcHelper;
 import edu.gorb.musicstudio.entity.Comment;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.mapper.impl.CommentRowMapperImpl;
+import edu.gorb.musicstudio.pool.ConnectionPool;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +43,8 @@ public class CommentDaoImpl implements CommentDao {
 
     private JdbcHelper<Comment> jdbcHelper;
 
-    public CommentDaoImpl(Connection connection) {
-        jdbcHelper = new JdbcHelper<>(connection, new CommentRowMapperImpl());
+    public CommentDaoImpl() {
+        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new CommentRowMapperImpl());
     }
 
     @Override

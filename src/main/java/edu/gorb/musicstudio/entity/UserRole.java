@@ -1,5 +1,5 @@
 package edu.gorb.musicstudio.entity;
 
 public enum UserRole {
-    ADMIN, TEACHER, STUDENT
+    ADMIN, TEACHER, STUDENT, GUEST
 }

@@ -6,6 +6,7 @@ import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.mapper.impl.UserRowMapperImpl;
 import edu.gorb.musicstudio.dao.JdbcHelper;
 import edu.gorb.musicstudio.dao.UserDao;
+import edu.gorb.musicstudio.pool.ConnectionPool;
 
 import java.sql.Connection;
 import java.util.List;
@@ -90,8 +91,8 @@ public class UserDaoImpl implements UserDao {
 
     private JdbcHelper<User> jdbcHelper;
 
-    public UserDaoImpl(Connection connection) {
-        jdbcHelper = new JdbcHelper<>(connection, new UserRowMapperImpl());
+    public UserDaoImpl() {
+        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new UserRowMapperImpl());
     }
 
     @Override

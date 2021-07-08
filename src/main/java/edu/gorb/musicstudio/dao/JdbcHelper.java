@@ -2,7 +2,9 @@ package edu.gorb.musicstudio.dao;
 
 import edu.gorb.musicstudio.entity.AbstractEntity;
 import edu.gorb.musicstudio.exception.DaoException;
+import edu.gorb.musicstudio.exception.DatabaseConnectionException;
 import edu.gorb.musicstudio.mapper.RowMapper;
+import edu.gorb.musicstudio.pool.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,17 +15,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class JdbcHelper<T extends AbstractEntity> {
-    private Connection connection;
+    private ConnectionPool connectionPool;
     private RowMapper<T> mapper;
 
-    public JdbcHelper(Connection connection, RowMapper<T> mapper) {
-        this.connection = connection;
+    public JdbcHelper(ConnectionPool connectionPool, RowMapper<T> mapper) {
+        this.connectionPool = connectionPool;
         this.mapper = mapper;
     }
 
     public List<T> executeQuery(String query, Object... parameters) throws DaoException {
         List<T> result = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             for (int i = 1; i <= parameters.length; i++) {
                 statement.setObject(i, parameters[i]);
             }
@@ -32,7 +35,7 @@ public class JdbcHelper<T extends AbstractEntity> {
                 T entity = mapper.mapRow(resultSet);
                 result.add(entity);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             throw new DaoException(e);
         }
         return result;
@@ -44,12 +47,13 @@ public class JdbcHelper<T extends AbstractEntity> {
     }
 
     public void executeUpdate(String query, Object... parameters) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             for (int i = 1; i <= parameters.length; i++) {
                 statement.setObject(i, parameters[i]);
             }
             statement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (SQLException | DatabaseConnectionException e) {
             throw new DaoException(e);
         }
     }

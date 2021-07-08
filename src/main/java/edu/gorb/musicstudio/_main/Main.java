@@ -1,4 +1,4 @@
-package _main;
+package edu.gorb.musicstudio._main;
 
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserRole;
