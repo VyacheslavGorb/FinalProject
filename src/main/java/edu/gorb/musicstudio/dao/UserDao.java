@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends BaseDao<Long, User> {
-    List<User> selectUserByStatus(UserStatus status) throws DaoException;
+    List<User> findUsersByStatus(UserStatus status) throws DaoException;
 
-    Optional<User> selectUserByLogin(String login) throws DaoException;
+    Optional<User> findUserByLogin(String login) throws DaoException;
 }

@@ -15,7 +15,7 @@ public class UserService {
         try {
             DaoProvider daoProvider = DaoProvider.getInstance();
             UserDao userDao = daoProvider.getUserDao();
-            Optional<User> user = userDao.selectUserByLogin(login);
+            Optional<User> user = userDao.findUserByLogin(login);
             if (user.isEmpty()) {
                 return Optional.empty();
             }

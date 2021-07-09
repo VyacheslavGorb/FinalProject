@@ -131,12 +131,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> selectUserByStatus(UserStatus status) throws DaoException {
+    public List<User> findUsersByStatus(UserStatus status) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_USERS_BY_STATUS, status.toString());
     }
 
     @Override
-    public Optional<User> selectUserByLogin(String login) throws DaoException {
+    public Optional<User> findUserByLogin(String login) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_USER_BY_LOGIN, login);
     }
 }
