@@ -21,9 +21,9 @@ public class AccessLevelFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         availableCommands = new EnumMap<>(UserRole.class);
-        availableCommands.put(UserRole.GUEST, List.of(LOGIN, DEFAULT));
-        availableCommands.put(UserRole.STUDENT, List.of(LOGOUT, PERSONAL_PAGE, DEFAULT));
-        availableCommands.put(UserRole.ADMIN, List.of(LOGOUT, PERSONAL_PAGE, DEFAULT));
+        availableCommands.put(UserRole.GUEST, List.of(LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE));
+        availableCommands.put(UserRole.STUDENT, List.of(LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
+        availableCommands.put(UserRole.ADMIN, List.of(LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
     }
 
     @Override
@@ -33,17 +33,20 @@ public class AccessLevelFilter implements Filter {
         HttpSession session = httpServletRequest.getSession();
         UserRole role;
         Object attributeObject = session.getAttribute(SessionAttribute.USER);
-        if (session.getAttribute(SessionAttribute.USER) == null || !(attributeObject instanceof User)) {
+        if (session.getAttribute(SessionAttribute.USER) == null || !(attributeObject instanceof User)) { // TODO
             role = UserRole.GUEST;
+//            session.setAttribute(SessionAttribute.USER, new User.Builder().setRole(UserRole.ADMIN).build());
         } else {
             User user = (User) session.getAttribute(SessionAttribute.USER);
             role = user.getRole();
         }
         CommandType commandType = extractRequestCommandType(httpServletRequest);
-
+        System.out.println(httpServletRequest.getRequestURI());
+        System.out.println(role);
         List<CommandType> availableCommandsForCurrentUser = availableCommands.get(role);
         if (!availableCommandsForCurrentUser.contains(commandType)) {
-            httpServletRequest.getRequestDispatcher("error page").forward(servletRequest, servletResponse); //TODO page
+            httpServletRequest.getRequestDispatcher("error_page").forward(servletRequest, servletResponse); //TODO page
+            return;
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

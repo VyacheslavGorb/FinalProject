@@ -42,7 +42,7 @@ public class JdbcHelper<T extends AbstractEntity> {
 
     public Optional<T> executeQueryForSingleResult(String query, Object... parameters) throws DaoException {
         List<T> entities = executeQuery(query, parameters);
-        return entities.isEmpty() ? Optional.empty() : Optional.of(entities.get(1));
+        return entities.isEmpty() ? Optional.empty() : Optional.of(entities.get(0));
     }
 
     public void executeUpdate(String query, Object... parameters) throws DaoException {
@@ -58,7 +58,7 @@ public class JdbcHelper<T extends AbstractEntity> {
 
     private void fillPreparedStatement(PreparedStatement statement, Object... parameters) throws SQLException {
         for (int i = 1; i <= parameters.length; i++) {
-            statement.setObject(i, parameters[i]);
+            statement.setObject(i, parameters[i-1]);
         }
     }
 }

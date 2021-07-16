@@ -1,9 +1,6 @@
 package edu.gorb.musicstudio.command;
 
-import edu.gorb.musicstudio.command.impl.DefaultCommand;
-import edu.gorb.musicstudio.command.impl.LoginCommand;
-import edu.gorb.musicstudio.command.impl.LogoutCommand;
-import edu.gorb.musicstudio.command.impl.PersonalPageCommand;
+import edu.gorb.musicstudio.command.impl.*;
 
 import java.util.EnumMap;
 
@@ -18,6 +15,8 @@ public class CommandProvider {
         commands.put(LOGOUT, new LogoutCommand());
         commands.put(PERSONAL_PAGE, new PersonalPageCommand());
         commands.put(DEFAULT, new DefaultCommand());
+        commands.put(HOME_PAGE, new HomePageCommand());
+        commands.put(GO_TO_LOGIN_PAGE, new GoToLoginPageCommand());
     }
 
     private static class CommandProviderHolder {

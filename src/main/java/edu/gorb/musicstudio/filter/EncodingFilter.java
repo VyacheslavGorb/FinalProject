@@ -11,6 +11,7 @@ public class EncodingFilter implements Filter {
         encoding = fConfig.getInitParameter("encoding");
     }
 
+    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
         String codeRequest = servletRequest.getCharacterEncoding();

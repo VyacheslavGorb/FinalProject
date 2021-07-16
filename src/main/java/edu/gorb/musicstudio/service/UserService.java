@@ -10,7 +10,11 @@ import java.util.Optional;
 
 public class UserService {
 
-    Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
+    public Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
+
+        if (login == null || password == null) {
+            return Optional.empty();
+        }
 
         try {
             DaoProvider daoProvider = DaoProvider.getInstance();

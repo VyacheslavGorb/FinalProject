@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class PersonalPageCommand implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest request) throws ServiceException {
+    public CommandResult execute(HttpServletRequest request){
         throw new UnsupportedOperationException(); //TODO
     }
 }

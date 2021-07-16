@@ -9,7 +9,7 @@ public class CommandResult {
     private RoutingType routingType;
     private String page;
 
-    public CommandResult(RoutingType routingType, String page) {
+    public CommandResult(String page, RoutingType routingType) {
         this.routingType = routingType;
         this.page = page;
     }
@@ -24,5 +24,9 @@ public class CommandResult {
 
     public RoutingType getRoutingType() {
         return routingType;
+    }
+
+    public String getPage() {
+        return page;
     }
 }
