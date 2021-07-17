@@ -31,19 +31,16 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandString = req.getParameter(RequestParameter.COMMAND);
-        if (commandString == null) {
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
-        }
         Command command = CommandProvider.getInstance().getCommand(commandString);
         CommandResult commandResult;
         commandResult = command.execute(req);
         switch (commandResult.getRoutingType()) {
+            case FORWARD:
+                req.getRequestDispatcher(commandResult.getPage()).forward(req, resp);
+                break;
             case REDIRECT:
                 resp.sendRedirect(req.getContextPath() + commandResult.getPage());
                 break;
-            case FORWARD:
-                req.getRequestDispatcher(commandResult.getPage()).forward(req, resp);
-                break; //TODO default
         }
     }
 

@@ -5,7 +5,7 @@ import java.util.Objects;
 public abstract class AbstractEntity {
     private long entityId;
 
-    public AbstractEntity(long entityId) {
+    protected AbstractEntity(long entityId) {
         this.entityId = entityId;
     }
 

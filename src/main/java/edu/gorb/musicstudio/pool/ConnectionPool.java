@@ -47,7 +47,6 @@ public class ConnectionPool {
     private int timerInterval;
     private boolean isValidationTaskUsed;
 
-    // FIXME may throw NullPointerException if resource doesn't exist (catch NullPointerException or if else??)
     private ConnectionPool() {
         try (InputStream inputStream = ConnectionPool.class.getClassLoader().getResourceAsStream(PROPERTY_FILE_PATH)) {
             if (inputStream == null) {

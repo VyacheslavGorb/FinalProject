@@ -5,6 +5,9 @@ import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.DatabaseConnectionException;
 import edu.gorb.musicstudio.mapper.RowMapper;
 import edu.gorb.musicstudio.pool.ConnectionPool;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JdbcHelper<T extends AbstractEntity> {
+    private static final Logger logger = LogManager.getLogger();
     private ConnectionPool connectionPool;
     private RowMapper<T> mapper;
 
@@ -35,6 +39,7 @@ public class JdbcHelper<T extends AbstractEntity> {
                 result.add(entity);
             }
         } catch (SQLException | DatabaseConnectionException e) {
+            logger.log(Level.ERROR, e.getMessage());
             throw new DaoException(e);
         }
         return result;
@@ -52,6 +57,7 @@ public class JdbcHelper<T extends AbstractEntity> {
             fillPreparedStatement(statement, parameters);
             statement.executeUpdate();
         } catch (SQLException | DatabaseConnectionException e) {
+            logger.log(Level.ERROR, e.getMessage());
             throw new DaoException(e);
         }
     }

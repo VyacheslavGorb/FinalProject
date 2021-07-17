@@ -5,6 +5,7 @@
 <fmt:setLocale value="${sessionScope.locale == null ? 'ru_RU' : sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent" var="rb"/>
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">

@@ -14,14 +14,6 @@ public class CommandResult {
         this.page = page;
     }
 
-    public boolean isRedirect() {
-        return routingType == RoutingType.REDIRECT;
-    }
-
-    public boolean isForward() {
-        return routingType == RoutingType.FORWARD;
-    }
-
     public RoutingType getRoutingType() {
         return routingType;
     }

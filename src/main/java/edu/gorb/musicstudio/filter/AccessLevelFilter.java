@@ -34,8 +34,7 @@ public class AccessLevelFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
         UserRole role;
-        Object attributeObject = session.getAttribute(SessionAttribute.USER);
-        if (session.getAttribute(SessionAttribute.USER) == null || !(attributeObject instanceof User)) { // TODO is type check required
+        if (session.getAttribute(SessionAttribute.USER) == null) { // TODO is type check required
             role = UserRole.GUEST;
         } else {
             User user = (User) session.getAttribute(SessionAttribute.USER);

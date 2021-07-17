@@ -1,7 +1,9 @@
 package edu.gorb.musicstudio.service;
 
+import edu.gorb.musicstudio.service.impl.UserServiceImpl;
+
 public class ServiceProvider {
-    private final UserService userService = new UserService();
+    private final UserService userService = new UserServiceImpl();
     private ServiceProvider() {
     }
 

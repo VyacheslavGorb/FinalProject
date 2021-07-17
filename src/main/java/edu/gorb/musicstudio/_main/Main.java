@@ -4,7 +4,7 @@ import edu.gorb.musicstudio.exception.DaoException;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class Main {
-    public static void main(String[] args) throws DaoException {
-        System.out.println(DigestUtils.sha3_256Hex("12345678"));
+    public static void main(String[] args) {
+//        System.out.println(DigestUtils.sha3_256Hex("12345678"));
     }
 }
