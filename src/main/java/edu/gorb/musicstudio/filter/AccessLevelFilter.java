@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Locale;
 
 import static edu.gorb.musicstudio.command.CommandType.*;
 
@@ -23,9 +24,9 @@ public class AccessLevelFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         availableCommands = new EnumMap<>(UserRole.class);
-        availableCommands.put(UserRole.GUEST, List.of(LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE));
-        availableCommands.put(UserRole.STUDENT, List.of(LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
-        availableCommands.put(UserRole.ADMIN, List.of(LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
+        availableCommands.put(UserRole.GUEST, List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE));
+        availableCommands.put(UserRole.STUDENT, List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
+        availableCommands.put(UserRole.ADMIN, List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
     }
 
     @Override
@@ -40,8 +41,14 @@ public class AccessLevelFilter implements Filter {
             User user = (User) session.getAttribute(SessionAttribute.USER);
             role = user.getRole();
         }
+
         List<CommandType> availableCommandsForCurrentUser = availableCommands.get(role);
         CommandType commandType = extractRequestCommandType(httpServletRequest);
+        
+        if(commandType != CHANGE_LANGUAGE){
+            session.setAttribute(SessionAttribute.PREV_COMMAND, commandType.toString().toLowerCase(Locale.ROOT));
+        }
+
         logger.log(Level.DEBUG, "Role: {} | Command: {}", role, commandType);
         if (role != UserRole.GUEST && (commandType == LOGIN || commandType == GO_TO_LOGIN_PAGE)) {
             httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, "error.already_logged_in");

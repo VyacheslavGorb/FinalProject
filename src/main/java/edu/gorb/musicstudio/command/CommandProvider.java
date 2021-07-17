@@ -17,6 +17,7 @@ public class CommandProvider {
         commands.put(DEFAULT, new DefaultCommand());
         commands.put(HOME_PAGE, new HomePageCommand());
         commands.put(GO_TO_LOGIN_PAGE, new GoToLoginPageCommand());
+        commands.put(CHANGE_LANGUAGE, new ChangeLanguageCommand());
     }
 
     private static class CommandProviderHolder {
