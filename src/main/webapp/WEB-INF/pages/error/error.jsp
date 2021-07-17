@@ -12,19 +12,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="style/home.css" rel="stylesheet">
+    <link href="style/error.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title>MuzShock - Home</title>
+    <title>MuzShock - Error</title>
 </head>
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
-
-<h1 class="fs-1"><fmt:message key="${requestScope.error_key}" bundle="${rb}"/></h1>
-
+<div class="error_page_outer">
+    <div class="error_page_inner">
+        <h1 class="error_message error_message_main display-2"><fmt:message key="error.main_message"
+                                                                            bundle="${rb}"/></h1>
+        <p class="error_message fs-2 mt-3">
+            <fmt:message key="${requestScope.error_key}" bundle="${rb}"/>.
+            <a class="home_link" href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message key="error.return_to_home"
+                                                                                                                     bundle="${rb}"/></a>
+        </p>
+    </div>
+</div>
 <jsp:include page="../parts/footer.jsp"/>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
 </body>
 </html>

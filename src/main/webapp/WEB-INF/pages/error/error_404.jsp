@@ -14,17 +14,19 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/error.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title>MuzShock - Home</title>
+    <title>MuzShock - 404</title>
 </head>
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
 <div class="error_page_outer">
     <div class="error_page_inner">
         <h1 class="error_code display-1">404</h1>
-        <h2 class="error_message error_message_main display-6">Oops! Page not found.</h2>
+        <h2 class="error_message error_message_main display-6"><fmt:message key="error.not_found_main_message"
+                                                                            bundle="${rb}"/></h2>
         <p class="error_message fs-5 mt-3">
-            The page you are looking for might have been removed had its name changed or is temporarily unavailable.
-            <a class="home_link" href="${pageContext.request.contextPath}/controller?command=home_page">Return to homepage</a>
+            <fmt:message key="error.page_not_found_info" bundle="${rb}"/>
+            <a class="home_link" href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message
+                    key="error.return_to_home" bundle="${rb}"/></a>
         </p>
     </div>
 </div>
