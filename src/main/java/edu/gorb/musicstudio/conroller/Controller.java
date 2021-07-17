@@ -39,7 +39,7 @@ public class Controller extends HttpServlet {
         commandResult = command.execute(req);
         switch (commandResult.getRoutingType()) {
             case REDIRECT:
-                resp.sendRedirect(commandResult.getPage());
+                resp.sendRedirect(req.getContextPath() + commandResult.getPage());
                 break;
             case FORWARD:
                 req.getRequestDispatcher(commandResult.getPage()).forward(req, resp);

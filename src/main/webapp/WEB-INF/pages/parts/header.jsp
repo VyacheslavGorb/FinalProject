@@ -1,7 +1,6 @@
 <%@ page import="edu.gorb.musicstudio.entity.UserRole" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.locale == null ? 'ru_RU' : sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent" var="rb" />
@@ -31,7 +30,7 @@
                     </c:when>
                 </c:choose>
                 <c:if test="${sessionScope.user != null}">
-                    <a type="button" class="btn btn-secondary"><fmt:message key="header.logout" bundle="${ rb }" /></a>
+                    <a href="${pageContext.request.contextPath}/controller?command=logout" type="button" class="btn btn-secondary"><fmt:message key="header.logout" bundle="${ rb }" /></a>
                 </c:if>
             </div>
         </div>

@@ -5,13 +5,12 @@ import edu.gorb.musicstudio.dao.UserDao;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.ServiceException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Optional;
 
 public class UserService {
-
     public Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
-
         if (login == null || password == null) {
             return Optional.empty();
         }
@@ -23,8 +22,8 @@ public class UserService {
             if (user.isEmpty()) {
                 return Optional.empty();
             }
-            //TODO hash password
-            if (user.get().getPassword().equals(password)) {
+
+            if (isCorrectPassword(user.get(), password)) {
                 return user;
             } else {
                 return Optional.empty();
@@ -33,4 +32,10 @@ public class UserService {
             throw new ServiceException(e);
         }
     }
+
+    private boolean isCorrectPassword(User user, String password) {
+        String hashedPassword = DigestUtils.sha3_256Hex(password);
+        return hashedPassword.equals(user.getPassword());
+    }
+
 }

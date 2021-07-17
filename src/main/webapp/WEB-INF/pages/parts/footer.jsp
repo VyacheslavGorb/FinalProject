@@ -1,7 +1,6 @@
 <%@ page import="edu.gorb.musicstudio.entity.UserRole" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.locale == null ? 'ru_RU' : sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent" var="rb" />
