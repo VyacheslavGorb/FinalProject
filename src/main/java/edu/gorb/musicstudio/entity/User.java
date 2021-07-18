@@ -170,11 +170,6 @@ public class User extends AbstractEntity {
             return this;
         }
 
-        public Builder setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-            return this;
-        }
-
         public Builder setRole(UserRole role) {
             this.role = role;
             return this;
