@@ -20,7 +20,6 @@ public class UserDaoImpl implements UserDao {
             "       surname,\n" +
             "       patronymic,\n" +
             "       email,\n" +
-            "       phone_number,\n" +
             "       user_role,\n" +
             "       user_status\n" +
             "FROM users\n" +
@@ -34,7 +33,6 @@ public class UserDaoImpl implements UserDao {
             "       surname,\n" +
             "       patronymic,\n" +
             "       email,\n" +
-            "       phone_number,\n" +
             "       user_role,\n" +
             "       user_status\n" +
             "FROM users\n" +
@@ -49,7 +47,6 @@ public class UserDaoImpl implements UserDao {
             "       surname,\n" +
             "       patronymic,\n" +
             "       email,\n" +
-            "       phone_number,\n" +
             "       user_status,\n" +
             "       user_role\n" +
             "FROM users\n" +
@@ -64,7 +61,6 @@ public class UserDaoImpl implements UserDao {
             "       surname,\n" +
             "       patronymic,\n" +
             "       email,\n" +
-            "       phone_number,\n" +
             "       user_status,\n" +
             "       user_role\n" +
             "FROM users\n" +
@@ -72,9 +68,24 @@ public class UserDaoImpl implements UserDao {
             "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
             "WHERE login=?";
 
+
+    private static final String SELECT_USER_BY_EMAIL = "SELECT id_user,\n" +
+            "       login,\n" +
+            "       password_hash,\n" +
+            "       name,\n" +
+            "       surname,\n" +
+            "       patronymic,\n" +
+            "       email,\n" +
+            "       user_status,\n" +
+            "       user_role\n" +
+            "FROM users\n" +
+            "         JOIN user_statuses us on us.id_user_status = users.id_user_status\n" +
+            "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
+            "WHERE email=?";
+
     private static final String INSERT_NEW_USER =
-            "INSERT INTO users (login, password_hash, name, surname, patronymic, email, phone_number, id_user_status,\n" +
-                    "             id_user_role) VALUE (?, ?, ?, ?, ?, ?, ?,\n" +
+            "INSERT INTO users (login, password_hash, name, surname, patronymic, email, id_user_status,\n" +
+                    "             id_user_role) VALUE (?, ?, ?, ?, ?, ?,\n" +
                     "                   (SELECT us.id_user_status FROM user_statuses us where us.user_status = ?),\n" +
                     "                   (SELECT ur.id_user_role FROM user_roles ur where ur.user_role = ?))";
 
@@ -83,7 +94,6 @@ public class UserDaoImpl implements UserDao {
             "    name           =?,\n" +
             "    surname        = ?,\n" +
             "    patronymic     = ?,\n" +
-            "    phone_number   = ?,\n" +
             "    id_user_status = (SELECT ur.id_user_role FROM user_roles ur WHERE ur.user_role = ?),\n" +
             "    id_user_role   = (SELECT us.id_user_status FROM user_statuses us WHERE us.user_status = ?)\n" +
             "WHERE id_user = ?";
@@ -105,15 +115,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void insert(User user) throws DaoException {
-        jdbcHelper.executeUpdate(INSERT_NEW_USER,
+    public int insert(User user) throws DaoException {
+        return jdbcHelper.executeInsert(INSERT_NEW_USER,
                 user.getLogin(),
                 user.getPassword(),
                 user.getName(),
                 user.getSurname(),
                 user.getPatronymic(),
                 user.getEmail(),
-                user.getPhoneNumber(),
                 user.getStatus().toString(),
                 user.getRole().toString());
     }
@@ -125,7 +134,6 @@ public class UserDaoImpl implements UserDao {
                 user.getName(),
                 user.getSurname(),
                 user.getPatronymic(),
-                user.getPhoneNumber(),
                 user.getStatus().toString(),
                 user.getRole().toString());
     }
@@ -138,5 +146,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findUserByLogin(String login) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_USER_BY_LOGIN, login);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) throws DaoException {
+        return jdbcHelper.executeQueryForSingleResult(SELECT_USER_BY_EMAIL, email);
     }
 }

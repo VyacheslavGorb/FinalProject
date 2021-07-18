@@ -9,7 +9,6 @@ public class User extends AbstractEntity {
     private String surname;
     private String patronymic;
     private String email;
-    private String phoneNumber;
     private UserRole role;
     private UserStatus status;
 
@@ -21,7 +20,6 @@ public class User extends AbstractEntity {
         this.surname = builder.surname;
         this.patronymic = builder.patronymic;
         this.email = builder.email;
-        this.phoneNumber = builder.phoneNumber;
         this.role = builder.role;
         this.status = builder.status;
     }
@@ -74,14 +72,6 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public UserRole getRole() {
         return role;
     }
@@ -107,13 +97,13 @@ public class User extends AbstractEntity {
         return Objects.equals(login, user.login) && Objects.equals(password, user.password)
                 && Objects.equals(name, user.name) && Objects.equals(surname, user.surname)
                 && Objects.equals(patronymic, user.patronymic) && Objects.equals(email, user.email)
-                && Objects.equals(phoneNumber, user.phoneNumber) && role == user.role && status == user.status;
+                && role == user.role && status == user.status;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                super.hashCode(), login, password, name, surname, patronymic, email, phoneNumber, role, status);
+                super.hashCode(), login, password, name, surname, patronymic, email, role, status);
     }
 
     @Override
@@ -126,7 +116,6 @@ public class User extends AbstractEntity {
         sb.append(", surname='").append(surname).append('\'');
         sb.append(", patronymic='").append(patronymic).append('\'');
         sb.append(", email='").append(email).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
         sb.append(", role=").append(role);
         sb.append(", status=").append(status);
         sb.append('}');
@@ -145,7 +134,6 @@ public class User extends AbstractEntity {
         private String email;
         private UserRole role;
         private UserStatus status;
-        private String phoneNumber = DEFAULT_PHONE_NUMBER_VALUE;
 
         public Builder setUserId(long userId) {
             this.userId = userId;

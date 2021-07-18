@@ -9,10 +9,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +53,20 @@ public class JdbcHelper<T extends AbstractEntity> {
 
             fillPreparedStatement(statement, parameters);
             statement.executeUpdate();
+        } catch (SQLException | DatabaseConnectionException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            throw new DaoException(e);
+        }
+    }
+
+    public int executeInsert(String query, Object... parameters) throws DaoException{
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            fillPreparedStatement(statement, parameters);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            return resultSet.getInt(1);
         } catch (SQLException | DatabaseConnectionException e) {
             logger.log(Level.ERROR, e.getMessage());
             throw new DaoException(e);

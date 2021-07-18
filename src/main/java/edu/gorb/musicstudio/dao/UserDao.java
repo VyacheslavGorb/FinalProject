@@ -11,4 +11,6 @@ public interface UserDao extends BaseDao<Long, User> {
     List<User> findUsersByStatus(UserStatus status) throws DaoException;
 
     Optional<User> findUserByLogin(String login) throws DaoException;
+
+    Optional<User> findUserByEmail(String email) throws DaoException;
 }

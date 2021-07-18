@@ -18,6 +18,8 @@ public class CommandProvider {
         commands.put(HOME_PAGE, new HomePageCommand());
         commands.put(GO_TO_LOGIN_PAGE, new GoToLoginPageCommand());
         commands.put(CHANGE_LANGUAGE, new ChangeLanguageCommand());
+        commands.put(SIGN_UP, new SignUpCommand());
+        commands.put(GO_TO_SIGN_UP_PAGE, new GoToSignUpPage());
     }
 
     private static class CommandProviderHolder {

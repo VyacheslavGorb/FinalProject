@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,13 +21,18 @@ import static edu.gorb.musicstudio.command.CommandType.*;
 public class AccessLevelFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
     private EnumMap<UserRole, List<CommandType>> availableCommands;
+    private EnumSet<CommandType> guestOnlyAvailableCommands;
 
     @Override
     public void init(FilterConfig filterConfig) {
         availableCommands = new EnumMap<>(UserRole.class);
-        availableCommands.put(UserRole.GUEST, List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE));
-        availableCommands.put(UserRole.STUDENT, List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
-        availableCommands.put(UserRole.ADMIN, List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
+        guestOnlyAvailableCommands = EnumSet.of(LOGIN, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE);
+        availableCommands.put(UserRole.GUEST,
+                List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE));
+        availableCommands.put(UserRole.STUDENT,
+                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
+        availableCommands.put(UserRole.ADMIN,
+                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
     }
 
     @Override
@@ -44,13 +50,13 @@ public class AccessLevelFilter implements Filter {
 
         List<CommandType> availableCommandsForCurrentUser = availableCommands.get(role);
         CommandType commandType = extractRequestCommandType(httpServletRequest);
-        
-        if(commandType != CHANGE_LANGUAGE){
+
+        if (commandType != CHANGE_LANGUAGE) {
             session.setAttribute(SessionAttribute.PREV_COMMAND, commandType.toString().toLowerCase(Locale.ROOT));
         }
 
         logger.log(Level.DEBUG, "Role: {} | Command: {}", role, commandType);
-        if (role != UserRole.GUEST && (commandType == LOGIN || commandType == GO_TO_LOGIN_PAGE)) {
+        if (role != UserRole.GUEST && guestOnlyAvailableCommands.contains(commandType)) {
             httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, "error.already_logged_in");
             httpServletRequest.getRequestDispatcher(PagePath.ERROR_PAGE).forward(servletRequest, servletResponse);
             return;

@@ -22,7 +22,7 @@
 <div class="login-outer ">
     <div class="login-inner d-flex flex-column p-4">
         <h1 class="fs-3 mb-3"><fmt:message key="login_page.message" bundle="${rb}"/></h1>
-        <c:if test="${requestScope.login_error != null}">
+        <c:if test="${requestScope.is_error != null}">
             <div class="alert alert-danger d-flex align-items-center" role="alert">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                      class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
@@ -49,8 +49,9 @@
             </div>
             <button type="submit" class="btn btn-success mt-2"><fmt:message key="login_page.login_btn"
                                                                             bundle='${rb}'/></button>
-            <button type="button" class="btn btn-outline-secondary mt-3"><fmt:message key="login_page.signup_btn"
-                                                                                      bundle='${rb}'/></button>
+            <a href="${pageContext.request.contextPath}/controller?command=go_to_sign_up_page" type="button"
+               class="btn btn-outline-secondary mt-3"><fmt:message key="login_page.signup_btn"
+                                                                   bundle='${rb}'/></a>
         </form>
     </div>
 </div>

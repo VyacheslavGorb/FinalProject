@@ -1,6 +1,6 @@
-.login-outer{
+.signup-outer{
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,12 +8,16 @@
     background-position: center;
 }
 
-.login-inner{
+.signup-inner{
     background-color : rgba(255, 255, 255, 0.623);
     border-radius: 5px;
     width: 40%;
 }
 
-.copyright{
-    color: rgba(255,255,255,0.8);
+.login_link{
+    color: #198754;
+}
+
+#passwords_mismatch{
+    display: none;
 }

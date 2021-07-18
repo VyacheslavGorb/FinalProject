@@ -4,6 +4,7 @@ import edu.gorb.musicstudio.service.impl.UserServiceImpl;
 
 public class ServiceProvider {
     private final UserService userService = new UserServiceImpl();
+
     private ServiceProvider() {
     }
 
@@ -11,7 +12,7 @@ public class ServiceProvider {
         private static final ServiceProvider instance = new ServiceProvider();
     }
 
-    public static ServiceProvider getInstance(){
+    public static ServiceProvider getInstance() {
         return ServiceProviderHolder.instance;
     }
 

@@ -23,8 +23,10 @@
                                                                                bundle="${ rb }"/></a>
                 <c:choose>
                     <c:when test="${sessionScope.user == null}">
-                        <a class="nav-link " aria-current="page" href="#"><fmt:message key="header.signup"
-                                                                                       bundle="${ rb }"/></a>
+                        <a class="nav-link " aria-current="page"
+                           href="${pageContext.request.contextPath}/controller?command=go_to_sign_up_page"><fmt:message
+                                key="header.signup"
+                                bundle="${ rb }"/></a>
                         <a href="${pageContext.request.contextPath}/controller?command=go_to_login_page" type="button"
                            class="btn btn-success"><fmt:message key="header.login" bundle="${ rb }"/></a>
                     </c:when>

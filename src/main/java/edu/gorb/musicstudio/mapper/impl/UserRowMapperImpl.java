@@ -20,7 +20,6 @@ public class UserRowMapperImpl implements RowMapper<User> {
         String surname = resultSet.getString(USER_SURNAME);
         String patronymic = resultSet.getString(USER_PATRONYMIC);
         String email = resultSet.getString(USER_EMAIL);
-        String phoneNumber = resultSet.getString(USER_PHONE_NUMBER);
         UserRole role = UserRole.valueOf(resultSet.getString(USER_ROLE));
         UserStatus status = UserStatus.valueOf(resultSet.getString(USER_STATUS));
         return new User.Builder()
@@ -31,7 +30,6 @@ public class UserRowMapperImpl implements RowMapper<User> {
                 .setSurname(surname)
                 .setPatronymic(patronymic)
                 .setEmail(email)
-                .setPhoneNumber(phoneNumber)
                 .setRole(role)
                 .setStatus(status)
                 .build();

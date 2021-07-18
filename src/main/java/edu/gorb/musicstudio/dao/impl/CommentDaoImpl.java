@@ -58,8 +58,8 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public void insert(Comment comment) throws DaoException {
-        jdbcHelper.executeUpdate(INSERT_NEW_COMMENT,
+    public int insert(Comment comment) throws DaoException {
+        return jdbcHelper.executeInsert(INSERT_NEW_COMMENT,
                 comment.getStudentId(),
                 comment.getTeacherId(),
                 comment.getContent(),
