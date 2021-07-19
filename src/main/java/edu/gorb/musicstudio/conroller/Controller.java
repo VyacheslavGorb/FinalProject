@@ -1,10 +1,10 @@
 package edu.gorb.musicstudio.conroller;
 
-import edu.gorb.musicstudio.command.Command;
-import edu.gorb.musicstudio.command.CommandProvider;
-import edu.gorb.musicstudio.command.CommandResult;
-import edu.gorb.musicstudio.command.RequestParameter;
-import edu.gorb.musicstudio.pool.ConnectionPool;
+import edu.gorb.musicstudio.conroller.command.Command;
+import edu.gorb.musicstudio.conroller.command.CommandProvider;
+import edu.gorb.musicstudio.conroller.command.CommandResult;
+import edu.gorb.musicstudio.conroller.command.RequestParameter;
+import edu.gorb.musicstudio.model.pool.ConnectionPool;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         ConnectionPool.getInstance();
     }
 
