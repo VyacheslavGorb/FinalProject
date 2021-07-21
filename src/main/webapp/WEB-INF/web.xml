@@ -24,6 +24,15 @@
     </filter>
 
     <filter>
+        <filter-name>LocaleFilter</filter-name>
+        <filter-class>edu.gorb.musicstudio.conroller.filter.LocaleFilter</filter-class>
+        <init-param>
+            <param-name>defaultLocale</param-name>
+            <param-value>ru</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
         <filter-name>ResponseCacheFilter</filter-name>
         <filter-class>edu.gorb.musicstudio.conroller.filter.ResponseCacheFilter</filter-class>
     </filter>
@@ -32,6 +41,11 @@
         <filter-name>AccessLevelFilter</filter-name>
         <filter-class>edu.gorb.musicstudio.conroller.filter.AccessLevelFilter</filter-class>
     </filter>
+
+    <filter-mapping>
+        <filter-name>LocaleFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
 
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
@@ -53,9 +67,10 @@
         <location>/WEB-INF/pages/error/error_404.jsp</location>
     </error-page>
 
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type >
-        <location>/WEB-INF/pages/error/error_500.jsp</location>
-    </error-page>
+<!--    TODO-->
+<!--    <error-page>-->
+<!--        <exception-type>java.lang.Throwable</exception-type >-->
+<!--        <location>/WEB-INF/pages/error/error_500.jsp</location>-->
+<!--    </error-page>-->
 
 </web-app>

@@ -2,6 +2,7 @@ package edu.gorb.musicstudio.conroller.command.impl;
 
 import edu.gorb.musicstudio.conroller.command.*;
 import edu.gorb.musicstudio.entity.User;
+import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
 import edu.gorb.musicstudio.model.service.UserService;
@@ -22,13 +23,21 @@ public class LoginCommand implements Command {
         UserService service = ServiceProvider.getInstance().getUserService();
         try {
             Optional<User> user = service.findRegisteredUser(login, password);
-            if (user.isPresent()) {
-                request.getSession().setAttribute(SessionAttribute.USER, user.get());
-                return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT); //FIXME change to personal page
-            } else {
+            if (user.isEmpty()) {
                 request.setAttribute(RequestAttribute.IS_ERROR, true);
+                request.setAttribute(RequestAttribute.ERROR_KEY, "login_page.error_message");
                 return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
             }
+
+            if (user.get().getStatus() == UserStatus.EMAIL_NOT_CONFIRMED) {
+                request.setAttribute(RequestAttribute.IS_ERROR, true);
+                request.setAttribute(RequestAttribute.ERROR_KEY, "login_page.email_error");
+                return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
+            }
+
+            request.getSession().setAttribute(SessionAttribute.USER, user.get());
+            return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT); //FIXME change to personal page
+
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e.getMessage());
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);

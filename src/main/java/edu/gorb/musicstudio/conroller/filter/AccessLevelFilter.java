@@ -28,11 +28,11 @@ public class AccessLevelFilter implements Filter {
         availableCommands = new EnumMap<>(UserRole.class);
         guestOnlyAvailableCommands = EnumSet.of(LOGIN, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE);
         availableCommands.put(UserRole.GUEST,
-                List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE));
+                List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE, CONFIRM_EMAIL));
         availableCommands.put(UserRole.STUDENT,
-                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
+                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL));
         availableCommands.put(UserRole.ADMIN,
-                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE));
+                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL));
     }
 
     @Override
@@ -41,10 +41,10 @@ public class AccessLevelFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpServletRequest.getSession();
         UserRole role;
-        if (session.getAttribute(SessionAttribute.USER) == null) { // TODO is type check required
+        User user = (User) session.getAttribute(SessionAttribute.USER);
+        if (user == null) {
             role = UserRole.GUEST;
         } else {
-            User user = (User) session.getAttribute(SessionAttribute.USER);
             role = user.getRole();
         }
 

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.locale == null ? 'ru_RU' : sessionScope.locale}" scope="session"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent" var="rb" />
 
 <footer class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,9 +31,9 @@
             </div>
         </div>
         <div class="navbar-nav">
-            <a class="nav-link fw-bold" aria-current="page" href="${pageContext.request.contextPath}/controller?command=change_language&lang=en_EN">En</a>
+            <a class="nav-link fw-bold" aria-current="page" href="${pageContext.request.contextPath}/controller?command=change_language&lang=en">En</a>
             <span class="nav-link disabled"> | </span>
-            <a class="nav-link ml-5 fw-bold" aria-current="page" href="${pageContext.request.contextPath}/controller?command=change_language&lang=ru_RU">Рус</a>
+            <a class="nav-link ml-5 fw-bold" aria-current="page" href="${pageContext.request.contextPath}/controller?command=change_language&lang=ru">Рус</a>
         </div>
         <div>
             <span class="copyright"> &#169 2021 Copyright: MuzShock.com </span>

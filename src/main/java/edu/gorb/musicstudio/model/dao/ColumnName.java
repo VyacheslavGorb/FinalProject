@@ -12,6 +12,14 @@ public class ColumnName {
     public static final String USER_STATUS = "user_status";
     public static final String USER_ROLE = "user_role";
 
+    /*User tokens table*/
+
+    public static final String TOKEN_ID = "id_token";
+    public static final String TOKEN_USER_ID = "id_user";
+    public static final String TOKEN = "token";
+    public static final String TOKEN_TIMESTAMP = "timestamp";
+
+
     /*Comments table*/
     public static final String COMMENT_ID = "id_comment";
     public static final String COMMENT_STUDENT_ID = "id_student";

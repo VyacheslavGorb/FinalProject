@@ -6,6 +6,8 @@
     justify-content: center;
     background-image: url("../pic/login_image.jpg");
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .login-inner{

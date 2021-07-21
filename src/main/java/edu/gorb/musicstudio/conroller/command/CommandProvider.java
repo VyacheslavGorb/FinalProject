@@ -20,6 +20,8 @@ public class CommandProvider {
         commands.put(CHANGE_LANGUAGE, new ChangeLanguageCommand());
         commands.put(SIGN_UP, new SignUpCommand());
         commands.put(GO_TO_SIGN_UP_PAGE, new GoToSignUpPage());
+        commands.put(CONFIRM_EMAIL, new ConfirmEmailCommand());
+
     }
 
     private static class CommandProviderHolder {

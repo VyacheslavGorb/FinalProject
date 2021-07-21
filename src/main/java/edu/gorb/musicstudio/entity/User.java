@@ -1,8 +1,9 @@
 package edu.gorb.musicstudio.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User extends AbstractEntity {
+public class User extends AbstractEntity implements Serializable {
     private String login;
     private String password;
     private String name;
@@ -102,8 +103,16 @@ public class User extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                super.hashCode(), login, password, name, surname, patronymic, email, role, status);
+        int result = super.hashCode();
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (patronymic != null ? patronymic.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -123,8 +132,6 @@ public class User extends AbstractEntity {
     }
 
     public static class Builder {
-        private static final String DEFAULT_PHONE_NUMBER_VALUE = "";
-
         private long userId;
         private String login;
         private String password;

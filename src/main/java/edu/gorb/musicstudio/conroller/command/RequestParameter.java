@@ -11,6 +11,9 @@ public class RequestParameter {
     public static final String PASSWORD_REPEAT = "password_repeat";
     public static final String EMAIL = "email";
     public static final String USER_ROLE = "user_role";
+    public static final String TOKEN = "token";
+    public static final String ID = "id";
+
 
     private RequestParameter() {
     }

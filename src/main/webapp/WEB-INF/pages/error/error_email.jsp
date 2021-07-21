@@ -20,12 +20,16 @@
 <jsp:include page="../parts/header.jsp" flush="true"/>
 <div class="error_page_outer">
     <div class="error_page_inner">
-        <h1 class="error_message error_message_main display-3"><fmt:message key="error.main_message"
-                                                                            bundle="${rb}"/></h1>
+        <h1 class="error_message error_message_main fs-1"><fmt:message key="error.email_not_confirmed.main_message"
+                                                                       bundle="${rb}"/></h1>
         <p class="error_message fs-4 mt-3">
-            <fmt:message key="${requestScope.error_key}" bundle="${rb}"/>.
-            <a class="home_link" href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message key="error.return_to_home"
-                                                                                                                     bundle="${rb}"/></a>
+            <fmt:message key="error.email_not_confirmed.submessage" bundle="${rb}"/>
+            <a class="send_link" href="${pageContext.request.contextPath}/controller?command=send_"><fmt:message
+                    key="error.email_not_confirmed.send_again" bundle="${rb}"/></a>
+            <br>
+            <br>
+            <a class="home_link" href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message
+                    key="error.return_to_home" bundle="${rb}"/></a>
         </p>
     </div>
 </div>

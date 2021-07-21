@@ -5,15 +5,18 @@ import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserRole;
 import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.exception.ServiceException;
+import edu.gorb.musicstudio.model.service.MailService;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
 import edu.gorb.musicstudio.model.service.UserService;
+import edu.gorb.musicstudio.validator.FormValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-public class SignUpCommand implements Command { //TODO for all roles
+public class SignUpCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
@@ -27,8 +30,7 @@ public class SignUpCommand implements Command { //TODO for all roles
         String patronymic = request.getParameter(RequestParameter.PATRONYMIC);
         String email = request.getParameter(RequestParameter.EMAIL);
 
-        UserService service = ServiceProvider.getInstance().getUserService();
-        boolean isValidRequest = service.areStudentSignUpParametersValid(
+        boolean isValidRequest = FormValidator.areSignUpParametersValid(
                 userRoleString, login, password, passwordRepeated, name, surname, patronymic, email);
 
         if (!isValidRequest) {
@@ -38,8 +40,12 @@ public class SignUpCommand implements Command { //TODO for all roles
             return new CommandResult(PagePath.SIGN_UP_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        UserService userService = serviceProvider.getUserService();
+        MailService mailService = serviceProvider.getMailService();
+
         try {
-            if (!service.isLoginAvailableForNewUser(login)) {
+            if (!userService.isLoginAvailableForNewUser(login)) {
                 logger.log(Level.DEBUG, "Login already exists");
                 request.setAttribute(RequestAttribute.IS_ERROR, true);
                 request.setAttribute(RequestAttribute.ERROR_KEY, "signup.error.login_not_available");
@@ -52,7 +58,7 @@ public class SignUpCommand implements Command { //TODO for all roles
         }
 
         try {
-            if (!service.isEmailAvailableForNewUser(email)) {
+            if (!userService.isEmailAvailableForNewUser(email)) {
                 logger.log(Level.DEBUG, "Email already exists");
                 request.setAttribute(RequestAttribute.IS_ERROR, true);
                 request.setAttribute(RequestAttribute.ERROR_KEY, "signup.error.email_not_available");
@@ -67,15 +73,26 @@ public class SignUpCommand implements Command { //TODO for all roles
 
         User user;
         try {
-            user = service.registerUser(UserRole.valueOf(userRoleString), login,
-                    password, name, surname, patronymic, email, UserStatus.ACTIVE);
+            user = userService.registerUser(UserRole.valueOf(userRoleString), login,
+                    password, name, surname, patronymic, email, UserStatus.EMAIL_NOT_CONFIRMED);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error during user registration {}",
                     e.getMessage());
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
-        request.getSession().setAttribute(SessionAttribute.USER, user);
-        return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT); //FIXME change to personal page
+
+        HttpSession session = request.getSession();
+        String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
+
+        try {
+            String token = userService.createUserToken(user);
+            mailService.sendSignUpConfirmation(user.getId(), email, token, locale);
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, "Error while sending email: {}", e.getMessage());
+            return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
+        }
+
+        return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
     }
 }

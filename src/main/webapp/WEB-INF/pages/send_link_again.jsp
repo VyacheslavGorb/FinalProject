@@ -41,12 +41,7 @@
                 <input type="text" class="form-control" id="login" name="login" pattern="[A-Za-z][0-9a-zA-Z]{2,19}"
                        title="<fmt:message key="login_page.login_hint" bundle='${rb}'/>" required>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label"><fmt:message key="login_page.password" bundle='${rb}'/></label>
-                <input type="password" class="form-control" id="password" name="password" required
-                       pattern="[0-9a-zA-Z]{8,20}"
-                       title="<fmt:message key="login_page.password_hint" bundle='${rb}'/>">
-            </div>
+
             <button type="submit" class="btn btn-success mt-2"><fmt:message key="login_page.login_btn"
                                                                             bundle='${rb}'/></button>
             <a href="${pageContext.request.contextPath}/controller?command=go_to_sign_up_page" type="button"

@@ -7,8 +7,8 @@ import javax.servlet.http.HttpSession;
 
 public class ChangeLanguageCommand implements Command {
     private static final String REDIRECT_TEMPLATE = "/controller?command=";
-    private static final String RUSSIAN_LOCALE = "ru_RU";
-    private static final String ENGLISH_LOCALE = "en_EN";
+    private static final String RUSSIAN_LOCALE = "ru";
+    private static final String ENGLISH_LOCALE = "en";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
@@ -25,5 +25,3 @@ public class ChangeLanguageCommand implements Command {
         return new CommandResult(REDIRECT_TEMPLATE + command, CommandResult.RoutingType.REDIRECT);
     }
 }
-
-//TODO Error or do nothing

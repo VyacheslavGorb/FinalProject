@@ -60,7 +60,12 @@ public class Comment extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), studentId, teacherId, content, dateTime);
+        int result = super.hashCode();
+        result = 31 * result + (int) (studentId ^ (studentId >>> 32));
+        result = 31 * result + (int) (teacherId ^ (teacherId >>> 32));
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
+        return result;
     }
 
     @Override
