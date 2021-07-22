@@ -139,10 +139,32 @@ public class UserServiceImpl implements UserService {
                 throw new ServiceException("User with id " + userId + " not found");
             }
             UserStatus updatedStatus =
-                    user.get().getRole() == UserRole.GUEST ? UserStatus.ACTIVE : UserStatus.WAITING_FOR_APPROVEMENT;
+                    user.get().getRole() == UserRole.STUDENT ? UserStatus.ACTIVE : UserStatus.WAITING_FOR_APPROVEMENT;
             userDao.updateUserStatus(userId, updatedStatus);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while updating user status: {}", e.getMessage());
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<User> findUserByLogin(String login) throws ServiceException {
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        try{
+            return userDao.findUserByLogin(login);
+        }catch (DaoException e){
+            logger.log(Level.ERROR, "Error while searching for user with login: {}. {}", login, e.getMessage());
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Optional<User> findUserById(Long id) throws ServiceException {
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        try{
+            return userDao.findEntityById(id);
+        }catch (DaoException e){
+            logger.log(Level.ERROR, "Error while searching for user with id: {}. {}", id, e.getMessage());
             throw new ServiceException(e);
         }
     }

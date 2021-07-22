@@ -1,6 +1,8 @@
 package edu.gorb.musicstudio.conroller.command.impl;
 
 import edu.gorb.musicstudio.conroller.command.*;
+import edu.gorb.musicstudio.entity.User;
+import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.entity.UserToken;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
@@ -21,16 +23,16 @@ public class ConfirmEmailCommand implements Command {
         String userIdParameter = request.getParameter(RequestParameter.ID);
 
         if (tokenParameter == null || userIdParameter == null) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link"); //TODO
-            return new CommandResult(PagePath.ERROR_EMAIL_PAGE, CommandResult.RoutingType.FORWARD);
+            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link");
+            return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
         long userId;
         try {
             userId = Long.parseLong(userIdParameter);
         } catch (IllegalArgumentException e) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link"); //TODO
-            return new CommandResult(PagePath.ERROR_EMAIL_PAGE, CommandResult.RoutingType.FORWARD);
+            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link");
+            return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
         UserService userService = ServiceProvider.getInstance().getUserService();
@@ -39,13 +41,23 @@ public class ConfirmEmailCommand implements Command {
         try {
             userToken = userService.findValidToken(tokenParameter, userId);
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error while searching for user token: {}", e.getMessage());
-            return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
+            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link");
+            return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
         if (userToken.isEmpty()) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link"); //TODO
             return new CommandResult(PagePath.ERROR_EMAIL_PAGE, CommandResult.RoutingType.FORWARD);
+        }
+
+        try{
+            Optional<User> userOptional = userService.findUserById(userId);
+            if(userOptional.get().getStatus() != UserStatus.EMAIL_NOT_CONFIRMED){ // userOptional always contains value
+                request.setAttribute(RequestAttribute.ERROR_KEY, "error.email_already_confirmed");
+                return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
+            }
+        }catch (ServiceException e){
+            logger.log(Level.ERROR, "Error while searching for user with id {}", userId);
+            return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
         try {
@@ -55,6 +67,6 @@ public class ConfirmEmailCommand implements Command {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
-        return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
+        return new CommandResult(PagePath.INFO_EMAIL_CONFIRMED_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
     }
 }

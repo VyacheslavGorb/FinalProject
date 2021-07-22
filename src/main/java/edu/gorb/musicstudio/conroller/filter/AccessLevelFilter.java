@@ -28,11 +28,16 @@ public class AccessLevelFilter implements Filter {
         availableCommands = new EnumMap<>(UserRole.class);
         guestOnlyAvailableCommands = EnumSet.of(LOGIN, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE);
         availableCommands.put(UserRole.GUEST,
-                List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE, CONFIRM_EMAIL));
+                List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE,
+                        CONFIRM_EMAIL, GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN, GO_TO_EMAIL_SENT_PAGE,
+                        GO_TO_EMAIL_CONFIRMED_PAGE));
         availableCommands.put(UserRole.STUDENT,
-                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL));
+                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
+                        GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN, GO_TO_EMAIL_SENT_PAGE,
+                        GO_TO_EMAIL_CONFIRMED_PAGE));
         availableCommands.put(UserRole.ADMIN,
-                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL));
+                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
+                        GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN, GO_TO_EMAIL_SENT_PAGE, GO_TO_EMAIL_CONFIRMED_PAGE));
     }
 
     @Override
@@ -49,20 +54,38 @@ public class AccessLevelFilter implements Filter {
         }
 
         List<CommandType> availableCommandsForCurrentUser = availableCommands.get(role);
-        CommandType commandType = extractRequestCommandType(httpServletRequest);
+        String commandString = httpServletRequest.getParameter(RequestParameter.COMMAND);
 
-        if (commandType != CHANGE_LANGUAGE) {
-            session.setAttribute(SessionAttribute.PREV_COMMAND, commandType.toString().toLowerCase(Locale.ROOT));
+        CommandType currentCommand = convertParameterToCommand(commandString);
+        CommandType previousCommand = convertParameterToCommand((String) session.getAttribute(SessionAttribute.PREV_COMMAND));
+
+        if (currentCommand == GO_TO_EMAIL_CONFIRMED_PAGE
+                && previousCommand != CONFIRM_EMAIL
+                && previousCommand != GO_TO_EMAIL_CONFIRMED_PAGE) {
+            httpServletRequest.getRequestDispatcher(PagePath.ERROR_404_PAGE).forward(servletRequest, servletResponse);
+            return;
         }
 
-        logger.log(Level.DEBUG, "Role: {} | Command: {}", role, commandType);
-        if (role != UserRole.GUEST && guestOnlyAvailableCommands.contains(commandType)) {
+        if (currentCommand == GO_TO_EMAIL_SENT_PAGE
+                && previousCommand != SIGN_UP
+                && previousCommand != SEND_EMAIL_AGAIN
+                && previousCommand != GO_TO_EMAIL_SENT_PAGE) {
+            httpServletRequest.getRequestDispatcher(PagePath.ERROR_404_PAGE).forward(servletRequest, servletResponse);
+            return;
+        }
+
+        if (currentCommand != CHANGE_LANGUAGE) { //todo
+            session.setAttribute(SessionAttribute.PREV_COMMAND, currentCommand.toString().toLowerCase(Locale.ROOT));
+        }
+
+        logger.log(Level.DEBUG, "Role: {} | Command: {}", role, currentCommand);
+        if (role != UserRole.GUEST && guestOnlyAvailableCommands.contains(currentCommand)) {
             httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, "error.already_logged_in");
             httpServletRequest.getRequestDispatcher(PagePath.ERROR_PAGE).forward(servletRequest, servletResponse);
             return;
         }
 
-        if (!availableCommandsForCurrentUser.contains(commandType)) {
+        if (!availableCommandsForCurrentUser.contains(currentCommand)) {
             httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, "error.not_enough_rights");
             httpServletRequest.getRequestDispatcher(PagePath.ERROR_PAGE).forward(servletRequest, servletResponse);
             return;
@@ -71,13 +94,12 @@ public class AccessLevelFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private CommandType extractRequestCommandType(HttpServletRequest httpServletRequest) {
-        CommandType commandType;
-        String commandString = httpServletRequest.getParameter(RequestParameter.COMMAND);
+    private CommandType convertParameterToCommand(String commandString) {
         if (commandString == null) {
             return DEFAULT;
         }
 
+        CommandType commandType;
         try {
             commandType = CommandType.valueOf(commandString.toUpperCase());
         } catch (IllegalArgumentException e) {

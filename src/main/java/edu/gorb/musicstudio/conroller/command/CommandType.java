@@ -1,5 +1,7 @@
 package edu.gorb.musicstudio.conroller.command;
 
+import javax.servlet.http.HttpServletRequest;
+
 public enum CommandType {
     LOGIN,
     LOGOUT,
@@ -10,5 +12,9 @@ public enum CommandType {
     CHANGE_LANGUAGE,
     SIGN_UP,
     GO_TO_SIGN_UP_PAGE,
-    CONFIRM_EMAIL
+    CONFIRM_EMAIL,
+    GO_TO_SEND_EMAIL_AGAIN_PAGE,
+    SEND_EMAIL_AGAIN,
+    GO_TO_EMAIL_CONFIRMED_PAGE,
+    GO_TO_EMAIL_SENT_PAGE
 }

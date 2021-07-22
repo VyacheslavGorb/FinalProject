@@ -18,9 +18,13 @@ import javax.servlet.http.HttpSession;
 
 public class SignUpCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private static final String POST_HTTP_METHOD = "POST";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
+        if(!request.getMethod().equals(POST_HTTP_METHOD)){
+            return new CommandResult(PagePath.SIGN_UP_PAGE, CommandResult.RoutingType.FORWARD);
+        }
         String userRoleString = request.getParameter(RequestParameter.USER_ROLE);
         String login = request.getParameter(RequestParameter.LOGIN);
         String password = request.getParameter(RequestParameter.PASSWORD);
@@ -93,6 +97,6 @@ public class SignUpCommand implements Command {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
-        return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
+        return new CommandResult(PagePath.INFO_EMAIL_SENT_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
     }
 }

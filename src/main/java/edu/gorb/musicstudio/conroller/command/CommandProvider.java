@@ -1,6 +1,7 @@
 package edu.gorb.musicstudio.conroller.command;
 
 import edu.gorb.musicstudio.conroller.command.impl.*;
+import edu.gorb.musicstudio.conroller.command.impl.go.*;
 
 import java.util.EnumMap;
 
@@ -19,9 +20,12 @@ public class CommandProvider {
         commands.put(GO_TO_LOGIN_PAGE, new GoToLoginPageCommand());
         commands.put(CHANGE_LANGUAGE, new ChangeLanguageCommand());
         commands.put(SIGN_UP, new SignUpCommand());
-        commands.put(GO_TO_SIGN_UP_PAGE, new GoToSignUpPage());
+        commands.put(GO_TO_SIGN_UP_PAGE, new GoToSignUpPageCommand());
         commands.put(CONFIRM_EMAIL, new ConfirmEmailCommand());
-
+        commands.put(GO_TO_SEND_EMAIL_AGAIN_PAGE, new GoToSendEmailAgainPageCommand());
+        commands.put(SEND_EMAIL_AGAIN, new SendEmailAgainCommand());
+        commands.put(GO_TO_EMAIL_SENT_PAGE, new GoToEmailSentPageCommand());
+        commands.put(GO_TO_EMAIL_CONFIRMED_PAGE, new GoToEmailConfirmedPageCommand());
     }
 
     private static class CommandProviderHolder {

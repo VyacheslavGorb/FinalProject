@@ -24,4 +24,8 @@ public interface UserService {
     public Optional<UserToken> findValidToken(String token, long userId) throws ServiceException;
 
     void confirmEmail(long userId) throws ServiceException;
+
+    Optional<User> findUserByLogin(String login) throws ServiceException;
+
+    Optional<User> findUserById(Long id) throws ServiceException;
 }
