@@ -22,7 +22,7 @@ public class SignUpCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        if(!request.getMethod().equals(POST_HTTP_METHOD)){
+        if (!request.getMethod().equals(POST_HTTP_METHOD)) {
             return new CommandResult(PagePath.SIGN_UP_PAGE, CommandResult.RoutingType.FORWARD);
         }
         String userRoleString = request.getParameter(RequestParameter.USER_ROLE);
@@ -40,7 +40,7 @@ public class SignUpCommand implements Command {
         if (!isValidRequest) {
             logger.log(Level.DEBUG, "Invalid request parameters");
             request.setAttribute(RequestAttribute.IS_ERROR, true);
-            request.setAttribute(RequestAttribute.ERROR_KEY, "signup.error.illegal_request");
+            request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.SIGNUP_INVALID_REQUEST);
             return new CommandResult(PagePath.SIGN_UP_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
@@ -52,7 +52,7 @@ public class SignUpCommand implements Command {
             if (!userService.isLoginAvailableForNewUser(login)) {
                 logger.log(Level.DEBUG, "Login already exists");
                 request.setAttribute(RequestAttribute.IS_ERROR, true);
-                request.setAttribute(RequestAttribute.ERROR_KEY, "signup.error.login_not_available");
+                request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.SIGNUP_LOGIN_NOT_AVAILABLE);
                 return new CommandResult(PagePath.SIGN_UP_PAGE, CommandResult.RoutingType.FORWARD);
             }
         } catch (ServiceException e) {
@@ -65,7 +65,7 @@ public class SignUpCommand implements Command {
             if (!userService.isEmailAvailableForNewUser(email)) {
                 logger.log(Level.DEBUG, "Email already exists");
                 request.setAttribute(RequestAttribute.IS_ERROR, true);
-                request.setAttribute(RequestAttribute.ERROR_KEY, "signup.error.email_not_available");
+                request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.SIGNUP_EMAIL_NOT_AVAILABLE);
                 return new CommandResult(PagePath.SIGN_UP_PAGE, CommandResult.RoutingType.FORWARD);
             }
         } catch (ServiceException e) {
@@ -89,13 +89,14 @@ public class SignUpCommand implements Command {
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
 
-        try {
-            String token = userService.createUserToken(user);
-            mailService.sendSignUpConfirmation(user.getId(), email, token, locale);
-        } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error while sending email: {}", e.getMessage());
-            return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
-        }
+        new Thread(() -> { //todo is required
+            try {
+                String token = userService.createUserToken(user);
+                mailService.sendSignUpConfirmation(user.getId(), email, token, locale);
+            } catch (ServiceException e) {
+                logger.log(Level.ERROR, "Error while sending email: {}", e.getMessage());
+            }
+        }).start();
 
         return new CommandResult(PagePath.INFO_EMAIL_SENT_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
     }

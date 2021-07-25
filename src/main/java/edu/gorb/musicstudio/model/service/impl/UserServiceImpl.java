@@ -150,9 +150,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserByLogin(String login) throws ServiceException {
         UserDao userDao = DaoProvider.getInstance().getUserDao();
-        try{
+        try {
             return userDao.findUserByLogin(login);
-        }catch (DaoException e){
+        } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for user with login: {}. {}", login, e.getMessage());
             throw new ServiceException(e);
         }
@@ -161,9 +161,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserById(Long id) throws ServiceException {
         UserDao userDao = DaoProvider.getInstance().getUserDao();
-        try{
+        try {
             return userDao.findEntityById(id);
-        }catch (DaoException e){
+        } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for user with id: {}. {}", id, e.getMessage());
             throw new ServiceException(e);
         }

@@ -1,16 +1,16 @@
-.carousel-item{
+.carousel-item {
     height: 80vh;
 }
 
-.carousel_image{
+.carousel_image {
     object-fit: scale-down;
 }
 
-.teachers_outer{
+.teachers_outer {
     align-items: center;
 }
 
-.carousel-caption{
+.carousel-caption {
     border-radius: 7px;
     left: 35%;
     right: 35%;

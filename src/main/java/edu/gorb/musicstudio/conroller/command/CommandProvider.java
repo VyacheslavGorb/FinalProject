@@ -28,10 +28,6 @@ public class CommandProvider {
         commands.put(GO_TO_EMAIL_CONFIRMED_PAGE, new GoToEmailConfirmedPageCommand());
     }
 
-    private static class CommandProviderHolder {
-        private static final CommandProvider instance = new CommandProvider();
-    }
-
     public static CommandProvider getInstance() {
         return CommandProviderHolder.instance;
     }
@@ -51,6 +47,10 @@ public class CommandProvider {
             commandType = DEFAULT;
         }
         return commands.get(commandType);
+    }
+
+    private static class CommandProviderHolder {
+        private static final CommandProvider instance = new CommandProvider();
     }
 
 }

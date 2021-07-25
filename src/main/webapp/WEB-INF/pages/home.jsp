@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
-<fmt:setBundle basename="pagecontent" var="rb" />
+<fmt:setBundle basename="pagecontent" var="rb"/>
 
 <!DOCTYPE html>
 <html lang="${sessionScope.locale}">
@@ -31,9 +31,9 @@
         <div class="carousel-item active">
             <img src="pic/slide1.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h5 class="fs-1 mb-4"><fmt:message key="slide.first.label" bundle="${ rb }" /></h5>
-                <p class="fs-5"><fmt:message key="slide.first.content" bundle="${ rb }" /></p>
-                <a class="btn btn-success w-50" href="#"><fmt:message key="header.aboutus" bundle="${rb}" /></a>
+                <h5 class="fs-1 mb-4"><fmt:message key="slide.first.label" bundle="${ rb }"/></h5>
+                <p class="fs-5"><fmt:message key="slide.first.content" bundle="${ rb }"/></p>
+                <a class="btn btn-success w-50" href="#"><fmt:message key="header.aboutus" bundle="${rb}"/></a>
             </div>
         </div>
         <div class="carousel-item">

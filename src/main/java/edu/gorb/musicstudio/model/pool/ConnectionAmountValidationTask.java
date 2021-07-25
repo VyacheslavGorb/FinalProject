@@ -19,7 +19,7 @@ class ConnectionAmountValidationTask extends TimerTask {
     private int poolSize;
 
     ConnectionAmountValidationTask(Lock connectionLock, Deque<ProxyConnection> freeConnections,
-                                          Deque<ProxyConnection> givenAwayConnections, int poolSize) {
+                                   Deque<ProxyConnection> givenAwayConnections, int poolSize) {
         this.connectionLock = connectionLock;
         this.freeConnections = freeConnections;
         this.givenAwayConnections = givenAwayConnections;

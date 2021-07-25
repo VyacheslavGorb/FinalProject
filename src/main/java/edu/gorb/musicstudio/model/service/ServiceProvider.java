@@ -10,10 +10,6 @@ public class ServiceProvider {
     private ServiceProvider() {
     }
 
-    private static class ServiceProviderHolder {
-        private static final ServiceProvider instance = new ServiceProvider();
-    }
-
     public static ServiceProvider getInstance() {
         return ServiceProviderHolder.instance;
     }
@@ -24,5 +20,9 @@ public class ServiceProvider {
 
     public MailService getMailService() {
         return mailService;
+    }
+
+    private static class ServiceProviderHolder {
+        private static final ServiceProvider instance = new ServiceProvider();
     }
 }

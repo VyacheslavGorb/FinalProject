@@ -2,10 +2,8 @@ package edu.gorb.musicstudio.model.dao;
 
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserStatus;
-import edu.gorb.musicstudio.entity.UserToken;
 import edu.gorb.musicstudio.exception.DaoException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

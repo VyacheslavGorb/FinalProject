@@ -10,7 +10,7 @@ public class FormValidator {
     private static final String EMAIL_REGEX = "[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*";
     private static final int MAX_EMAIL_LENGTH = 60;
 
-    private FormValidator(){
+    private FormValidator() {
     }
 
     public static boolean areSignUpParametersValid(String userRoleString, String login, String password,

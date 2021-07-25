@@ -1,9 +1,9 @@
 package edu.gorb.musicstudio.model.dao.impl;
 
-import edu.gorb.musicstudio.model.dao.CommentDao;
-import edu.gorb.musicstudio.model.dao.JdbcHelper;
 import edu.gorb.musicstudio.entity.Comment;
 import edu.gorb.musicstudio.exception.DaoException;
+import edu.gorb.musicstudio.model.dao.CommentDao;
+import edu.gorb.musicstudio.model.dao.JdbcHelper;
 import edu.gorb.musicstudio.model.dao.mapper.impl.CommentRowMapperImpl;
 import edu.gorb.musicstudio.model.pool.ConnectionPool;
 
@@ -12,36 +12,30 @@ import java.util.Optional;
 
 public class CommentDaoImpl implements CommentDao {
 
-    private static final String SELECT_ALL_COMMENTS =
-            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
-                    "FROM comments";
-
-    private static final String SELECT_COMMENT_BY_ID =
-            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
-                    "FROM comments\n" +
-                    "WHERE id_comment=?";
-
-    private static final String SELECT_COMMENTS_BY_TEACHER_ID =
-            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
-                    "FROM comments\n" +
-                    "WHERE id_teacher=?";
-
-    private static final String SELECT_COMMENTS_BY_STUDENT_ID =
-            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
-                    "FROM comments\n" +
-                    "WHERE id_student=?";
-
     public static final String INSERT_NEW_COMMENT =
             "INSERT INTO comments (id_student, id_teacher, content, date_time) VALUE (?, ?, ?, ?)";
-
     public static final String UPDATE_COMMENT = "UPDATE comments\n" +
             "SET id_student=?,\n" +
             "    id_teacher=?,\n" +
             "    content=?,\n" +
             "    date_time=?\n" +
             "WHERE id_comment = ?";
-
-    private JdbcHelper<Comment> jdbcHelper;
+    private static final String SELECT_ALL_COMMENTS =
+            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
+                    "FROM comments";
+    private static final String SELECT_COMMENT_BY_ID =
+            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
+                    "FROM comments\n" +
+                    "WHERE id_comment=?";
+    private static final String SELECT_COMMENTS_BY_TEACHER_ID =
+            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
+                    "FROM comments\n" +
+                    "WHERE id_teacher=?";
+    private static final String SELECT_COMMENTS_BY_STUDENT_ID =
+            "SELECT id_comment, id_student, id_teacher, content, date_time, rating\n" +
+                    "FROM comments\n" +
+                    "WHERE id_student=?";
+    private final JdbcHelper<Comment> jdbcHelper;
 
     public CommentDaoImpl() {
         jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new CommentRowMapperImpl());

@@ -18,7 +18,7 @@ import java.util.Locale;
 
 import static edu.gorb.musicstudio.conroller.command.CommandType.*;
 
-public class AccessLevelFilter implements Filter {
+public class PageAccessFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
     private EnumMap<UserRole, List<CommandType>> availableCommands;
     private EnumSet<CommandType> guestOnlyAvailableCommands;
@@ -59,6 +59,8 @@ public class AccessLevelFilter implements Filter {
         CommandType currentCommand = convertParameterToCommand(commandString);
         CommandType previousCommand = convertParameterToCommand((String) session.getAttribute(SessionAttribute.PREV_COMMAND));
 
+        logger.log(Level.DEBUG, "Role: {} | Command: {}", role, currentCommand);
+
         if (currentCommand == GO_TO_EMAIL_CONFIRMED_PAGE
                 && previousCommand != CONFIRM_EMAIL
                 && previousCommand != GO_TO_EMAIL_CONFIRMED_PAGE) {
@@ -74,19 +76,18 @@ public class AccessLevelFilter implements Filter {
             return;
         }
 
-        if (currentCommand != CHANGE_LANGUAGE) { //todo
+        if (currentCommand != CHANGE_LANGUAGE) {
             session.setAttribute(SessionAttribute.PREV_COMMAND, currentCommand.toString().toLowerCase(Locale.ROOT));
         }
 
-        logger.log(Level.DEBUG, "Role: {} | Command: {}", role, currentCommand);
         if (role != UserRole.GUEST && guestOnlyAvailableCommands.contains(currentCommand)) {
-            httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, "error.already_logged_in");
+            httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.ALREADY_LOGGED_IN);
             httpServletRequest.getRequestDispatcher(PagePath.ERROR_PAGE).forward(servletRequest, servletResponse);
             return;
         }
 
         if (!availableCommandsForCurrentUser.contains(currentCommand)) {
-            httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, "error.not_enough_rights");
+            httpServletRequest.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.NOT_ENOUGH_RIGHTS);
             httpServletRequest.getRequestDispatcher(PagePath.ERROR_PAGE).forward(servletRequest, servletResponse);
             return;
         }

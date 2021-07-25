@@ -21,22 +21,17 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
-
-    private static ConnectionPool instance;
-    private static AtomicBoolean isInitialised = new AtomicBoolean(false);
-
     private static final int DEFAULT_POOL_SIZE = 32;
     private static final int DEFAULT_MILLISECONDS_DELAY = 1000;
     private static final int DEFAULT_MILLISECONDS_INTERVAL = 1000;
     private static final boolean DEFAULT_IS_VALIDATION_TASK_USED = false;
-
     private static final String PROPERTY_FILE_PATH = "properties/pool.properties";
     private static final String IS_VALIDATION_TASK_USED_PROPERTY = "is_connection_amount_validation_task_used";
     private static final String TASK_DELAY_PROPERTY = "task_delay";
     private static final String TASK_INTERVAL_PROPERTY = "task_interval";
     private static final String POOL_SIZE_PROPERTY = "pool_size";
-
-
+    private static ConnectionPool instance;
+    private static AtomicBoolean isInitialised = new AtomicBoolean(false);
     private Deque<ProxyConnection> freeConnections;
     private Deque<ProxyConnection> givenAwayConnections;
     private Lock connectionLock;

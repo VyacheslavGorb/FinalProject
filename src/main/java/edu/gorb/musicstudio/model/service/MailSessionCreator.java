@@ -25,12 +25,12 @@ public class MailSessionCreator {
         userName = configProperties.getProperty("mail.user.name");
         userPassword = configProperties.getProperty("mail.user.password");
 
-        if(userName == null || userPassword == null){
+        if (userName == null || userPassword == null) {
             logger.log(Level.ERROR, "Wrong mail authentication properties");
             throw new ServiceException("Wrong mail authentication properties");
         }
 
-        if(smtpHost == null || smtpPort == null){
+        if (smtpHost == null || smtpPort == null) {
             smtpHost = DEFAULT_HOST;
             smtpPort = DEFAULT_PORT;
         }

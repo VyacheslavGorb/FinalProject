@@ -6,6 +6,6 @@
     <title></title>
 </head>
 <body>
-    <jstl:redirect url="/controller?command=home_page" />
+<jstl:redirect url="/controller?command=home_page"/>
 </body>
 </html>

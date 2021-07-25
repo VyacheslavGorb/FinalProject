@@ -2,15 +2,12 @@ package edu.gorb.musicstudio.model.dao.impl;
 
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserStatus;
-import edu.gorb.musicstudio.entity.UserToken;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.model.dao.JdbcHelper;
 import edu.gorb.musicstudio.model.dao.UserDao;
 import edu.gorb.musicstudio.model.dao.mapper.impl.UserRowMapperImpl;
 import edu.gorb.musicstudio.model.pool.ConnectionPool;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,7 +102,7 @@ public class UserDaoImpl implements UserDao {
             "SET id_user_status = (SELECT us.id_user_status FROM user_statuses us WHERE us.user_status = ?)\n" +
             "WHERE id_user = ?";
 
-    private JdbcHelper<User> jdbcHelper;
+    private final JdbcHelper<User> jdbcHelper;
 
     public UserDaoImpl() {
         jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new UserRowMapperImpl());

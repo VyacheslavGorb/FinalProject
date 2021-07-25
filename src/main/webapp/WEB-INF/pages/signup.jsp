@@ -52,7 +52,8 @@
         </div>
 
 
-        <form class="d-flex flex-column" action="${pageContext.request.contextPath}/controller?command=sign_up" method="post">
+        <form class="d-flex flex-column" action="${pageContext.request.contextPath}/controller?command=sign_up"
+              method="post">
             <div class="mb-3">
                 <label for="role_select" class="form-label"><fmt:message key="signup.role" bundle="${rb}"/></label>
                 <select class="form-select" id="role_select" name="user_role">
@@ -74,7 +75,8 @@
                        title="<fmt:message key="signup.hint.password" bundle="${rb}"/>" name="password">
             </div>
             <div class="mb-3">
-                <label for="password2" class="form-label"><fmt:message key="signup.password_repeated" bundle="${rb}"/></label>
+                <label for="password2" class="form-label"><fmt:message key="signup.password_repeated"
+                                                                       bundle="${rb}"/></label>
                 <input type="password" class="form-control" id="password2" required pattern="[0-9a-zA-Z]{8,20}"
                        title="<fmt:message key="signup.hint.password" bundle="${rb}"/>"
                        name="password_repeat">
@@ -104,9 +106,11 @@
                        pattern="([ЁА-Я][ёа-я]{1,20})|([A-Z][a-z]{1,20})"
                        title="<fmt:message key="signup.hint.name" bundle="${rb}"/>">
             </div>
-            <button id="signup_btn" type="submit" class="btn btn-success mt-2 mb-3"><fmt:message key="signup.btn" bundle="${rb}"/></button>
+            <button id="signup_btn" type="submit" class="btn btn-success mt-2 mb-3"><fmt:message key="signup.btn"
+                                                                                                 bundle="${rb}"/></button>
             <p class="fs-6"><fmt:message key="signup.have_account" bundle="${rb}"/> <a class="login_link"
-                                                 href="${pageContext.request.contextPath}/controller?command=go_to_login_page"><fmt:message key="login_page.login_btn" bundle="${rb}"/></a>
+                                                                                       href="${pageContext.request.contextPath}/controller?command=go_to_login_page"><fmt:message
+                    key="login_page.login_btn" bundle="${rb}"/></a>
             </p>
         </form>
     </div>

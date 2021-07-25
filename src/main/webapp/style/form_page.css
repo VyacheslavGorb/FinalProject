@@ -1,4 +1,4 @@
-.login-outer{
+.login-outer {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -10,12 +10,12 @@
     background-size: cover;
 }
 
-.login-inner{
-    background-color : rgba(255, 255, 255, 0.623);
+.login-inner {
+    background-color: rgba(255, 255, 255, 0.623);
     border-radius: 5px;
     width: 40%;
 }
 
-.copyright{
-    color: rgba(255,255,255,0.8);
+.copyright {
+    color: rgba(255, 255, 255, 0.8);
 }

@@ -12,10 +12,6 @@ public class DaoProvider {
     private DaoProvider() {
     }
 
-    private static class DataProviderHolder {
-        private static final DaoProvider instance = new DaoProvider();
-    }
-
     public static DaoProvider getInstance() {
         return DataProviderHolder.instance;
     }
@@ -30,5 +26,9 @@ public class DaoProvider {
 
     public UserTokenDao getUserTokenDao() {
         return userTokenDao;
+    }
+
+    private static class DataProviderHolder {
+        private static final DaoProvider instance = new DaoProvider();
     }
 }

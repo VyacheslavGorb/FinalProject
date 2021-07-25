@@ -1,4 +1,4 @@
-.error_page_outer{
+.error_page_outer {
     height: 90vh;
     width: 100%;
     display: flex;
@@ -6,7 +6,7 @@
     justify-content: center;
 }
 
-.error_page_inner{
+.error_page_inner {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,23 +14,23 @@
     width: 40%;
 }
 
-.error_code{
+.error_code {
     font-size: 10rem;
     color: #6c757d;
 }
 
-.send_link{
+.send_link {
     color: #6c757d;
 }
 
-.error_message{
+.error_message {
     text-align: center;
 }
 
-.error_message_main{
+.error_message_main {
     font-weight: 400;
 }
 
-.home_link{
+.home_link {
     color: #198754;
 }

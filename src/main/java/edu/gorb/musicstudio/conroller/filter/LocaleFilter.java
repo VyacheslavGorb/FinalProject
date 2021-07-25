@@ -11,7 +11,7 @@ public class LocaleFilter implements Filter {
     private String defaultLocale;
 
     @Override
-    public void init(FilterConfig filterConfig){
+    public void init(FilterConfig filterConfig) {
         defaultLocale = filterConfig.getInitParameter("defaultLocale");
     }
 

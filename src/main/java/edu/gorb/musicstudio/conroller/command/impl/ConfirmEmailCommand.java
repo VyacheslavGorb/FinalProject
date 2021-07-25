@@ -23,7 +23,7 @@ public class ConfirmEmailCommand implements Command {
         String userIdParameter = request.getParameter(RequestParameter.ID);
 
         if (tokenParameter == null || userIdParameter == null) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link");
+            request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.INVALID_ACTIVATION_LINK);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
@@ -31,7 +31,7 @@ public class ConfirmEmailCommand implements Command {
         try {
             userId = Long.parseLong(userIdParameter);
         } catch (IllegalArgumentException e) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link");
+            request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.INVALID_ACTIVATION_LINK);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
@@ -41,7 +41,7 @@ public class ConfirmEmailCommand implements Command {
         try {
             userToken = userService.findValidToken(tokenParameter, userId);
         } catch (ServiceException e) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_activation_link");
+            request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.INVALID_ACTIVATION_LINK);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
@@ -49,13 +49,13 @@ public class ConfirmEmailCommand implements Command {
             return new CommandResult(PagePath.ERROR_EMAIL_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
-        try{
+        try {
             Optional<User> userOptional = userService.findUserById(userId);
-            if(userOptional.get().getStatus() != UserStatus.EMAIL_NOT_CONFIRMED){ // userOptional always contains value
-                request.setAttribute(RequestAttribute.ERROR_KEY, "error.email_already_confirmed");
+            if (userOptional.get().getStatus() != UserStatus.EMAIL_NOT_CONFIRMED) { // userOptional always contains value
+                request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.EMAIL_ALREADY_CONFIRMED);
                 return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
             }
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while searching for user with id {}", userId);
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
         }

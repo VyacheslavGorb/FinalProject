@@ -59,7 +59,7 @@ public class JdbcHelper<T extends AbstractEntity> {
         }
     }
 
-    public int executeInsert(String query, Object... parameters) throws DaoException{
+    public int executeInsert(String query, Object... parameters) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             fillPreparedStatement(statement, parameters);
@@ -75,7 +75,7 @@ public class JdbcHelper<T extends AbstractEntity> {
 
     private void fillPreparedStatement(PreparedStatement statement, Object... parameters) throws SQLException {
         for (int i = 1; i <= parameters.length; i++) {
-            statement.setObject(i, parameters[i-1]);
+            statement.setObject(i, parameters[i - 1]);
         }
     }
 }

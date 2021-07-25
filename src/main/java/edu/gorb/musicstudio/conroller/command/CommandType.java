@@ -1,7 +1,5 @@
 package edu.gorb.musicstudio.conroller.command;
 
-import javax.servlet.http.HttpServletRequest;
-
 public enum CommandType {
     LOGIN,
     LOGOUT,

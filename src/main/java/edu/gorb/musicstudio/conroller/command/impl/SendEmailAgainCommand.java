@@ -22,13 +22,13 @@ public class SendEmailAgainCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        if(!request.getMethod().equals(POST_HTTP_METHOD)){
+        if (!request.getMethod().equals(POST_HTTP_METHOD)) {
             return new CommandResult(PagePath.SEND_EMAIL_AGAIN_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
         String login = request.getParameter(RequestParameter.LOGIN);
         if (login == null) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_request");
+            request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.INVALID_REQUEST);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
@@ -45,27 +45,28 @@ public class SendEmailAgainCommand implements Command {
         }
 
         if (userOptional.isEmpty()) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.invalid_request");
+            request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.INVALID_REQUEST);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
         User user = userOptional.get();
 
         if (user.getStatus() != UserStatus.EMAIL_NOT_CONFIRMED) {
-            request.setAttribute(RequestAttribute.ERROR_KEY, "error.email_already_confirmed");
+            request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.EMAIL_ALREADY_CONFIRMED);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.FORWARD);
         }
 
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(SessionAttribute.LOCALE);
 
-        try {
-            String token = userService.createUserToken(userOptional.get());
-            mailService.sendSignUpConfirmation(user.getId(), user.getEmail(), token, locale);
-        } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error while sending email: {}", e.getMessage());
-            return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
-        }
+        new Thread(() -> {
+            try {
+                String token = userService.createUserToken(user);
+                mailService.sendSignUpConfirmation(user.getId(), user.getEmail(), token, locale);
+            } catch (ServiceException e) {
+                logger.log(Level.ERROR, "Error while sending email: {}", e.getMessage());
+            }
+        }).start();
 
         return new CommandResult(PagePath.INFO_EMAIL_SENT_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
 
