@@ -14,7 +14,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/home.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title>MuzShock - Home</title>
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.home" bundle="${rb}"/></title>
 </head>
 <body>
 <jsp:include page="parts/header.jsp" flush="true"/>
