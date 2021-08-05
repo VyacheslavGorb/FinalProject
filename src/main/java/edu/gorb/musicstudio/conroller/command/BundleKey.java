@@ -12,6 +12,10 @@ public class BundleKey {
     public static final String SIGNUP_EMAIL_NOT_AVAILABLE = "signup.error.email_not_available";
     public static final String NOT_ENOUGH_RIGHTS = "error.not_enough_rights";
     public static final String ALREADY_LOGGED_IN = "error.already_logged_in";
+    public static final String EMAIL_SENT = "info.email_sent";
+    public static final String EMAIL_CONFIRMED = "info.email_confirmed";
+    public static final String INVALID_LOGIN = "error.invalid_login";
+
 
     private BundleKey() {
     }

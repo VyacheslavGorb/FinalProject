@@ -6,7 +6,8 @@ import java.io.IOException;
 
 public class ResponseCacheFilter implements Filter {
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
         httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         httpServletResponse.setHeader("Pragma", "no-cache");

@@ -1,7 +1,6 @@
 package edu.gorb.musicstudio.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class User extends AbstractEntity implements Serializable {
     private String login;
@@ -94,11 +93,17 @@ public class User extends AbstractEntity implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
+
         User user = (User) o;
-        return Objects.equals(login, user.login) && Objects.equals(password, user.password)
-                && Objects.equals(name, user.name) && Objects.equals(surname, user.surname)
-                && Objects.equals(patronymic, user.patronymic) && Objects.equals(email, user.email)
-                && role == user.role && status == user.status;
+
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        if (patronymic != null ? !patronymic.equals(user.patronymic) : user.patronymic != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (role != user.role) return false;
+        return status == user.status;
     }
 
     @Override

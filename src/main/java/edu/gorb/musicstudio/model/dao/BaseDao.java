@@ -6,10 +6,10 @@ import edu.gorb.musicstudio.exception.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface BaseDao<K, T extends AbstractEntity> {
+public interface BaseDao<T extends AbstractEntity> {
     List<T> findAll() throws DaoException;
 
-    Optional<T> findEntityById(K id) throws DaoException;
+    Optional<T> findEntityById(long id) throws DaoException;
 
     int insert(T t) throws DaoException;
 

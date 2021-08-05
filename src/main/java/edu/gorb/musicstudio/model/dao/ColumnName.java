@@ -35,6 +35,8 @@ public class ColumnName {
     public static final String COURSE_PICTURE_PATH = "picture_path";
     public static final String COURSE_PRICE_PER_HOUR = "price_per_hour";
     public static final String COURSE_IS_ACTIVE = "is_active";
+    public static final String COURSE_CATEGORY = "category";
+
 
     /*Lesson schedules table*/
     public static final String LESSON_ID = "id_schedule";

@@ -11,43 +11,41 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private static final String POST_HTTP_METHOD = "POST";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        if (!request.getMethod().equals(POST_HTTP_METHOD)) {
-            return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
-        }
+        HttpSession session = request.getSession();
         String login = request.getParameter(RequestParameter.LOGIN);
         String password = request.getParameter(RequestParameter.PASSWORD);
         UserService service = ServiceProvider.getInstance().getUserService();
         try {
             Optional<User> user = service.findRegisteredUser(login, password);
             if (user.isEmpty()) {
-                request.setAttribute(RequestAttribute.IS_ERROR, true);
-                request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.LOGIN_ERROR);
-                return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
-            }
-
-            if (user.get().getStatus() == UserStatus.EMAIL_NOT_CONFIRMED) {
-                request.setAttribute(RequestAttribute.EMAIL_NOT_CONFIRMED, true);
-                return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
+                session.setAttribute(SessionAttribute.IS_LOGIN_ERROR, true);
+                session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.LOGIN_ERROR);
+                return new CommandResult(PagePath.LOGIN_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
             if (user.get().getStatus() == UserStatus.WAITING_FOR_APPROVEMENT) {
-                request.setAttribute(RequestAttribute.IS_ERROR, true);
-                request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.LOGIN_USER_NOT_APPROVED);
-                return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
+                session.setAttribute(SessionAttribute.IS_LOGIN_ERROR, true);
+                session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.LOGIN_USER_NOT_APPROVED);
+                return new CommandResult(PagePath.LOGIN_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
+            }
+
+            if (user.get().getStatus() == UserStatus.EMAIL_NOT_CONFIRMED) {
+                session.setAttribute(SessionAttribute.EMAIL_NOT_CONFIRMED, true);
+                return new CommandResult(PagePath.LOGIN_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
             if (user.get().getStatus() == UserStatus.INACTIVE) {
-                request.setAttribute(RequestAttribute.IS_ERROR, true);
-                request.setAttribute(RequestAttribute.ERROR_KEY, BundleKey.LOGIN_USER_BLOCKED);
-                return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
+                session.setAttribute(SessionAttribute.IS_LOGIN_ERROR, true);
+                session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.LOGIN_USER_BLOCKED);
+                return new CommandResult(PagePath.LOGIN_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
             request.getSession().setAttribute(SessionAttribute.USER, user.get());
@@ -55,7 +53,7 @@ public class LoginCommand implements Command {
 
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e.getMessage());
-            return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.FORWARD);
+            return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
     }
 }

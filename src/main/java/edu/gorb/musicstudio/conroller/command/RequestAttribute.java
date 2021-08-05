@@ -1,9 +1,9 @@
 package edu.gorb.musicstudio.conroller.command;
 
 public class RequestAttribute {
-    public static final String ERROR_KEY = "error_key";
-    public static final String IS_ERROR = "is_error";
-    public static final String EMAIL_NOT_CONFIRMED = "email_not_confirmed";
+    public static final String PAGE_COUNT = "page_count";
+    public static final String COURSES = "courses";
+    public static final String SEARCH_LINE = "search_line";
 
     private RequestAttribute() {
     }

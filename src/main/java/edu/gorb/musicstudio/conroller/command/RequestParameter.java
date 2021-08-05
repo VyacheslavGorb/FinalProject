@@ -13,7 +13,9 @@ public class RequestParameter {
     public static final String USER_ROLE = "user_role";
     public static final String TOKEN = "token";
     public static final String ID = "id";
-
+    public static final String PAGE = "page";
+    public static final String FILTER = "filter";
+    public static final String SEARCH = "search";
 
     private RequestParameter() {
     }

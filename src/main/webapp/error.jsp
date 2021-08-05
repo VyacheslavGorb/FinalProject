@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page isErrorPage="true" %>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="pagecontent" var="rb"/>
@@ -19,19 +18,19 @@
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
-<jsp:include page="../parts/header.jsp" flush="true"/>
+<jsp:include page="WEB-INF/pages/parts/header.jsp" flush="true"/>
 <div class="error_page_outer">
     <div class="error_page_inner">
-        <h1 class="error_code display-1">500</h1>
-        <h2 class="error_message error_message_main display-6"><fmt:message key="error.server_error_main_message"
-                                                                            bundle="${rb}"/></h2>
-        <p class="error_message fs-5 mt-3">
-            <fmt:message key="error.server_error_info" bundle="${rb}"/>
+        <h1 class="error_message error_message_main fs-1"><fmt:message key="error.main_message"
+                                                                       bundle="${rb}"/></h1>
+        <p class="error_message fs-4 mt-3">
+            <fmt:message key="${requestScope.error_key}" bundle="${rb}"/>.
             <a class="home_link" href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message
-                    key="error.return_to_home" bundle="${rb}"/></a>
+                    key="error.return_to_home"
+                    bundle="${rb}"/></a>
         </p>
     </div>
 </div>
-<jsp:include page="../parts/footer.jsp"/>
+<jsp:include page="WEB-INF/pages/parts/footer.jsp"/>
 </body>
 </html>

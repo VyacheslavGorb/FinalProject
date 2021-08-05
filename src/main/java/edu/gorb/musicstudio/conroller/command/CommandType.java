@@ -13,6 +13,18 @@ public enum CommandType {
     CONFIRM_EMAIL,
     GO_TO_SEND_EMAIL_AGAIN_PAGE,
     SEND_EMAIL_AGAIN,
-    GO_TO_EMAIL_CONFIRMED_PAGE,
-    GO_TO_EMAIL_SENT_PAGE
+    COURSES;
+
+    public static CommandType convertRequestParameterToCommandType(String parameter){
+        if (parameter == null) {
+            return DEFAULT;
+        }
+        CommandType commandType;
+        try {
+            commandType = CommandType.valueOf(parameter.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            commandType = DEFAULT;
+        }
+        return commandType;
+    }
 }

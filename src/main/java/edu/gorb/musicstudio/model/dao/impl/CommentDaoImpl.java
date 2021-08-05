@@ -47,7 +47,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public Optional<Comment> findEntityById(Long id) throws DaoException {
+    public Optional<Comment> findEntityById(long id) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_COMMENT_BY_ID, id);
     }
 

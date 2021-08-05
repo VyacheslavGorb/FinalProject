@@ -1,0 +1,22 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>pagestag</short-name>
+    <uri>customtag</uri>
+
+    <tag>
+        <name>pagestag</name>
+        <tag-class>edu.gorb.musicstudio.tag.PagesTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>pagesCountAttribute</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>searchLine</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

@@ -1,0 +1,39 @@
+.outer {
+    min-height: 100vh;
+}
+
+.courses-main {
+    width: 80%;
+}
+
+.search-courses {
+    align-items: center;
+    justify-content: center;
+}
+
+.card-img-top {
+    max-height: 40vh;
+    object-fit: cover;
+}
+
+.card {
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.page-item{
+    margin-top: 1rem;
+}
+
+.page-link{
+    color: #198754;
+}
+
+.form-select{
+    width: 30vh;
+}
+
+.page-item.active .page-link {
+    background-color: #198754;
+    border-color: #198754;
+}

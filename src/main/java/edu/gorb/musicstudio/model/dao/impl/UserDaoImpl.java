@@ -114,7 +114,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findEntityById(Long id) throws DaoException {
+    public Optional<User> findEntityById(long id) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_USER_BY_ID, id);
     }
 

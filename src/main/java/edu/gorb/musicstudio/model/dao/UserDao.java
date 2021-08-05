@@ -7,7 +7,7 @@ import edu.gorb.musicstudio.exception.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao extends BaseDao<Long, User> {
+public interface UserDao extends BaseDao<User> {
     List<User> findUsersByStatus(UserStatus status) throws DaoException;
 
     Optional<User> findUserByLogin(String login) throws DaoException;
