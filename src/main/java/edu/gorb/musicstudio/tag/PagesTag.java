@@ -26,7 +26,7 @@ public class PagesTag extends TagSupport {
         try {
             StringBuilder stringBuilder =
                     new StringBuilder("<nav class=\"mt-4\" aria-label=\"Page navigation example\">\n" +
-                            "                <ul class=\"pagination flex-wrap justify-content-center\">");
+                            "                <ul class=\"pagination pagination-lg flex-wrap justify-content-center\">");
 
             int pageCount;
             try {
@@ -35,7 +35,7 @@ public class PagesTag extends TagSupport {
                 logger.log(Level.ERROR, "Illegal attribute value");
                 throw new JspException(e.getMessage());
             }
-//
+
             String contextPath = pageContext.getServletContext().getContextPath();
 
             String currentTemplate = searchLine.isBlank() ?

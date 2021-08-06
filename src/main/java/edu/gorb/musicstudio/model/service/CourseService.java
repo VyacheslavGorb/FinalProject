@@ -14,4 +14,6 @@ public interface CourseService {
     int calcPagesCount(int coursesCount);
 
     int countCoursesForRequest(String searchParameter) throws ServiceException;
+
+    List<Course> trimCoursesDescriptionForPreview(List<Course> courses);
 }

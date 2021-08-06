@@ -11,11 +11,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
     private static final Logger logger = LogManager.getLogger();
-    private static final int ITEMS_ON_PAGE_COUNT = 1; //TODO change to 5
+    private static final int ITEMS_ON_PAGE_COUNT = 2;
     private static final int MIN_PAGE_COUNT = 1;
+    private static final int MAX_PREVIEW_CHARACTER_AMOUNT = 250;
+    private static final String ELLIPSIS = "...";
 
     @Override
     public List<Course> findCoursesForRequest(int pageNumber, String searchParameter) throws ServiceException {
@@ -57,5 +60,18 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseAmount;
     }
+
+    @Override
+    public List<Course> trimCoursesDescriptionForPreview(List<Course> courses) {
+        return courses.stream()
+                .map(course -> {
+                    String description = course.getDescription();
+                    if (description.length() > MAX_PREVIEW_CHARACTER_AMOUNT) {
+                        description = description.substring(0, MAX_PREVIEW_CHARACTER_AMOUNT) + ELLIPSIS;
+                        course.setDescription(description);
+                    }
+                    return course;
+                })
+                .collect(Collectors.toList());
+    }
 }
-//TODO logs (file)

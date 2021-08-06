@@ -22,7 +22,7 @@ public class CoursesCommand implements Command {
         String pageParameter = request.getParameter(RequestParameter.PAGE);
         String searchParameter = request.getParameter(RequestParameter.SEARCH);
 
-        if(pageParameter == null){
+        if (pageParameter == null) {
             pageParameter = DEFAULT_PAGE_NUMBER_PARAMETER;
         }
 
@@ -32,23 +32,27 @@ public class CoursesCommand implements Command {
         try {
             pageNumber = Integer.parseInt(pageParameter);
         } catch (NumberFormatException e) {
-            return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.FORWARD); //TODO
+            return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 
         int pageCount;
         List<Course> courses;
         try {
-            pageCount = courseService.countCoursesForRequest(searchParameter);
+            int courseAmount = courseService.countCoursesForRequest(searchParameter);
 
-            if(pageCount == 0){
-                //TODO nothing was found
+            if (courseAmount == 0) {
+                request.setAttribute(RequestAttribute.NOTHING_FOUND, true);
+                return new CommandResult(PagePath.COURSES_PAGE, CommandResult.RoutingType.FORWARD);
             }
 
+            pageCount = courseService.calcPagesCount(courseAmount);
+
             if (!PageValidator.isValidPageNumber(pageNumber, pageCount)) {
-                return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.FORWARD); // TODO
+                return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
 
             courses = courseService.findCoursesForRequest(pageNumber, searchParameter);
+            courses = courseService.trimCoursesDescriptionForPreview(courses);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while selecting courses");
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
