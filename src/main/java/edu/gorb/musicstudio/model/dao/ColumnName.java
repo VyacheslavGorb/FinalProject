@@ -23,7 +23,7 @@ public class ColumnName {
     /*Comments table*/
     public static final String COMMENT_ID = "id_comment";
     public static final String COMMENT_STUDENT_ID = "id_student";
-    public static final String COMMENT_TEACHER_ID = "id_teacher";
+    public static final String COMMENT_COURSE_ID = "id_course";
     public static final String COMMENT_CONTENT = "content";
     public static final String COMMENT_TIMESTAMP = "date_time";
 

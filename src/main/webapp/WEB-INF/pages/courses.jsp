@@ -53,7 +53,8 @@
                         <div class="card-body">
                             <h5 class="card-title display-4">${course.name}</h5>
                             <p class="card-text fs-5">${course.description}</p>
-                            <a href="#" class="fs-4 btn btn-outline-success"><fmt:message
+                            <a href="${pageContext.request.contextPath}/controller?command=course_page&course_id=${course.id}"
+                               class="fs-4 btn btn-outline-success"><fmt:message
                                     key="courses.learn_more" bundle="${rb}"/></a>
                         </div>
                     </div>

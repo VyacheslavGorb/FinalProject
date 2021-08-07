@@ -15,41 +15,29 @@ import java.util.List;
 
 public class CoursesCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private static final String DEFAULT_PAGE_NUMBER_PARAMETER = "1";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
         String pageParameter = request.getParameter(RequestParameter.PAGE);
         String searchParameter = request.getParameter(RequestParameter.SEARCH);
 
-        if (pageParameter == null) {
-            pageParameter = DEFAULT_PAGE_NUMBER_PARAMETER;
-        }
-
         CourseService courseService = ServiceProvider.getInstance().getCourseService();
-
-        int pageNumber;
-        try {
-            pageNumber = Integer.parseInt(pageParameter);
-        } catch (NumberFormatException e) {
-            return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
-        }
 
         int pageCount;
         List<Course> courses;
         try {
             int courseAmount = courseService.countCoursesForRequest(searchParameter);
-
             if (courseAmount == 0) {
                 request.setAttribute(RequestAttribute.NOTHING_FOUND, true);
                 return new CommandResult(PagePath.COURSES_PAGE, CommandResult.RoutingType.FORWARD);
             }
-
             pageCount = courseService.calcPagesCount(courseAmount);
 
-            if (!PageValidator.isValidPageNumber(pageNumber, pageCount)) {
+            if (!PageValidator.isValidPageParameter(pageParameter, pageCount)) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
+
+            int pageNumber = Integer.parseInt(pageParameter);
 
             courses = courseService.findCoursesForRequest(pageNumber, searchParameter);
             courses = courseService.trimCoursesDescriptionForPreview(courses);

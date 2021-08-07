@@ -7,9 +7,9 @@ import edu.gorb.musicstudio.model.dao.impl.UserTokenDaoImpl;
 
 public class DaoProvider {
     private final UserDao userDao = new UserDaoImpl();
-    private final CommentDao commentDao = new CommentDaoImpl();
     private final UserTokenDao userTokenDao = new UserTokenDaoImpl();
     private final CourseDao courseDao = new CourseDaoImpl();
+    private final CommentDao commentDao = new CommentDaoImpl(); //todo
 
     private DaoProvider() {
     }
@@ -22,16 +22,16 @@ public class DaoProvider {
         return userDao;
     }
 
-    public CommentDao getCommentDao() {
-        return commentDao;
-    }
-
     public UserTokenDao getUserTokenDao() {
         return userTokenDao;
     }
 
     public CourseDao getCourseDao() {
         return courseDao;
+    }
+
+    public CommentDao getCommentDao() {
+        return commentDao;
     }
 
     private static class DataProviderHolder {

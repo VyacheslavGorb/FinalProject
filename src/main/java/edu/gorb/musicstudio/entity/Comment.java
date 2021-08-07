@@ -1,18 +1,17 @@
 package edu.gorb.musicstudio.entity;
 
-import java.sql.Timestamp;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
-public class Comment extends AbstractEntity {
+public class Comment extends AbstractEntity { //todo
     private long studentId;
-    private long teacherId;
+    private long courseId;
     private String content;
-    private Timestamp dateTime;
+    private LocalDateTime dateTime;
 
-    public Comment(long commentId, long studentId, long teacherId, String content, Timestamp dateTime) {
-        super(commentId);
+    public Comment(long entityId, long studentId, long courseId, String content, LocalDateTime dateTime) {
+        super(entityId);
         this.studentId = studentId;
-        this.teacherId = teacherId;
+        this.courseId = courseId;
         this.content = content;
         this.dateTime = dateTime;
     }
@@ -25,12 +24,12 @@ public class Comment extends AbstractEntity {
         this.studentId = studentId;
     }
 
-    public long getTeacherId() {
-        return teacherId;
+    public long getCourseId() {
+        return courseId;
     }
 
-    public void setTeacherId(long teacherId) {
-        this.teacherId = teacherId;
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
     }
 
     public String getContent() {
@@ -41,11 +40,11 @@ public class Comment extends AbstractEntity {
         this.content = content;
     }
 
-    public Timestamp getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Timestamp dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -54,15 +53,20 @@ public class Comment extends AbstractEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
+
         Comment comment = (Comment) o;
-        return studentId == comment.studentId && teacherId == comment.teacherId && Objects.equals(content, comment.content) && Objects.equals(dateTime, comment.dateTime);
+
+        if (studentId != comment.studentId) return false;
+        if (courseId != comment.courseId) return false;
+        if (content != null ? !content.equals(comment.content) : comment.content != null) return false;
+        return dateTime != null ? dateTime.equals(comment.dateTime) : comment.dateTime == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + (int) (studentId ^ (studentId >>> 32));
-        result = 31 * result + (int) (teacherId ^ (teacherId >>> 32));
+        result = 31 * result + (int) (courseId ^ (courseId >>> 32));
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
         return result;
@@ -70,10 +74,9 @@ public class Comment extends AbstractEntity {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Comment{");
-        sb.append("id='").append(getId()).append('\'');
+        final StringBuilder sb = new StringBuilder("Comment{");
         sb.append("studentId=").append(studentId);
-        sb.append(", teacherId=").append(teacherId);
+        sb.append(", courseId=").append(courseId);
         sb.append(", content='").append(content).append('\'');
         sb.append(", dateTime=").append(dateTime);
         sb.append('}');

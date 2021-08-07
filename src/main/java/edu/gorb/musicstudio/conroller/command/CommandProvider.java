@@ -25,6 +25,7 @@ public class CommandProvider {
         commands.put(GO_TO_SEND_EMAIL_AGAIN_PAGE, new GoToSendEmailAgainPageCommand());
         commands.put(SEND_EMAIL_AGAIN, new SendEmailAgainCommand());
         commands.put(COURSES, new CoursesCommand());
+        commands.put(COURSE_PAGE, new CoursePageCommand());
     }
 
     public static CommandProvider getInstance() {

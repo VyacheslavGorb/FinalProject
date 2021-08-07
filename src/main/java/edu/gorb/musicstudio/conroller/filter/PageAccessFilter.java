@@ -30,15 +30,15 @@ public class PageAccessFilter implements Filter {
         availableCommands.put(UserRole.GUEST,
                 List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE,
                         CONFIRM_EMAIL, GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
-                        COURSES));
+                        COURSES, COURSE_PAGE));
         availableCommands.put(UserRole.STUDENT,
                 List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
-                        COURSES));
+                        COURSES, COURSE_PAGE));
         availableCommands.put(UserRole.ADMIN,
                 List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
-                        COURSES));
+                        COURSES, COURSE_PAGE));
     }
 
     @Override

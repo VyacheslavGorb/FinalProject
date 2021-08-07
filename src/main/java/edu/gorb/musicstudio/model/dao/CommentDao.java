@@ -6,7 +6,7 @@ import edu.gorb.musicstudio.exception.DaoException;
 import java.util.List;
 
 public interface CommentDao extends BaseDao<Comment> {
-    List<Comment> findCommentsByTeacherId(long teacherId) throws DaoException;
+    List<Comment> findCommentsByCourseId(long teacherId) throws DaoException;
 
     List<Comment> findCommentsByStudentId(long teacherId) throws DaoException;
 }

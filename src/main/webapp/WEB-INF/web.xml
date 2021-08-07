@@ -63,12 +63,11 @@
         <filter-class>edu.gorb.musicstudio.conroller.filter.PreviousCommandFilter</filter-class>
     </filter>
 
+
     <filter-mapping>
         <filter-name>PreviousCommandFilter</filter-name>
-        <servlet-name>Controller</servlet-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-
 
 
     <filter>

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CourseServiceImpl implements CourseService {
@@ -73,5 +74,16 @@ public class CourseServiceImpl implements CourseService {
                     return course;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Course> findCourseById(long courseId) throws ServiceException {
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        try {
+            return courseDao.findEntityById(courseId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for course by id");
+            throw new ServiceException(e);
+        }
     }
 }

@@ -6,7 +6,13 @@ public class PageValidator {
     private PageValidator() {
     }
 
-    public static boolean isValidPageNumber(int pageNumber, int pageCount) {
+    public static boolean isValidPageParameter(String pageParameter, int pageCount) {
+        int pageNumber;
+        try{
+            pageNumber = Integer.parseInt(pageParameter);
+        }catch (NumberFormatException e){
+            return false;
+        }
         return pageNumber >= MIN_PAGE_NUMBER && pageNumber <= pageCount;
     }
 }

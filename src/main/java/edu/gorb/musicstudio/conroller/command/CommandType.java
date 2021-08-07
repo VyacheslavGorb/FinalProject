@@ -13,7 +13,8 @@ public enum CommandType {
     CONFIRM_EMAIL,
     GO_TO_SEND_EMAIL_AGAIN_PAGE,
     SEND_EMAIL_AGAIN,
-    COURSES;
+    COURSES,
+    COURSE_PAGE;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {

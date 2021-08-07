@@ -1,27 +1,27 @@
 package edu.gorb.musicstudio.conroller.command.impl;
 
-import edu.gorb.musicstudio.conroller.command.*;
+import edu.gorb.musicstudio.conroller.command.Command;
+import edu.gorb.musicstudio.conroller.command.CommandResult;
+import edu.gorb.musicstudio.conroller.command.RequestParameter;
+import edu.gorb.musicstudio.conroller.command.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class ChangeLanguageCommand implements Command {
-    private static final String REDIRECT_TEMPLATE = "/controller?command=";
     private static final String RUSSIAN_LOCALE = "ru";
     private static final String ENGLISH_LOCALE = "en";
 
     @Override
     public CommandResult execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String command = (String) session.getAttribute(SessionAttribute.PREV_COMMAND);
+        String previousQuery = (String) session.getAttribute(SessionAttribute.PREVIOUS_QUERY);
         String language = request.getParameter(RequestParameter.LANGUAGE);
+
         if (language != null
                 && (language.equals(RUSSIAN_LOCALE) || language.equals(ENGLISH_LOCALE))) {
             session.setAttribute(SessionAttribute.LOCALE, language);
         }
-        if (command == null) {
-            return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
-        }
-        return new CommandResult(REDIRECT_TEMPLATE + command, CommandResult.RoutingType.REDIRECT);
+        return new CommandResult(previousQuery, CommandResult.RoutingType.REDIRECT);
     }
 }

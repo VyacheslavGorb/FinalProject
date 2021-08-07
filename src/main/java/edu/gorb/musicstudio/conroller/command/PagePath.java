@@ -19,6 +19,8 @@ public class PagePath {
     public static final String ERROR_404_PAGE = "/error_404.jsp";
     public static final String ERROR_500_PAGE = "/error_500.jsp";
 
+    public static final String COURSE_PAGE = "WEB-INF/pages/course_page.jsp";
+
     private PagePath() {
     }
 }
