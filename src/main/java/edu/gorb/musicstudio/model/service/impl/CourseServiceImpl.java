@@ -6,6 +6,7 @@ import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.dao.CourseDao;
 import edu.gorb.musicstudio.model.dao.DaoProvider;
 import edu.gorb.musicstudio.model.service.CourseService;
+import edu.gorb.musicstudio.util.DescriptionUtil;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,8 +19,6 @@ public class CourseServiceImpl implements CourseService {
     private static final Logger logger = LogManager.getLogger();
     private static final int ITEMS_ON_PAGE_COUNT = 2;
     private static final int MIN_PAGE_COUNT = 1;
-    private static final int MAX_PREVIEW_CHARACTER_AMOUNT = 250;
-    private static final String ELLIPSIS = "...";
 
     @Override
     public List<Course> findCoursesForRequest(int pageNumber, String searchParameter) throws ServiceException {
@@ -34,7 +33,7 @@ public class CourseServiceImpl implements CourseService {
             }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting courses for page");
-            throw new ServiceException(e);
+            throw new ServiceException("Error while selecting courses for page", e);
         }
         return courses;
     }
@@ -57,7 +56,7 @@ public class CourseServiceImpl implements CourseService {
             }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while counting courses");
-            throw new ServiceException(e);
+            throw new ServiceException("Error while counting courses", e);
         }
         return courseAmount;
     }
@@ -67,13 +66,10 @@ public class CourseServiceImpl implements CourseService {
         return courses.stream()
                 .map(course -> {
                     String description = course.getDescription();
-                    if (description.length() > MAX_PREVIEW_CHARACTER_AMOUNT) {
-                        description = description.substring(0, MAX_PREVIEW_CHARACTER_AMOUNT) + ELLIPSIS;
-                        course.setDescription(description);
-                    }
+                    String shortDescription = DescriptionUtil.trimDescriptionForPreview(description);
+                    course.setDescription(shortDescription);
                     return course;
-                })
-                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
     }
 
     @Override
@@ -82,8 +78,8 @@ public class CourseServiceImpl implements CourseService {
         try {
             return courseDao.findEntityById(courseId);
         } catch (DaoException e) {
-            logger.log(Level.ERROR, "Error while searching for course by id");
-            throw new ServiceException(e);
+            logger.log(Level.ERROR, "Error while searching for course by id={}", courseId);
+            throw new ServiceException("Error while searching for course by id=" + courseId, e);
         }
     }
 }

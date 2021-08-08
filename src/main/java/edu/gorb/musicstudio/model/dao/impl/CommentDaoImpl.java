@@ -10,31 +10,40 @@ import edu.gorb.musicstudio.model.pool.ConnectionPool;
 import java.util.List;
 import java.util.Optional;
 
-public class CommentDaoImpl implements CommentDao { //todo
+public class CommentDaoImpl implements CommentDao {
 
     public static final String INSERT_NEW_COMMENT =
             "INSERT INTO comments (id_student, id_course, content, date_time) VALUE (?, ?, ?, ?)";
+
     public static final String UPDATE_COMMENT = "UPDATE comments\n" +
             "SET id_student=?,\n" +
             "    id_course=?,\n" +
             "    content=?,\n" +
             "    date_time=?\n" +
             "WHERE id_comment = ?";
+
     private static final String SELECT_ALL_COMMENTS =
-            "SELECT id_comment, id_student, id_course, content, date_time, rating\n" +
-                    "FROM comments";
+            "SELECT id_comment, id_student, id_course, content, date_time\n" +
+                    "FROM comments\n" +
+                    "ORDER BY date_time DESC";
+
     private static final String SELECT_COMMENT_BY_ID =
-            "SELECT id_comment, id_student, id_course, content, date_time, rating\n" +
+            "SELECT id_comment, id_student, id_course, content, date_time\n" +
                     "FROM comments\n" +
                     "WHERE id_comment=?";
+
     private static final String SELECT_COMMENTS_BY_COURSE_ID =
-            "SELECT id_comment, id_student, id_course, content, date_time, rating\n" +
+            "SELECT id_comment, id_student, id_course, content, date_time\n" +
                     "FROM comments\n" +
-                    "WHERE id_course=?";
+                    "WHERE id_course=?\n" +
+                    "ORDER BY date_time DESC";
+
     private static final String SELECT_COMMENTS_BY_STUDENT_ID =
-            "SELECT id_comment, id_student, id_course, content, date_time, rating\n" +
+            "SELECT id_comment, id_student, id_course, content, date_time\n" +
                     "FROM comments\n" +
-                    "WHERE id_student=?";
+                    "WHERE id_student=?\n" +
+                    "ORDER BY date_time DESC";
+
     private final JdbcHelper<Comment> jdbcHelper;
 
     public CommentDaoImpl() {
@@ -62,7 +71,7 @@ public class CommentDaoImpl implements CommentDao { //todo
 
     @Override
     public void update(Comment comment) throws DaoException {
-        jdbcHelper.executeUpdate(INSERT_NEW_COMMENT,
+        jdbcHelper.executeUpdate(UPDATE_COMMENT,
                 comment.getStudentId(),
                 comment.getCourseId(),
                 comment.getContent(),

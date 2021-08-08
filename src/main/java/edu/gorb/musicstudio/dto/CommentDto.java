@@ -6,13 +6,9 @@ public class CommentDto { //todo
     private String studentName;
     private String studentSurname;
     private String content;
-    private LocalDateTime dateTime;
+    private String dateTime;
 
-    public CommentDto(String studentName, String studentSurname, String content, LocalDateTime dateTime) {
-        this.studentName = studentName;
-        this.studentSurname = studentSurname;
-        this.content = content;
-        this.dateTime = dateTime;
+    public CommentDto() {
     }
 
     public String getStudentName() {
@@ -39,11 +35,11 @@ public class CommentDto { //todo
         this.content = content;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 

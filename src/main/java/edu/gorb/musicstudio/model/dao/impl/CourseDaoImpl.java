@@ -17,6 +17,7 @@ import java.util.Optional;
 
 public class CourseDaoImpl implements CourseDao {
     private static final Logger logger = LogManager.getLogger();
+    private static final int FIRST_COLUMN_INDEX = 1;
 
     private static final String SELECT_ALL_COURSES =
             "SELECT id_course, name, description, picture_path, price_per_hour, is_active\n" +
@@ -111,7 +112,7 @@ public class CourseDaoImpl implements CourseDao {
              Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(COUNT_ALL_COURSES);
             resultSet.next();
-            result = resultSet.getInt(1);
+            result = resultSet.getInt(FIRST_COLUMN_INDEX);
         } catch (SQLException | DatabaseConnectionException e) {
             logger.log(Level.ERROR, e.getMessage());
             throw new DaoException(e);
@@ -124,16 +125,14 @@ public class CourseDaoImpl implements CourseDao {
         int result;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(COUNT_COURSES_WITH_SEARCH)) {
-            statement.setString(1, searchParameter);
+            statement.setString(FIRST_COLUMN_INDEX, searchParameter);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            result = resultSet.getInt(1);
+            result = resultSet.getInt(FIRST_COLUMN_INDEX);
         } catch (SQLException | DatabaseConnectionException e) {
             logger.log(Level.ERROR, e.getMessage());
             throw new DaoException(e);
         }
         return result;
     }
-
-
 }

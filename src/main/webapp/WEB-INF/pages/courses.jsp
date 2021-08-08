@@ -60,7 +60,8 @@
                     </div>
                 </c:forEach>
                 <ctg:pagestag pagesCountAttribute="${requestScope.page_count}"
-                              searchLine="${requestScope.search_line}"/>
+                              searchLine="${requestScope.search_line}"
+                              command="${requestScope.command}"/>
             </div>
         </div>
     </div>
@@ -72,13 +73,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<script src="script/courses.js"></script>
+<script src="script/pagination.js"></script>
 </html>
-
-<%--                        <nav class="mt-4" aria-label="Page navigation example"TODO remove>--%>
-<%--                            <ul class="pagination flex-wrap justify-content-center">--%>
-<%--                                <c:forEach begin="0" end="${requestScope.page_count - 1}" varStatus="status">--%>
-<%--                                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/contoller?command=courses&page=&search=">${status.count}</a></li>--%>
-<%--                                </c:forEach>--%>
-<%--                            </ul>--%>
-<%--                        </nav>--%>

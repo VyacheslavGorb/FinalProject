@@ -35,8 +35,8 @@ public class MailServiceImpl implements MailService {
         try {
             mailProperties.load(fileInputStream);
         } catch (IOException e) {
-            logger.log(Level.ERROR, "Error while reading mail properties: {}", e.getMessage());
-            throw new ServiceException(e);
+            logger.log(Level.ERROR, "Error while reading mail properties. {}", e.getMessage());
+            throw new ServiceException("Error while reading mail properties", e);
         }
         MailSessionCreator creator = new MailSessionCreator(mailProperties);
         Session session = creator.createSession();
@@ -53,8 +53,8 @@ public class MailServiceImpl implements MailService {
             text = mailBundle.getString("mail.content.signup.message");
             linkTemplate = mailProperties.getProperty("mail.confirmation.link_template");
         } catch (MissingResourceException e) {
-            logger.log(Level.ERROR, "Mail message properties not specified");
-            throw new ServiceException("Mail message properties not specified");
+            logger.log(Level.ERROR, "Mail message properties not specified. {}", e.getMessage());
+            throw new ServiceException("Mail message properties not specified", e);
         }
 
         String messageText;
@@ -62,7 +62,7 @@ public class MailServiceImpl implements MailService {
             messageText = text + String.format(linkTemplate, token, userId);
         } catch (IllegalFormatException e) {
             logger.log(Level.ERROR, "Illegal link template: {}", linkTemplate);
-            throw new ServiceException(e);
+            throw new ServiceException("Illegal link template: " + linkTemplate, e);
         }
 
         try {
@@ -71,8 +71,8 @@ public class MailServiceImpl implements MailService {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
             Transport.send(message);
         } catch (MessagingException e) {
-            logger.log(Level.ERROR, "Error while sending message: {}", e.getMessage());
-            throw new ServiceException(e);
+            logger.log(Level.ERROR, "Error while sending message. {}", e.getMessage());
+            throw new ServiceException("Error while sending message: " + messageText, e);
         }
     }
 }

@@ -12,6 +12,7 @@ public class PagesTag extends TagSupport {
     private static final Logger logger = LogManager.getLogger();
     private String pagesCountAttribute;
     private String searchLine;
+    private String command;
 
     public void setPagesCountAttribute(String pageCountAttribute) {
         this.pagesCountAttribute = pageCountAttribute;
@@ -19,6 +20,10 @@ public class PagesTag extends TagSupport {
 
     public void setSearchLine(String searchLine) {
         this.searchLine = searchLine;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     @Override
@@ -39,8 +44,10 @@ public class PagesTag extends TagSupport {
             String contextPath = pageContext.getServletContext().getContextPath();
 
             String currentTemplate = searchLine.isBlank() ?
-                    "<li class=\"page-item\"><a class=\"page-link\" href=\"" + contextPath + "/controller?command=courses&page=%d\">%d</a></li>" :
-                    "<li class=\"page-item\"><a class=\"page-link\" href=\"" + contextPath + "/controller?command=courses&page=%d&search=" + searchLine + "\">%d</a></li>";
+                    "<li class=\"page-item\"><a class=\"page-link\" href=\"" + contextPath
+                            + "/controller?command=" + command + "&page=%d\">%d</a></li>" :
+                    "<li class=\"page-item\"><a class=\"page-link\" href=\"" + contextPath
+                            + "/controller?command=" + command + "&page=%d&search=" + searchLine + "\">%d</a></li>";
 
             for (int i = 1; i <= pageCount; i++) {
                 stringBuilder.append(String.format(currentTemplate, i, i));

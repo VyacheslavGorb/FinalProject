@@ -3,15 +3,21 @@ package edu.gorb.musicstudio.model.dao.impl;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.exception.DaoException;
+import edu.gorb.musicstudio.exception.DatabaseConnectionException;
 import edu.gorb.musicstudio.model.dao.JdbcHelper;
 import edu.gorb.musicstudio.model.dao.UserDao;
 import edu.gorb.musicstudio.model.dao.mapper.impl.UserRowMapperImpl;
 import edu.gorb.musicstudio.model.pool.ConnectionPool;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
+    private static final Logger logger = LogManager.getLogger();
 
     private static final String SELECT_ALL_USERS = "SELECT id_user,\n" +
             "       login,\n" +
@@ -102,6 +108,54 @@ public class UserDaoImpl implements UserDao {
             "SET id_user_status = (SELECT us.id_user_status FROM user_statuses us WHERE us.user_status = ?)\n" +
             "WHERE id_user = ?";
 
+    private static final String SELECT_TEACHERS_FOR_PAGE =
+            "SELECT id_user,\n" +
+                    "       login,\n" +
+                    "       password_hash,\n" +
+                    "       name,\n" +
+                    "       surname,\n" +
+                    "       patronymic,\n" +
+                    "       email,\n" +
+                    "       user_status,\n" +
+                    "       user_role\n" +
+                    "FROM users\n" +
+                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
+                    "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
+                    "WHERE user_role = 'TEACHER'\n" +
+                    "LIMIT ?, ?";
+
+    private static final String SELECT_TEACHERS_FOR_PAGE_WITH_SEARCH =
+            "SELECT id_user,\n" +
+                    "       login,\n" +
+                    "       password_hash,\n" +
+                    "       name,\n" +
+                    "       surname,\n" +
+                    "       patronymic,\n" +
+                    "       email,\n" +
+                    "       user_status,\n" +
+                    "       user_role\n" +
+                    "FROM users\n" +
+                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
+                    "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
+                    "WHERE user_role = 'TEACHER'\n" +
+                    "  and CONCAT(name, ' ', surname, ' ', patronymic) LIKE CONCAT('%', ?, '%')\n" +
+                    "LIMIT ?, ?";
+
+    private static final String COUNT_TEACHERS =
+            "SELECT COUNT(id_user)\n" +
+                    "FROM users\n" +
+                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
+                    "WHERE user_role = 'TEACHER'";
+
+    private static final String COUNT_TEACHERS_WITH_SEARCH =
+            "SELECT COUNT(id_user)\n" +
+                    "FROM users\n" +
+                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
+                    "WHERE user_role = 'TEACHER'\n" +
+                    "  and CONCAT(name, ' ', surname, ' ', patronymic) LIKE CONCAT('%', ?, '%')";
+
+    private static final int FIRST_COLUMN_INDEX = 1;
+
     private final JdbcHelper<User> jdbcHelper;
 
     public UserDaoImpl() {
@@ -162,5 +216,45 @@ public class UserDaoImpl implements UserDao {
         jdbcHelper.executeUpdate(UPDATE_USER_STATUS, userStatus.toString(), userId);
     }
 
+    @Override
+    public List<User> selectTeachersForPage(int skipAmount, int coursePerPageAmount) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_TEACHERS_FOR_PAGE, skipAmount, coursePerPageAmount);
+    }
 
+    @Override
+    public List<User> selectTeachersWithSearchForPage(int skipAmount, int coursePerPageAmount, String search) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_TEACHERS_FOR_PAGE_WITH_SEARCH, search, skipAmount, coursePerPageAmount);
+    }
+
+    @Override
+    public int countTeachers() throws DaoException {
+        int result;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(COUNT_TEACHERS);
+            resultSet.next();
+            result = resultSet.getInt(FIRST_COLUMN_INDEX);
+        } catch (SQLException | DatabaseConnectionException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            throw new DaoException(e);
+        }
+        return result;
+    }
+
+
+    @Override
+    public int countTeachersWithSearch(String searchParameter) throws DaoException {
+        int result;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_TEACHERS_WITH_SEARCH)) {
+            statement.setString(FIRST_COLUMN_INDEX, searchParameter);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            result = resultSet.getInt(FIRST_COLUMN_INDEX);
+        } catch (SQLException | DatabaseConnectionException e) {
+            logger.log(Level.ERROR, e.getMessage());
+            throw new DaoException(e);
+        }
+        return result;
+    }
 }

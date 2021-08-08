@@ -7,6 +7,7 @@ import edu.gorb.musicstudio.entity.UserToken;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
 import edu.gorb.musicstudio.model.service.UserService;
+import edu.gorb.musicstudio.validator.IntegerNumberValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,13 +30,12 @@ public class ConfirmEmailCommand implements Command {
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 
-        long userId;
-        try {
-            userId = Long.parseLong(userIdParameter);
-        } catch (IllegalArgumentException e) {
+        if(!IntegerNumberValidator.isIntegerNumber(userIdParameter)){
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.INVALID_ACTIVATION_LINK);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.REDIRECT);
         }
+
+        long userId = Long.parseLong(userIdParameter);
 
         UserService userService = ServiceProvider.getInstance().getUserService();
 

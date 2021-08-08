@@ -7,12 +7,10 @@ public class PageValidator {
     }
 
     public static boolean isValidPageParameter(String pageParameter, int pageCount) {
-        int pageNumber;
-        try{
-            pageNumber = Integer.parseInt(pageParameter);
-        }catch (NumberFormatException e){
+        if (!IntegerNumberValidator.isIntegerNumber(pageParameter)) {
             return false;
         }
+        int pageNumber = Integer.parseInt(pageParameter);
         return pageNumber >= MIN_PAGE_NUMBER && pageNumber <= pageCount;
     }
 }

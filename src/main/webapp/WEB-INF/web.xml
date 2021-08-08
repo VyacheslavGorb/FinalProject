@@ -56,8 +56,6 @@
     </filter-mapping>
 
 
-
-
     <filter>
         <filter-name>PreviousCommandFilter</filter-name>
         <filter-class>edu.gorb.musicstudio.conroller.filter.PreviousCommandFilter</filter-class>
@@ -66,7 +64,8 @@
 
     <filter-mapping>
         <filter-name>PreviousCommandFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/static_pages/*</url-pattern>
     </filter-mapping>
 
 

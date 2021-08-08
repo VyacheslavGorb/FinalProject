@@ -21,8 +21,10 @@
                    href="${pageContext.request.contextPath}/controller?command=courses&page=1"><fmt:message
                         key="header.courses"
                         bundle="${ rb }"/></a>
-                <a class="nav-link " aria-current="page" href="#"><fmt:message key="header.teachers"
-                                                                               bundle="${ rb }"/></a>
+                <a class="nav-link " aria-current="page"
+                   href="${pageContext.request.contextPath}/controller?command=teachers&page=1"><fmt:message
+                        key="header.teachers"
+                        bundle="${ rb }"/></a>
                 <c:choose>
                     <c:when test="${sessionScope.user == null}">
                         <a class="nav-link " aria-current="page"

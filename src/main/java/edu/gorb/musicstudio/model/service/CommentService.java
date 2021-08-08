@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CommentService { //todo
     List<CommentDto> findCommentsForCourse(long courseId) throws ServiceException;
+    int addNewComment(long userId, long courseId, String content) throws ServiceException;
 }

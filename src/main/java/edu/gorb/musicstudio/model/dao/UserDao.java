@@ -15,4 +15,12 @@ public interface UserDao extends BaseDao<User> {
     Optional<User> findUserByEmail(String email) throws DaoException;
 
     void updateUserStatus(long userId, UserStatus userStatus) throws DaoException;
+
+    List<User> selectTeachersForPage(int skipAmount, int coursePerPageAmount) throws DaoException;
+
+    int countTeachers() throws DaoException;
+
+    List<User> selectTeachersWithSearchForPage(int skipAmount, int coursePerPageAmount, String search) throws DaoException;
+
+    int countTeachersWithSearch(String searchParameter) throws DaoException;
 }

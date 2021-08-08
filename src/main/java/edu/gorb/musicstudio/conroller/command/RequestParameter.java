@@ -16,6 +16,9 @@ public class RequestParameter {
     public static final String PAGE = "page";
     public static final String SEARCH = "search";
     public static final String COURSE_ID = "course_id";
+    public static final String CONTENT = "content";
+    public static final String TEACHER_ID = "teacher_id";
+
 
     private RequestParameter() {
     }
