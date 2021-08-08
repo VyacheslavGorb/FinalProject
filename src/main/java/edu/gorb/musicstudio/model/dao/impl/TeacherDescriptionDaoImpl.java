@@ -49,11 +49,12 @@ public class TeacherDescriptionDaoImpl implements TeacherDescriptionDao {
 
     @Override
     public int insert(TeacherDescription teacherDescription) throws DaoException {
-        return jdbcHelper.executeInsert(INSERT_DESCRIPTION,
+        jdbcHelper.executeUpdate(INSERT_DESCRIPTION,
                 teacherDescription.getId(),
                 teacherDescription.getDescription(),
                 teacherDescription.getExperience(),
                 teacherDescription.getPicturePath());
+        return 0;//TODO
     }
 
     @Override

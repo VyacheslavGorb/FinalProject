@@ -53,7 +53,8 @@
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img src="${teacher.picturePath}" class="img-fluid rounded-start"
+                                    <img src="${pageContext.request.contextPath}/image?path=${teacher.picturePath}"
+                                         class="img-fluid rounded-start"
                                          alt="${teacher.name}">
                                 </div>
                                 <div class="col-md-8">

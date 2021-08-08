@@ -29,17 +29,13 @@
                                                            bundle="${rb}"/> ${requestScope.teacher.experienceYears}</span>
         </div>
         <div class="w-100 d-flex">
-            <img class="course_page_image w-25 mt-4 mb-4" src="${requestScope.teacher.picturePath}">
+            <img class="course_page_image w-25 mt-4 mb-4"
+                 src="${pageContext.request.contextPath}/image?path=${requestScope.teacher.picturePath}"
+                 alt="${requestScope.teacher.name}">
             <p class="m-4 fs-4 text-start">${requestScope.teacher.selfDescription}</p>
         </div>
     </div>
 </div>
-
-<%--<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>TODO--%>
-<%--<script>--%>
-<%--    document.getElementById('content').innerHTML =--%>
-<%--        marked('${requestScope.teacher.selfDescription}');--%>
-<%--</script>--%>
 
 <jsp:include page="parts/footer.jsp"/>
 </body>

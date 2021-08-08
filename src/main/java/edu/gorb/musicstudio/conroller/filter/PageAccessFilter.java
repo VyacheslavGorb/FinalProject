@@ -38,7 +38,8 @@ public class PageAccessFilter implements Filter {
         availableCommands.put(UserRole.TEACHER,
                 List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
-                        COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE));
+                        COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, TEACHER_INIT_PAGE, TEACHER_LESSON_SCHEDULE_PAGE,
+                        SEND_DESCRIPTION));
         availableCommands.put(UserRole.ADMIN,
                 List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
@@ -70,13 +71,13 @@ public class PageAccessFilter implements Filter {
 
         if (role != UserRole.GUEST && guestOnlyAvailableCommands.contains(currentCommand)) {
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.ALREADY_LOGGED_IN);
-            httpServletResponse.sendRedirect(PagePath.ERROR_PAGE);
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + PagePath.ERROR_PAGE);
             return;
         }
 
         if (!availableCommandsForCurrentUser.contains(currentCommand)) {
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.NOT_ENOUGH_RIGHTS);
-            httpServletResponse.sendRedirect(PagePath.ERROR_PAGE);
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + PagePath.ERROR_PAGE);
             return;
         }
 

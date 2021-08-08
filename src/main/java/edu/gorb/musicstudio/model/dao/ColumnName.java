@@ -40,9 +40,12 @@ public class ColumnName {
 
     /*Lesson schedules table*/
     public static final String LESSON_ID = "id_schedule";
-    public static final String LESSON_STATUS = "id_lesson_status";
+    public static final String LESSON_STATUS = "status";
     public static final String LESSON_TIMESTAMP = "date_time";
     public static final String LESSON_DURATION = "duration";
+    public static final String LESSON_STUDENT_ID = "id_student";
+    public static final String LESSON_TEACHER_ID = "id_teacher";
+    public static final String LESSON_COURSE_ID = "id_course";
 
     /*Subscriptions table*/
     public static final String SUBSCRIPTION_ID = "id_subscriptions";

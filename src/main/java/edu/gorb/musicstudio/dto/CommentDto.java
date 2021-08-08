@@ -8,9 +8,6 @@ public class CommentDto { //todo
     private String content;
     private String dateTime;
 
-    public CommentDto() {
-    }
-
     public String getStudentName() {
         return studentName;
     }

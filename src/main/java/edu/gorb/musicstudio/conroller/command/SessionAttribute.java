@@ -18,6 +18,10 @@ public class SessionAttribute {
     public static final String IS_SEND_EMAIL_AGAIN_ERROR = "is_send_email_again_error";
 
 
+    public static final String IS_TEACHER_INIT_ERROR = "is_teacher_init_error";
+
+
+
 
     private SessionAttribute() {
     }

@@ -24,7 +24,7 @@
         <h1 class="error_message error_message_main fs-1"><fmt:message key="error.main_message"
                                                                        bundle="${rb}"/></h1>
         <p class="error_message fs-4 mt-3">
-            <fmt:message key="${requestScope.error_key}" bundle="${rb}"/>.
+            <fmt:message key="${sessionScope.error_key}" bundle="${rb}"/>.
             <a class="home_link" href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message
                     key="error.return_to_home"
                     bundle="${rb}"/></a>

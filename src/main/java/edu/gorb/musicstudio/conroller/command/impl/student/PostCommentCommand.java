@@ -1,4 +1,4 @@
-package edu.gorb.musicstudio.conroller.command.impl;
+package edu.gorb.musicstudio.conroller.command.impl.student;
 
 import edu.gorb.musicstudio.conroller.command.*;
 import edu.gorb.musicstudio.entity.User;

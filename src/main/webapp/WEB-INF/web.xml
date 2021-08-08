@@ -7,6 +7,11 @@
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>edu.gorb.musicstudio.conroller.Controller</servlet-class>
+        <multipart-config>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
     </servlet>
 
     <servlet-mapping>
@@ -14,6 +19,16 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>edu.gorb.musicstudio.conroller.ImageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/image</url-pattern>
+    </servlet-mapping>
 
 
     <filter>

@@ -49,7 +49,8 @@
 
                 <c:forEach items="${requestScope.courses}" var="course">
                     <div class="card ">
-                        <img src="${course.picturePath}" class="card-img-top" alt="${course.name}">
+                        <img src="${pageContext.request.contextPath}/image?path=${course.picturePath}"
+                             class="card-img-top" alt="${course.name}">
                         <div class="card-body">
                             <h5 class="card-title display-4">${course.name}</h5>
                             <p class="card-text fs-5">${course.description}</p>

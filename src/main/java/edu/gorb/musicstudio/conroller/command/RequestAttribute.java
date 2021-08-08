@@ -10,6 +10,9 @@ public class RequestAttribute {
     public static final String TEACHERS = "teachers";
     public static final String TEACHER = "teacher";
     public static final String COMMAND = "command";
+    public static final String LESSON_SCHEDULE_MAP = "lesson_schedule_map";
+    public static final String LESSON_SCHEDULE_DATES = "lesson_schedule_dates";
+
 
     private RequestAttribute() {
     }

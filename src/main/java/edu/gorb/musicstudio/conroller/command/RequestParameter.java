@@ -18,6 +18,10 @@ public class RequestParameter {
     public static final String COURSE_ID = "course_id";
     public static final String CONTENT = "content";
     public static final String TEACHER_ID = "teacher_id";
+    public static final String DESCRIPTION = "description";
+    public static final String EXPERIENCE = "experience";
+    public static final String IMAGE = "image";
+    public static final String PATH = "path";
 
 
     private RequestParameter() {

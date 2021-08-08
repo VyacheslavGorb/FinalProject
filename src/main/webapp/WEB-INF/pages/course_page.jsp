@@ -30,7 +30,8 @@
                     key="course_page.per_hour"
                     bundle="${rb}"/></span>
         </div>
-        <img class="course_page_image w-100 mt-4 mb-4" src="${requestScope.course.picturePath}"
+        <img class="course_page_image w-100 mt-4 mb-4"
+             src="${pageContext.request.contextPath}/image?path=${requestScope.course.picturePath}"
              alt="${requestScope.course.name}">
 
         <p id="content" class="m-4 fs-4 text-start">${requestScope.course.description}</p>
