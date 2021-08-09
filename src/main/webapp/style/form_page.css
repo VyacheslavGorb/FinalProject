@@ -23,3 +23,11 @@
 #illegal-file-type{
     display: none;
 }
+
+#illegal-datetime{
+    display: none;
+}
+
+#illegal-request{
+    display: none;
+}

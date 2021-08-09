@@ -12,13 +12,17 @@
 }
 
 .card-img-top {
-    max-height: 40vh;
     object-fit: cover;
 }
 
 .card {
     width: 100%;
     margin-top: 1.5rem;
+    max-height: 40vh;
+}
+
+.img-fluid{
+    object-fit: contain;
 }
 
 .page-item{

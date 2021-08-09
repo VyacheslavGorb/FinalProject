@@ -2,13 +2,14 @@ package edu.gorb.musicstudio.entity;
 
 import java.time.LocalTime;
 
-public class TeacherSchedule extends AbstractEntity{
+public class TeacherSchedule {
+    private long teacherId;
     private int dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
 
-    public TeacherSchedule(long entityId, int dayOfWeek, LocalTime startTime, LocalTime endTime) {
-        super(entityId);
+    public TeacherSchedule(long teacherId, int dayOfWeek, LocalTime startTime, LocalTime endTime) {
+        this.teacherId = teacherId;
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,6 +37,14 @@ public class TeacherSchedule extends AbstractEntity{
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    public long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(long teacherId) {
+        this.teacherId = teacherId;
     }
 
     @Override

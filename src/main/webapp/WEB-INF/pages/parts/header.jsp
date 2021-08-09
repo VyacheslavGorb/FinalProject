@@ -9,7 +9,8 @@
 <header class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold"
-           href="${pageContext.request.contextPath}/controller?command=home_page">MuzShock</a>
+           href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message key="company.name"
+                                                                                               bundle="${ rb }"/></a>
         <div class="d-flex justify-content-around">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page"
@@ -39,8 +40,9 @@
                                                                                        bundle="${ rb }"/></a>
                     </c:when>
                     <c:when test="${sessionScope.user.role eq UserRole.TEACHER}">
-                        <a class="nav-link " aria-current="page" href="#"><fmt:message key="header.profile"
-                                                                                       bundle="${ rb }"/></a>
+                        <a class="nav-link " aria-current="page"
+                           href="${pageContext.request.contextPath}/controller?command=teacher_lesson_schedule">
+                            <fmt:message key="header.profile" bundle="${ rb }"/></a>
                     </c:when>
                     <c:when test="${sessionScope.user.role eq UserRole.ADMIN}">
                         <a class="nav-link " aria-current="page" href="#"><fmt:message key="header.profile"

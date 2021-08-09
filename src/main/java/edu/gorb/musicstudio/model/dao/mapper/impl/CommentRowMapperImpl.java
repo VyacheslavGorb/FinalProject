@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static edu.gorb.musicstudio.model.dao.ColumnName.*;
 
-public class CommentRowMapperImpl implements RowMapper<Comment> { //todo
+public class CommentRowMapperImpl implements RowMapper<Comment> {
     @Override
     public Comment mapRow(ResultSet resultSet) throws SQLException {
         long commentId = resultSet.getLong(COMMENT_ID);

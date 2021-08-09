@@ -6,7 +6,7 @@ import edu.gorb.musicstudio.exception.DaoException;
 import java.util.List;
 import java.util.Optional;
 
-public interface BaseDao<T extends AbstractEntity> {
+public interface BaseDao<T> {
     List<T> findAll() throws DaoException;
 
     Optional<T> findEntityById(long id) throws DaoException;

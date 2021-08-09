@@ -1,8 +1,6 @@
 package edu.gorb.musicstudio.dto;
 
-import java.time.LocalDateTime;
-
-public class CommentDto { //todo
+public class CommentDto {
     private String studentName;
     private String studentSurname;
     private String content;

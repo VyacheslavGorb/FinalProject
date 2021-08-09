@@ -12,6 +12,7 @@ public class RequestAttribute {
     public static final String COMMAND = "command";
     public static final String LESSON_SCHEDULE_MAP = "lesson_schedule_map";
     public static final String LESSON_SCHEDULE_DATES = "lesson_schedule_dates";
+    public static final String TEACHER_SCHEDULE = "teacher_schedules";
 
 
     private RequestAttribute() {

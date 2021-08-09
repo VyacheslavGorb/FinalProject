@@ -2,6 +2,7 @@ package edu.gorb.musicstudio.conroller.command;
 
 public class SessionAttribute {
     public static final String USER = "user";
+    public static final String DESCRIPTION_EXISTS = "description_exists";
     public static final String PREVIOUS_QUERY = "previous_query";
     public static final String LOCALE = "locale";
     public static final String ERROR_KEY = "error_key";
@@ -19,6 +20,9 @@ public class SessionAttribute {
 
 
     public static final String IS_TEACHER_INIT_ERROR = "is_teacher_init_error";
+    public static final String IS_TEACHER_SCHEDULE_ERROR = "is_teacher_schedule_error";
+    public static final String IS_TEACHER_INFO_ERROR = "is_teacher_info_error";
+
 
 
 

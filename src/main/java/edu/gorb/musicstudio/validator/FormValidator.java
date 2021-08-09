@@ -2,9 +2,9 @@ package edu.gorb.musicstudio.validator;
 
 import edu.gorb.musicstudio.entity.UserRole;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.logging.log4j.core.appender.rolling.FileExtension;
 
-import javax.servlet.ServletResponseWrapper;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class FormValidator {
 
@@ -17,7 +17,10 @@ public class FormValidator {
     private static final String EXPERIENCE_REGEX = "[1-9]{1,2}";
     private static final String JPEG_EXTENSION = "jpeg";
     private static final String JPG_EXTENSION = "jpg";
+    private static final int MAX_TEXT_DESCRIPTION_LENGTH = 1000;
 
+    private static final String SECONDS_STRING = ":00";
+    private static final String DAY_OF_WEEK_REGEX = "[1-7]";
 
 
     private FormValidator() {
@@ -33,7 +36,7 @@ public class FormValidator {
         if (!password.equals(passwordRepeated)) {
             return false;
         }
-        if (email.length() > MAX_EMAIL_LENGTH) {
+        if (email.length() > MAX_EMAIL_LENGTH || email.isBlank()) {
             return false;
         }
         try {
@@ -51,10 +54,55 @@ public class FormValidator {
         if (description == null || experienceParameter == null || imageName == null) {
             return false;
         }
-        if(!experienceParameter.matches(EXPERIENCE_REGEX)){
+        if (!experienceParameter.matches(EXPERIENCE_REGEX)) {
+            return false;
+        }
+        if (description.length() > MAX_TEXT_DESCRIPTION_LENGTH || description.isBlank()) {
+            return false;
+        }
+        return isImageFileNameValid(imageName);
+    }
+
+    public static boolean areAlterTeacherScheduleParametersValid(String startParam, String endParam,
+                                                                 String removeParam, String dayOfWeekParam) {
+
+        if (dayOfWeekParam == null || !dayOfWeekParam.matches(DAY_OF_WEEK_REGEX)) {
             return false;
         }
 
+        if (removeParam == null && (endParam == null || startParam == null)) {
+            return false;
+        }
+
+        if (removeParam != null && (endParam != null || startParam != null)) {
+            return false;
+        }
+
+        if (removeParam == null) {
+            try {
+                LocalTime.parse(startParam + SECONDS_STRING);
+                LocalTime.parse(endParam + SECONDS_STRING);
+            } catch (DateTimeParseException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean areTeacherUpdateParametersValid(String description, String experienceParameter) {
+        if (description == null || experienceParameter == null) {
+            return false;
+        }
+        if (!experienceParameter.matches(EXPERIENCE_REGEX)) {
+            return false;
+        }
+        return description.length() <= MAX_TEXT_DESCRIPTION_LENGTH && !description.isBlank();
+    }
+
+    public static boolean isImageFileNameValid(String imageName) {
+        if (imageName == null) {
+            return false;
+        }
         String extension = FilenameUtils.getExtension(imageName);
         return extension.equals(JPEG_EXTENSION) || extension.equals(JPG_EXTENSION);
     }

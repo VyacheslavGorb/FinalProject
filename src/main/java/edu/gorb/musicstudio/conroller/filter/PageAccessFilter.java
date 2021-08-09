@@ -22,24 +22,36 @@ public class PageAccessFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
     private EnumMap<UserRole, List<CommandType>> availableCommands;
     private EnumSet<CommandType> guestOnlyAvailableCommands;
+    private EnumSet<CommandType> teacherWithDescriptionOnlyAvailableCommands;
+    private EnumSet<CommandType> teacherWithoutDescriptionOnlyAvailableCommands;
 
     @Override
     public void init(FilterConfig filterConfig) {
         availableCommands = new EnumMap<>(UserRole.class);
         guestOnlyAvailableCommands = EnumSet.of(LOGIN, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE);
+
+        teacherWithDescriptionOnlyAvailableCommands = EnumSet.of(TEACHER_LESSON_SCHEDULE,
+                TEACHER_SCHEDULE, ALTER_TEACHER_SCHEDULE, TEACHER_PERSONAL_INFO, UPDATE_TEACHER_DESCRIPTION);
+
+        teacherWithoutDescriptionOnlyAvailableCommands = EnumSet.of(TEACHER_INIT, SEND_TEACHER_INIT_DESCRIPTION);
+
         availableCommands.put(UserRole.GUEST,
                 List.of(CHANGE_LANGUAGE, LOGIN, DEFAULT, HOME_PAGE, GO_TO_LOGIN_PAGE, SIGN_UP, GO_TO_SIGN_UP_PAGE,
                         CONFIRM_EMAIL, GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE));
+
         availableCommands.put(UserRole.STUDENT,
                 List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
                         COURSES, COURSE_PAGE, POST_COMMENT, TEACHERS, TEACHER_PAGE));
+
         availableCommands.put(UserRole.TEACHER,
                 List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
-                        COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, TEACHER_INIT_PAGE, TEACHER_LESSON_SCHEDULE_PAGE,
-                        SEND_DESCRIPTION));
+                        COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, TEACHER_INIT, TEACHER_LESSON_SCHEDULE,
+                        SEND_TEACHER_INIT_DESCRIPTION, TEACHER_SCHEDULE, ALTER_TEACHER_SCHEDULE, TEACHER_PERSONAL_INFO,
+                        UPDATE_TEACHER_DESCRIPTION));
+
         availableCommands.put(UserRole.ADMIN,
                 List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
@@ -79,6 +91,20 @@ public class PageAccessFilter implements Filter {
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.NOT_ENOUGH_RIGHTS);
             httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + PagePath.ERROR_PAGE);
             return;
+        }
+
+        if (role == UserRole.TEACHER) {
+            boolean descriptionExists = (boolean) session.getAttribute(SessionAttribute.DESCRIPTION_EXISTS);
+            if (teacherWithDescriptionOnlyAvailableCommands.contains(currentCommand) && !descriptionExists){
+                httpServletResponse.sendRedirect(httpServletRequest.getContextPath()
+                        + PagePath.TEACHER_INIT_PAGE_REDIRECT);
+                return;
+            }
+            if(teacherWithoutDescriptionOnlyAvailableCommands.contains(currentCommand) && descriptionExists){
+                httpServletResponse.sendRedirect(httpServletRequest.getContextPath()
+                        + PagePath.TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT);
+                return;
+            }
         }
 
         filterChain.doFilter(servletRequest, servletResponse);

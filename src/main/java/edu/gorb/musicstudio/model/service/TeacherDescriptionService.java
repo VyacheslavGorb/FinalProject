@@ -12,5 +12,12 @@ public interface TeacherDescriptionService {
 
     boolean teacherDescriptionExists(long teacherId) throws ServiceException;
 
-    void saveTeacherDescription(long id, List<Part> imageParts, String description, int workExperienceYears) throws ServiceException;
+    void saveTeacherDescription(long teacherId, List<Part> imageParts, String description, int workExperienceYears)
+            throws ServiceException;
+
+    void updateTeacherDescription(long teacherId, List<Part> imageParts, String description, int workExperienceYears)
+            throws ServiceException;
+
+    void updateTeacherDescriptionWithoutImageUpload(long teacherId, String description, int workExperienceYears)
+            throws ServiceException;
 }

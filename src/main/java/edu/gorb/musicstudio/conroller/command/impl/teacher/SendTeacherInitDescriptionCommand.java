@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SendDescriptionCommand implements Command {
+public class SendTeacherInitDescriptionCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
         try {
@@ -23,14 +23,10 @@ public class SendDescriptionCommand implements Command {
             HttpSession session = request.getSession();
             User teacher = (User) session.getAttribute(SessionAttribute.USER);
 
-            if (descriptionService.teacherDescriptionExists(teacher.getId())) {
-                return new CommandResult(PagePath.TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
-            }
-
             String description = request.getParameter(RequestParameter.DESCRIPTION);
             String experienceParameter = request.getParameter(RequestParameter.EXPERIENCE);
             List<Part> imageParts = request.getParts().stream()
-                    .filter(part -> part.getName().equals(RequestParameter.IMAGE))
+                    .filter(part -> part.getName().equals(RequestParameter.IMAGE) && part.getSize() > 0)
                     .collect(Collectors.toList());
 
             if (imageParts.isEmpty()) {
@@ -47,9 +43,11 @@ public class SendDescriptionCommand implements Command {
             int workExperience = Integer.parseInt(experienceParameter);
 
             descriptionService.saveTeacherDescription(teacher.getId(), imageParts, description, workExperience);
+            session.setAttribute(SessionAttribute.DESCRIPTION_EXISTS, true);
         } catch (ServiceException | ServletException | IOException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
+
         return new CommandResult(PagePath.TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
     }
 }

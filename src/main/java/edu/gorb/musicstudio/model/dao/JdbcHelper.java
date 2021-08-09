@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class JdbcHelper<T extends AbstractEntity> {
+public class JdbcHelper<T> {
     private static final Logger logger = LogManager.getLogger();
     private ConnectionPool connectionPool;
     private RowMapper<T> mapper;

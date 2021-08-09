@@ -3,14 +3,3 @@
     object-fit: cover;
     border-radius: 10px;
 }
-
-.comment{
-    border-radius: 20px;
-    border: solid;
-    border-color: #198754;
-    border-width: 2px;
-}
-
-.comment-text{
-    word-wrap: break-word;
-}

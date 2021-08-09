@@ -26,10 +26,6 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
 
     private final JdbcHelper<LessonSchedule> jdbcHelper;
 
-    public LessonScheduleDaoImpl(JdbcHelper<LessonSchedule> jdbcHelper) {
-        this.jdbcHelper = jdbcHelper;
-    }
-
     public LessonScheduleDaoImpl() {
         jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new LessonScheduleRowMapper());
     }
@@ -41,17 +37,17 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
 
     @Override
     public Optional<LessonSchedule> findEntityById(long id) throws DaoException {
-        return Optional.empty();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public int insert(LessonSchedule lessonSchedule) throws DaoException {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void update(LessonSchedule lessonSchedule) throws DaoException {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override

@@ -15,7 +15,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/form_page.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.login"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="teacher.tabs.lesson_schedule"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
@@ -23,18 +23,33 @@
 
 <ul class="nav nav-tabs mb-5">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="#">Расписание занятий</a>
+        <a class="nav-link active" aria-current="page"
+           href="${pageContext.request.contextPath}/controller?command=teacher_lesson_schedule"><fmt:message
+                key="teacher.tabs.lesson_schedule"
+                bundle="${rb}"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Расписание преподавателя</a>
+        <a class="nav-link"
+           href="${pageContext.request.contextPath}/controller?command=teacher_schedule"><fmt:message
+                key="teacher.tabs.teacher_schedule"
+                bundle="${rb}"/></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Персональная информация</a>
+        <a class="nav-link"
+           href="${pageContext.request.contextPath}/controller?command=teacher_personal_info"><fmt:message
+                key="teacher.tabs.personal_info"
+                bundle="${rb}"/></a>
     </li>
 </ul>
 
 
 <div class="w-100 d-flex align-items-center flex-column vh-100">
+
+    <c:if test="${requestScope.lesson_schedule_dates.size() == 0}">
+        <div class="d-flex mt-5 align-items-center flex-column">
+            <h1 class="display-1"><fmt:message key="teacher.lesson_schedule.not_found" bundle="${rb}"/></h1>
+        </div>
+    </c:if>
 
     <c:forEach items="${requestScope.lesson_schedule_dates}" var="date">
         <div class="d-flex w-75">
@@ -44,12 +59,12 @@
             <table class="table mb-5 w-75">
                 <thead>
                 <tr>
-                    <th scope="col">User name</th>
-                    <th scope="col">User surname</th>
-                    <th scope="col">Course name</th>
-                    <th scope="col">Start time</th>
-                    <th scope="col">Duration (minutes)</th>
-                    <th scope="col">Status</th>
+                    <th scope="col"><fmt:message key="teacher.lesson_schedule.student_name" bundle="${rb}"/></th>
+                    <th scope="col"><fmt:message key="teacher.lesson_schedule.student_surname" bundle="${rb}"/></th>
+                    <th scope="col"><fmt:message key="teacher.lesson_schedule.course_name" bundle="${rb}"/></th>
+                    <th scope="col"><fmt:message key="teacher.lesson_schedule.start_time" bundle="${rb}"/></th>
+                    <th scope="col"><fmt:message key="teacher.lesson_schedule.duration" bundle="${rb}"/></th>
+                    <th scope="col"><fmt:message key="teacher.lesson_schedule.status" bundle="${rb}"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,7 +74,8 @@
                     <td>${lessonSchedule.courseName}</td>
                     <td>${lessonSchedule.startDateTime.hour}:${lessonSchedule.startDateTime.minute}</td>
                     <td>${lessonSchedule.duration.minute}</td>
-                    <td>${lessonSchedule.status}</td>
+                    <td><fmt:message key="teacher.lesson_schedule.status.${lessonSchedule.status}"
+                                     bundle="${rb}"/></td>
                 </tr>
                 </tbody>
             </table>

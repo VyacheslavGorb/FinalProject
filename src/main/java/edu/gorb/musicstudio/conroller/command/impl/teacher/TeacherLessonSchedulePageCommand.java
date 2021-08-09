@@ -6,19 +6,15 @@ import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.LessonScheduleService;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
-import edu.gorb.musicstudio.model.service.TeacherDescriptionService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-public class TeacherLessonSchedulePage implements Command {
+public class TeacherLessonSchedulePageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        TeacherDescriptionService teacherDescriptionService =
-                ServiceProvider.getInstance().getTeacherDescriptionService();
-
         LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
 
         HttpSession session = request.getSession();
@@ -26,9 +22,6 @@ public class TeacherLessonSchedulePage implements Command {
         List<String> lessonScheduleDateLines;
         Map<String, List<LessonScheduleDto>> lessonScheduleDtoMap;
         try {
-            if (!teacherDescriptionService.teacherDescriptionExists(user.getId())) {
-                return new CommandResult(PagePath.TEACHER_INIT_PAGE, CommandResult.RoutingType.REDIRECT);
-            }
             List<LessonScheduleDto> lessonScheduleDtos =
                     lessonScheduleService.findFutureSchedulesByTeacherId(user.getId());
 

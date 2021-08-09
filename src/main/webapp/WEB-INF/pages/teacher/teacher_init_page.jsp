@@ -15,14 +15,14 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/form_page.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.login"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.teacher"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
 
 <div class="w-100 d-flex flex-column align-items-center vh-100">
-    <p class="display-4 fs-1 mt-4">Enter personal data to continue</p>
+    <p class="display-4 fs-1 mt-4"><fmt:message key="teacher_init.main" bundle="${rb}"/></p>
 
     <c:if test="${sessionScope.is_teacher_init_error != null}">
         <div class="alert alert-danger d-flex align-items-center w-75" role="alert">
@@ -33,7 +33,7 @@
                         d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
             </svg>
             <div>
-                <fmt:message key="signup.hint.password" bundle="${rb}"/>
+                <fmt:message key="error.invalid_request" bundle="${rb}"/>
             </div>
         </div>
     </c:if>
@@ -47,23 +47,24 @@
                     d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
         </svg>
         <div>
-            <fmt:message key="signup.passwords_mismatch" bundle="${rb}"/>
+            <fmt:message key="error.image_type" bundle="${rb}"/>
         </div>
     </div>
 
-
-    <form id="teacher-init-form" method="post" class="w-75" action="${pageContext.request.contextPath}/controller" enctype='multipart/form-data'>
+    <form id="teacher-init-form" method="post" class="w-75" action="${pageContext.request.contextPath}/controller"
+          enctype='multipart/form-data'>
         <input type="hidden" name="command" value="send_description">
-        <label class="form-label mt-4">Enter self description</label>
-        <textarea name="description" class="form-control" rows="5" maxlength="2000" required></textarea>
+        <label class="form-label mt-4"><fmt:message key="teacher_init.label.description" bundle="${rb}"/></label>
+        <textarea name="description" class="form-control" rows="5" maxlength="1000" required></textarea>
 
-        <label class="form-label mt-4">Enter your work experience in years</label>
+        <label class="form-label mt-4"><fmt:message key="teacher_init.label.experience" bundle="${rb}"/></label>
         <input name="experience" type="text" pattern="[1-9]{1,2}" class="form-control" required>
 
-        <label class="form-label mt-4">Upload image</label>
+        <label class="form-label mt-4"><fmt:message key="teacher_init.label.image" bundle="${rb}"/></label>
         <input id="fileInput" name="image" type="file" class="form-control" accept="image/jpeg" required>
 
-        <button id="submit-btn" type="submit" class="btn btn-success mt-4 mb-4 w-25">Submit</button>
+        <button id="submit-btn" type="submit" class="btn btn-success mt-4 mb-4 w-25"><fmt:message
+                key="teacher_init.btn" bundle="${rb}"/></button>
     </form>
 </div>
 

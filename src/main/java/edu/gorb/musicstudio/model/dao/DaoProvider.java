@@ -9,6 +9,8 @@ public class DaoProvider {
     private final TeacherDescriptionDao teacherDescriptionDao = new TeacherDescriptionDaoImpl();
     private final CommentDao commentDao = new CommentDaoImpl();
     private final LessonScheduleDao lessonScheduleDao = new LessonScheduleDaoImpl();
+    private final TeacherScheduleDao teacherScheduleDao = new TeacherScheduleDaoImpl();
+
 
     private DaoProvider() {
     }
@@ -39,6 +41,10 @@ public class DaoProvider {
 
     public LessonScheduleDao getLessonScheduleDao() {
         return lessonScheduleDao;
+    }
+
+    public TeacherScheduleDao getTeacherScheduleDao() {
+        return teacherScheduleDao;
     }
 
     private static class DataProviderHolder {

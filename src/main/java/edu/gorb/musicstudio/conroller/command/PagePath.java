@@ -27,7 +27,13 @@ public class PagePath {
     public static final String TEACHER_INIT_PAGE_REDIRECT = "/controller?command=teacher_init_page";
 
     public static final String TEACHER_LESSON_SCHEDULE_PAGE = "WEB-INF/pages/teacher/teacher_lesson_schedule_page.jsp";
-    public static final String TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT = "/controller?command=teacher_lesson_schedule_page";
+    public static final String TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT = "/controller?command=teacher_lesson_schedule";
+
+    public static final String TEACHER_SCHEDULE_PAGE = "WEB-INF/pages/teacher/teacher_schedule.jsp";
+    public static final String TEACHER_SCHEDULE_PAGE_REDIRECT = "/controller?command=teacher_schedule";
+
+    public static final String TEACHER_PERSONAL_INFO_REDIRECT = "/controller?command=teacher_personal_info";
+    public static final String TEACHER_PERSONAL_INFO = "WEB-INF/pages/teacher/teacher_personal_info.jsp";
 
     private PagePath() {
     }

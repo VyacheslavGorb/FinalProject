@@ -9,6 +9,7 @@ public class ServiceProvider {
     private final CommentService commentService = new CommentServiceImpl();
     private final TeacherDescriptionService teacherDescriptionService = new TeacherDescriptionServiceImpl();
     private final LessonScheduleService lessonScheduleService = new LessonScheduleServiceImpl();
+    private final TeacherScheduleService teacherScheduleService = new TeacherScheduleServiceImpl();
 
     private ServiceProvider() {
     }
@@ -39,6 +40,10 @@ public class ServiceProvider {
 
     private static class ServiceProviderHolder {
         private static final ServiceProvider instance = new ServiceProvider();
+    }
+
+    public TeacherScheduleService getTeacherScheduleService() {
+        return teacherScheduleService;
     }
 
     public LessonScheduleService getLessonScheduleService() {

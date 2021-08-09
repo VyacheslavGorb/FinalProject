@@ -4,6 +4,7 @@ let signupBtn = document.getElementById("signup_btn");
 let error_message = document.getElementById("passwords_mismatch");
 
 signupBtn.addEventListener("click", (event) => {
+    error_message.style.display = "none";
     if (password1.value !== password2.value) {
         event.preventDefault();
         error_message.style.display = "flex";

@@ -18,9 +18,15 @@ public enum CommandType {
     POST_COMMENT,
     TEACHERS,
     TEACHER_PAGE,
-    TEACHER_LESSON_SCHEDULE_PAGE,
-    TEACHER_INIT_PAGE,
-    SEND_DESCRIPTION;
+
+    /*Teacher commands*/
+    TEACHER_LESSON_SCHEDULE,
+    TEACHER_INIT,
+    SEND_TEACHER_INIT_DESCRIPTION,
+    TEACHER_SCHEDULE,
+    ALTER_TEACHER_SCHEDULE,
+    TEACHER_PERSONAL_INFO,
+    UPDATE_TEACHER_DESCRIPTION;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {

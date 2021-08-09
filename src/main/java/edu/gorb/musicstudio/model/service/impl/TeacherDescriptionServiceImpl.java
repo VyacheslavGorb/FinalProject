@@ -61,11 +61,16 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
     }
 
     @Override
-    public void saveTeacherDescription(long id, List<Part> imageParts, String descriptionContent, int workExperienceYears) throws ServiceException {
+    public void saveTeacherDescription(long teacherId, List<Part> imageParts, String descriptionContent, int workExperienceYears)
+            throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
-        String relativeImagePath = TEACHER_FOLDER + id + JPEG_EXTENSION;
+        String relativeImagePath = TEACHER_FOLDER + teacherId + JPEG_EXTENSION;
         descriptionContent = HtmlEscapeUtil.escape(descriptionContent);
-        TeacherDescription teacherDescription = new TeacherDescription(id, descriptionContent, workExperienceYears, relativeImagePath);
+        TeacherDescription teacherDescription = new TeacherDescription(
+                teacherId,
+                descriptionContent,
+                workExperienceYears,
+                relativeImagePath);
         savePicture(relativeImagePath, imageParts);
         try {
             descriptionDao.insert(teacherDescription);
@@ -74,6 +79,47 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
             throw new ServiceException("Error while inserting teacher description", e);
         }
     }
+
+    @Override
+    public void updateTeacherDescription(long teacherId, List<Part> imageParts, String descriptionContent, int workExperienceYears)
+            throws ServiceException {
+        TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
+        String relativeImagePath = TEACHER_FOLDER + teacherId + JPEG_EXTENSION;
+        descriptionContent = HtmlEscapeUtil.escape(descriptionContent);
+        TeacherDescription teacherDescription = new TeacherDescription(
+                teacherId,
+                descriptionContent,
+                workExperienceYears,
+                relativeImagePath);
+        savePicture(relativeImagePath, imageParts);
+        try {
+            descriptionDao.update(teacherDescription);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while updating teacher description. {}", e.getMessage());
+            throw new ServiceException("Error while updating teacher description", e);
+        }
+    }
+
+    @Override
+    public void updateTeacherDescriptionWithoutImageUpload(long teacherId, String description, int workExperienceYears)
+            throws ServiceException {
+        TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
+        try {
+            Optional<TeacherDescription> optionalDescription = descriptionDao.findEntityById(teacherId);
+            if (optionalDescription.isEmpty()) {
+                throw new ServiceException();
+            }
+            TeacherDescription teacherDescription = optionalDescription.get();
+            String escapedDescription = HtmlEscapeUtil.escape(description);
+            teacherDescription.setDescription(escapedDescription);
+            teacherDescription.setExperience(workExperienceYears);
+            descriptionDao.update(teacherDescription);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while updating teacher description. {}", e.getMessage());
+            throw new ServiceException("Error while updating teacher description", e);
+        }
+    }
+
 
     private void savePicture(String relativePath, List<Part> imageParts) throws ServiceException {
         String absolutePath = basePicturePath + relativePath;

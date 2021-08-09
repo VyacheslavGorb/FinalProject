@@ -2,9 +2,11 @@ package edu.gorb.musicstudio.conroller.command.impl;
 
 import edu.gorb.musicstudio.conroller.command.*;
 import edu.gorb.musicstudio.entity.User;
+import edu.gorb.musicstudio.entity.UserRole;
 import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
+import edu.gorb.musicstudio.model.service.TeacherDescriptionService;
 import edu.gorb.musicstudio.model.service.UserService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -22,9 +24,10 @@ public class LoginCommand implements Command {
         HttpSession session = request.getSession();
         String login = request.getParameter(RequestParameter.LOGIN);
         String password = request.getParameter(RequestParameter.PASSWORD);
-        UserService service = ServiceProvider.getInstance().getUserService();
+        UserService userService = ServiceProvider.getInstance().getUserService();
+        TeacherDescriptionService descriptionService = ServiceProvider.getInstance().getTeacherDescriptionService();
         try {
-            Optional<User> user = service.findRegisteredUser(login, password);
+            Optional<User> user = userService.findRegisteredUser(login, password);
             if (user.isEmpty()) {
                 session.setAttribute(SessionAttribute.IS_LOGIN_ERROR, true);
                 session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.LOGIN_ERROR);
@@ -48,7 +51,18 @@ public class LoginCommand implements Command {
                 return new CommandResult(PagePath.LOGIN_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
-            request.getSession().setAttribute(SessionAttribute.USER, user.get());
+            if (user.get().getRole() == UserRole.TEACHER) {
+                session.setAttribute(SessionAttribute.DESCRIPTION_EXISTS,
+                        descriptionService.teacherDescriptionExists(user.get().getId()));
+            }
+
+            session.setAttribute(SessionAttribute.USER, user.get());
+            UserRole userRole = user.get().getRole();
+
+            if (userRole == UserRole.TEACHER) {
+                return new CommandResult(PagePath.TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
+            }
+
             return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT); //FIXME change to personal page
 
         } catch (ServiceException e) {

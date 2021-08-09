@@ -24,7 +24,9 @@ public class SessionAttributeFilter implements Filter {
         attributesToRemove.put(GO_TO_LOGIN_PAGE, List.of(IS_LOGIN_ERROR, EMAIL_NOT_CONFIRMED));
         attributesToRemove.put(GO_TO_SIGN_UP_PAGE, List.of(IS_SIGNUP_ERROR));
         attributesToRemove.put(GO_TO_SEND_EMAIL_AGAIN_PAGE, List.of(IS_SEND_EMAIL_AGAIN_ERROR));
-        attributesToRemove.put(SEND_DESCRIPTION, List.of(IS_TEACHER_INIT_ERROR));
+        attributesToRemove.put(TEACHER_INIT, List.of(IS_TEACHER_INIT_ERROR));
+        attributesToRemove.put(TEACHER_SCHEDULE, List.of(IS_TEACHER_SCHEDULE_ERROR));
+        attributesToRemove.put(TEACHER_PERSONAL_INFO, List.of(IS_TEACHER_INFO_ERROR));
     }
 
     @Override

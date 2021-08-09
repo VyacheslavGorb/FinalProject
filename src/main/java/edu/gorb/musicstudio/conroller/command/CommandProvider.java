@@ -3,9 +3,7 @@ package edu.gorb.musicstudio.conroller.command;
 import edu.gorb.musicstudio.conroller.command.impl.*;
 import edu.gorb.musicstudio.conroller.command.impl.go.*;
 import edu.gorb.musicstudio.conroller.command.impl.student.PostCommentCommand;
-import edu.gorb.musicstudio.conroller.command.impl.teacher.SendDescriptionCommand;
-import edu.gorb.musicstudio.conroller.command.impl.teacher.TeacherInitPageCommand;
-import edu.gorb.musicstudio.conroller.command.impl.teacher.TeacherLessonSchedulePage;
+import edu.gorb.musicstudio.conroller.command.impl.teacher.*;
 
 import java.util.EnumMap;
 
@@ -33,9 +31,13 @@ public class CommandProvider {
         commands.put(POST_COMMENT, new PostCommentCommand());
         commands.put(TEACHERS, new TeachersCommand());
         commands.put(TEACHER_PAGE, new TeacherPageCommand());
-        commands.put(TEACHER_INIT_PAGE, new TeacherInitPageCommand());
-        commands.put(TEACHER_LESSON_SCHEDULE_PAGE, new TeacherLessonSchedulePage());
-        commands.put(SEND_DESCRIPTION, new SendDescriptionCommand());
+        commands.put(TEACHER_INIT, new TeacherInitPageCommand());
+        commands.put(TEACHER_LESSON_SCHEDULE, new TeacherLessonSchedulePageCommand());
+        commands.put(SEND_TEACHER_INIT_DESCRIPTION, new SendTeacherInitDescriptionCommand());
+        commands.put(TEACHER_SCHEDULE, new TeacherSchedulePageCommand());
+        commands.put(ALTER_TEACHER_SCHEDULE, new AlterTeacherScheduleCommand());
+        commands.put(TEACHER_PERSONAL_INFO, new TeacherPersonalInfoCommand());
+        commands.put(UPDATE_TEACHER_DESCRIPTION, new UpdateTeacherDescriptionCommand());
     }
 
     public static CommandProvider getInstance() {

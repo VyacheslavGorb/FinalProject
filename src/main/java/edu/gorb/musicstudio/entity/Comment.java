@@ -2,7 +2,7 @@ package edu.gorb.musicstudio.entity;
 
 import java.time.LocalDateTime;
 
-public class Comment extends AbstractEntity { //todo
+public class Comment extends AbstractEntity {
     private long studentId;
     private long courseId;
     private String content;
