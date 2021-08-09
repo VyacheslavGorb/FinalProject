@@ -16,21 +16,21 @@ public class AlterTeacherScheduleCommand implements Command {
         HttpSession session = request.getSession();
         User teacher = (User) session.getAttribute(SessionAttribute.USER);
 
-        String startTimeParameter = request.getParameter(RequestParameter.START_TIME);
-        String endTimeParameter = request.getParameter(RequestParameter.END_TIME);
+        String startHourParameter = request.getParameter(RequestParameter.START_HOUR);
+        String endHourParameter = request.getParameter(RequestParameter.END_HOUR);
         String dayOfWeekParameter = request.getParameter(RequestParameter.DAY_OF_WEEK);
         String removeParameter = request.getParameter(RequestParameter.REMOVE);
 
         if (!FormValidator.areAlterTeacherScheduleParametersValid(
-                startTimeParameter, endTimeParameter, removeParameter, dayOfWeekParameter)) {
+                startHourParameter, endHourParameter, removeParameter, dayOfWeekParameter)) {
             session.setAttribute(SessionAttribute.IS_TEACHER_SCHEDULE_ERROR, true);
             return new CommandResult(PagePath.TEACHER_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
         }
 
         TeacherScheduleService scheduleService = ServiceProvider.getInstance().getTeacherScheduleService();
         try {
-            boolean isAltered = scheduleService.alterSchedule(teacher.getId(), startTimeParameter,
-                    endTimeParameter, Integer.parseInt(dayOfWeekParameter),
+            boolean isAltered = scheduleService.alterSchedule(teacher.getId(), startHourParameter,
+                    endHourParameter, Integer.parseInt(dayOfWeekParameter),
                     removeParameter != null);
             if (!isAltered) {
                 session.setAttribute(SessionAttribute.IS_TEACHER_SCHEDULE_ERROR, true);

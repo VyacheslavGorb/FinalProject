@@ -21,8 +21,10 @@
     max-height: 40vh;
 }
 
+
 .img-fluid{
     object-fit: contain;
+    max-height: 40vh;
 }
 
 .page-item{

@@ -71,7 +71,7 @@
                     </c:if>
 
                     <c:if test="${teacher.descriptionProvided == false}">
-                        <div class="card mb-3">
+                        <div class="card mb-3" >
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <img src="pic/slide1.jpg" class="img-fluid rounded-start"

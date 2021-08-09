@@ -21,6 +21,9 @@ public class FormValidator {
 
     private static final String SECONDS_STRING = ":00";
     private static final String DAY_OF_WEEK_REGEX = "[1-7]";
+    private static final int MIN_VALID_HOUR = 0;
+    private static final int MAX_VALID_HOUR = 24;
+
 
 
     private FormValidator() {
@@ -63,28 +66,29 @@ public class FormValidator {
         return isImageFileNameValid(imageName);
     }
 
-    public static boolean areAlterTeacherScheduleParametersValid(String startParam, String endParam,
+    public static boolean areAlterTeacherScheduleParametersValid(String startHourParam, String endHourParam,
                                                                  String removeParam, String dayOfWeekParam) {
 
         if (dayOfWeekParam == null || !dayOfWeekParam.matches(DAY_OF_WEEK_REGEX)) {
             return false;
         }
 
-        if (removeParam == null && (endParam == null || startParam == null)) {
+        if (removeParam == null && (endHourParam == null || startHourParam == null)) {
             return false;
         }
 
-        if (removeParam != null && (endParam != null || startParam != null)) {
+        if (removeParam != null && (endHourParam != null || startHourParam != null)) {
             return false;
         }
 
         if (removeParam == null) {
-            try {
-                LocalTime.parse(startParam + SECONDS_STRING);
-                LocalTime.parse(endParam + SECONDS_STRING);
-            } catch (DateTimeParseException e) {
+            if(!IntegerNumberValidator.isIntegerNumber(startHourParam)
+                    || !IntegerNumberValidator.isIntegerNumber(endHourParam)){
                 return false;
             }
+            int startHour = Integer.parseInt(startHourParam);
+            int endHour = Integer.parseInt(endHourParam);
+            return startHour < endHour;
         }
         return true;
     }

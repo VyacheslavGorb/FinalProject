@@ -29,7 +29,7 @@ public class TeacherScheduleServiceImpl implements TeacherScheduleService {
     }
 
     @Override
-    public boolean alterSchedule(long teacherId, String startTimeParam, String endTimeParam, int dayOfWeek, boolean isRemove)
+    public boolean alterSchedule(long teacherId, String startHourParam, String endHourParam, int dayOfWeek, boolean isRemove)
             throws ServiceException {
         TeacherScheduleDao scheduleDao = DaoProvider.getInstance().getTeacherScheduleDao();
         try {
@@ -44,15 +44,15 @@ public class TeacherScheduleServiceImpl implements TeacherScheduleService {
                 return true;
             }
 
-            LocalTime startTime = LocalTime.parse(startTimeParam);
-            LocalTime endTime = LocalTime.parse(endTimeParam);
+            LocalTime startTime = LocalTime.MIDNIGHT.plusHours(Integer.parseInt(startHourParam));
+            LocalTime endTime = LocalTime.MIDNIGHT.plusHours(Integer.parseInt(endHourParam));
 
             if (scheduleExist) {
                 scheduleDao.update(new TeacherSchedule(teacherId, dayOfWeek, startTime, endTime));
             } else {
                 scheduleDao.insert(new TeacherSchedule(teacherId, dayOfWeek, startTime, endTime));
             }
-        } catch (DaoException e) {
+        } catch (DaoException | NumberFormatException e) {
             logger.log(Level.ERROR, "Error while altering teacher schedule teacher id={}. {}",
                     teacherId, e.getMessage());
             throw new ServiceException("Error while altering teacher schedule teacher id=" + teacherId, e);
