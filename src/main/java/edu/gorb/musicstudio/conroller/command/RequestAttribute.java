@@ -13,6 +13,11 @@ public class RequestAttribute {
     public static final String LESSON_SCHEDULE_MAP = "lesson_schedule_map";
     public static final String LESSON_SCHEDULE_DATES = "lesson_schedule_dates";
     public static final String TEACHER_SCHEDULE = "teacher_schedules";
+    public static final String MAX_AVAILABLE_LESSON_COUNT = "max_available_lesson_count";
+    public static final String SUBSCRIPTIONS = "subscriptions";
+    public static final String SUBSCRIPTION_SCHEDULES = "subscription_schedules";
+    public static final String TEACHERS_SCHEDULES = "teachers_schedules";
+    public static final String AVAILABLE_DATES = "available_dates";
 
 
     private RequestAttribute() {

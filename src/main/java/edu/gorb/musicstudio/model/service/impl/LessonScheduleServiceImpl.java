@@ -17,13 +17,16 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class LessonScheduleServiceImpl implements LessonScheduleService {
     private static final Logger logger = LogManager.getLogger();
     private static final String DATE_FORMAT = "dd.MM.yyyy";
-    private DateTimeFormatter formatter;
+    private final DateTimeFormatter formatter;
 
     public LessonScheduleServiceImpl() {
         formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
@@ -86,16 +89,39 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
                 .distinct()
                 .sorted((o1, o2) -> {
                     int result = 0;
-                    if(o1.isAfter(o2)){
+                    if (o1.isAfter(o2)) {
                         result = 1;
                     }
-                    if(o1.isBefore(o2)){
+                    if (o1.isBefore(o2)) {
                         result = -1;
                     }
                     return result;
                 })
                 .map(localDate -> localDate.format(formatter))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<LessonSchedule> findTeacherLessonsForDate(long teacherId, LocalDate date) throws ServiceException {
+        LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
+        try {
+            return lessonScheduleDao.findScheduleForTeacherForDate(teacherId, date);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for teacher lesson schedule for date. {}", e.getMessage());
+            throw new ServiceException("Error while searching for teacher lesson schedule for date", e);
+        }
+    }
+
+    @Override
+    public List<LessonSchedule> findLessonSchedulesBySubscription(long subscriptionId) throws ServiceException {
+        LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
+        try {
+            return lessonScheduleDao.findLessonSchedulesBySubscription(subscriptionId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for schedule by subscription id={}. {}",
+                    subscriptionId, e.getMessage());
+            throw new ServiceException("Error while searching for schedule by subscription id=" + subscriptionId, e);
+        }
     }
 
     private LessonScheduleDto createLessonScheduleDto(User teacher, User student, Course course,

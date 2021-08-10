@@ -23,4 +23,6 @@ public interface UserDao extends BaseDao<User> {
     List<User> selectTeachersWithSearchForPage(int skipAmount, int coursePerPageAmount, String search) throws DaoException;
 
     int countTeachersWithSearch(String searchParameter) throws DaoException;
+
+    List<User> selectTeachersForCourse(long courseId) throws DaoException;
 }

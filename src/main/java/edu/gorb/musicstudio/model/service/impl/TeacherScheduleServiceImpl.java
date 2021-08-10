@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public class TeacherScheduleServiceImpl implements TeacherScheduleService {
     private static final Logger logger = LogManager.getLogger();
@@ -59,5 +60,17 @@ public class TeacherScheduleServiceImpl implements TeacherScheduleService {
         }
 
         return true;
+    }
+
+    @Override
+    public Optional<TeacherSchedule> findScheduleForDay(long teacherId, int dayOfWeek) throws ServiceException {
+        TeacherScheduleDao scheduleDao = DaoProvider.getInstance().getTeacherScheduleDao();
+        try {
+            return scheduleDao.findScheduleForTeacher(teacherId, dayOfWeek);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for teacher schedule for day. id={}. {}",
+                    teacherId, e.getMessage());
+            throw new ServiceException("Error while searching for teacher schedule for day. id=" + teacherId, e);
+        }
     }
 }

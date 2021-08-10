@@ -3,9 +3,6 @@ package edu.gorb.musicstudio.validator;
 import edu.gorb.musicstudio.entity.UserRole;
 import org.apache.commons.io.FilenameUtils;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
-
 public class FormValidator {
 
     private static final String LOGIN_REGEX = "[A-Za-z][0-9a-zA-Z]{2,19}";
@@ -19,11 +16,9 @@ public class FormValidator {
     private static final String JPG_EXTENSION = "jpg";
     private static final int MAX_TEXT_DESCRIPTION_LENGTH = 1000;
 
-    private static final String SECONDS_STRING = ":00";
     private static final String DAY_OF_WEEK_REGEX = "[1-7]";
     private static final int MIN_VALID_HOUR = 0;
     private static final int MAX_VALID_HOUR = 24;
-
 
 
     private FormValidator() {
@@ -82,12 +77,15 @@ public class FormValidator {
         }
 
         if (removeParam == null) {
-            if(!IntegerNumberValidator.isIntegerNumber(startHourParam)
-                    || !IntegerNumberValidator.isIntegerNumber(endHourParam)){
+            if (!IntegerNumberValidator.isNonNegativeIntegerNumber(startHourParam)
+                    || !IntegerNumberValidator.isNonNegativeIntegerNumber(endHourParam)) {
                 return false;
             }
             int startHour = Integer.parseInt(startHourParam);
             int endHour = Integer.parseInt(endHourParam);
+            if (startHour < MIN_VALID_HOUR || endHour > MAX_VALID_HOUR) {
+                return false;
+            }
             return startHour < endHour;
         }
         return true;

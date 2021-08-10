@@ -6,7 +6,7 @@ import edu.gorb.musicstudio.conroller.command.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class TeacherInitPageCommand implements Command {
+public class GoToTeacherInitPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
         return new CommandResult(PagePath.TEACHER_INIT_PAGE, CommandResult.RoutingType.FORWARD);

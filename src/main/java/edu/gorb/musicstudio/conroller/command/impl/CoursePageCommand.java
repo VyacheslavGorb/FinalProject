@@ -18,7 +18,7 @@ public class CoursePageCommand implements Command {
     public CommandResult execute(HttpServletRequest request) {
         String courseIdParameter = request.getParameter(RequestParameter.COURSE_ID);
 
-        if (!IntegerNumberValidator.isIntegerNumber(courseIdParameter)) {
+        if (!IntegerNumberValidator.isNonNegativeIntegerNumber(courseIdParameter)) {
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         long courseId = Long.parseLong(courseIdParameter);

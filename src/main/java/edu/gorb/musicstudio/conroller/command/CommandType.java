@@ -3,7 +3,6 @@ package edu.gorb.musicstudio.conroller.command;
 public enum CommandType {
     LOGIN,
     LOGOUT,
-    PERSONAL_PAGE,
     DEFAULT,
     HOME_PAGE,
     GO_TO_LOGIN_PAGE,
@@ -26,7 +25,13 @@ public enum CommandType {
     TEACHER_SCHEDULE,
     ALTER_TEACHER_SCHEDULE,
     TEACHER_PERSONAL_INFO,
-    UPDATE_TEACHER_DESCRIPTION;
+    UPDATE_TEACHER_DESCRIPTION,
+
+    /*Student commands*/
+    SUBSCRIPTION_PAGE,
+    SEND_SUBSCRIPTION_REQUEST,
+    PERSONAL_SUBSCRIPTIONS,
+    CHOOSE_LESSON_DATETIME_PAGE;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {

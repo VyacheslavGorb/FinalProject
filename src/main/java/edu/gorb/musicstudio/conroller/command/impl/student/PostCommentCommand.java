@@ -19,7 +19,7 @@ public class PostCommentCommand implements Command {
         String courseIdParameter = request.getParameter(RequestParameter.COURSE_ID);
 
 
-        if (!IntegerNumberValidator.isIntegerNumber(courseIdParameter) || content == null) {
+        if (!IntegerNumberValidator.isNonNegativeIntegerNumber(courseIdParameter) || content == null) {
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.INVALID_REQUEST);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.REDIRECT);
         }

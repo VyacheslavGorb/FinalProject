@@ -15,6 +15,7 @@ public class BundleKey {
     public static final String EMAIL_SENT = "info.email_sent";
     public static final String EMAIL_CONFIRMED = "info.email_confirmed";
     public static final String INVALID_LOGIN = "error.invalid_login";
+    public static final String ALREADY_SUBSCRIBED = "info.already_subscribed";
 
 
     private BundleKey() {

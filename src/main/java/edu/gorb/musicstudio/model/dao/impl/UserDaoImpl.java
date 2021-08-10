@@ -154,6 +154,23 @@ public class UserDaoImpl implements UserDao {
                     "WHERE user_role = 'TEACHER'\n" +
                     "  and CONCAT(name, ' ', surname, ' ', patronymic) LIKE CONCAT('%', ?, '%')";
 
+    private static final String SELECT_TEACHER_FOR_COURSE =
+            "SELECT id_user,\n" +
+                    "       login,\n" +
+                    "       password_hash,\n" +
+                    "       name,\n" +
+                    "       surname,\n" +
+                    "       patronymic,\n" +
+                    "       email,\n" +
+                    "       user_status,\n" +
+                    "       user_role\n" +
+                    "FROM users\n" +
+                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
+                    "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
+                    "         JOIN teacher_descriptions_has_courses on id_teacher = id_user\n" +
+                    "WHERE user_status = 'ACTIVE'\n" +
+                    "  and id_course = ?;";
+
     private static final int FIRST_COLUMN_INDEX = 1;
 
     private final JdbcHelper<User> jdbcHelper;
@@ -256,5 +273,10 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException(e);
         }
         return result;
+    }
+
+    @Override
+    public List<User> selectTeachersForCourse(long courseId) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_TEACHER_FOR_COURSE, courseId);
     }
 }

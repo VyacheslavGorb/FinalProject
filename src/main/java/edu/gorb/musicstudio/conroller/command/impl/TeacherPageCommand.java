@@ -15,7 +15,7 @@ public class TeacherPageCommand implements Command {
     public CommandResult execute(HttpServletRequest request) {
         String teacherIdParameter = request.getParameter(RequestParameter.TEACHER_ID);
 
-        if(!IntegerNumberValidator.isIntegerNumber(teacherIdParameter)){
+        if(!IntegerNumberValidator.isNonNegativeIntegerNumber(teacherIdParameter)){
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         long teacherId = Long.parseLong((teacherIdParameter));

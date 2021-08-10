@@ -26,6 +26,9 @@ public class RequestParameter {
     public static final String END_HOUR = "end_time";
     public static final String REMOVE = "remove";
     public static final String DAY_OF_WEEK = "day_of_week";
+    public static final String LESSON_COUNT = "lesson_count";
+    public static final String DATE = "date";
+    public static final String SUBSCRIPTION_ID = "subscription_id";
 
 
 

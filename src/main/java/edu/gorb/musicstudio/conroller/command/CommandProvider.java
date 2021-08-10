@@ -2,7 +2,7 @@ package edu.gorb.musicstudio.conroller.command;
 
 import edu.gorb.musicstudio.conroller.command.impl.*;
 import edu.gorb.musicstudio.conroller.command.impl.go.*;
-import edu.gorb.musicstudio.conroller.command.impl.student.PostCommentCommand;
+import edu.gorb.musicstudio.conroller.command.impl.student.*;
 import edu.gorb.musicstudio.conroller.command.impl.teacher.*;
 
 import java.util.EnumMap;
@@ -16,7 +16,6 @@ public class CommandProvider {
         commands = new EnumMap<>(CommandType.class);
         commands.put(LOGIN, new LoginCommand());
         commands.put(LOGOUT, new LogoutCommand());
-        commands.put(PERSONAL_PAGE, new PersonalPageCommand());
         commands.put(DEFAULT, new DefaultCommand());
         commands.put(HOME_PAGE, new HomePageCommand());
         commands.put(GO_TO_LOGIN_PAGE, new GoToLoginPageCommand());
@@ -31,13 +30,17 @@ public class CommandProvider {
         commands.put(POST_COMMENT, new PostCommentCommand());
         commands.put(TEACHERS, new TeachersCommand());
         commands.put(TEACHER_PAGE, new TeacherPageCommand());
-        commands.put(TEACHER_INIT, new TeacherInitPageCommand());
+        commands.put(TEACHER_INIT, new GoToTeacherInitPageCommand());
         commands.put(TEACHER_LESSON_SCHEDULE, new TeacherLessonSchedulePageCommand());
         commands.put(SEND_TEACHER_INIT_DESCRIPTION, new SendTeacherInitDescriptionCommand());
         commands.put(TEACHER_SCHEDULE, new TeacherSchedulePageCommand());
         commands.put(ALTER_TEACHER_SCHEDULE, new AlterTeacherScheduleCommand());
         commands.put(TEACHER_PERSONAL_INFO, new TeacherPersonalInfoCommand());
         commands.put(UPDATE_TEACHER_DESCRIPTION, new UpdateTeacherDescriptionCommand());
+        commands.put(SUBSCRIPTION_PAGE, new CourseSubscriptionPageCommand());
+        commands.put(SEND_SUBSCRIPTION_REQUEST, new SendSubscriptionRequestCommand());
+        commands.put(PERSONAL_SUBSCRIPTIONS, new PersonalSubscriptionsCommand());
+        commands.put(CHOOSE_LESSON_DATETIME_PAGE, new ChooseLessonDateTimePageCommand());
     }
 
     public static CommandProvider getInstance() {

@@ -41,19 +41,21 @@ public class PageAccessFilter implements Filter {
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE));
 
         availableCommands.put(UserRole.STUDENT,
-                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
+                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
-                        COURSES, COURSE_PAGE, POST_COMMENT, TEACHERS, TEACHER_PAGE));
+                        COURSES, COURSE_PAGE, POST_COMMENT, TEACHERS, TEACHER_PAGE,
+                        SUBSCRIPTION_PAGE, SEND_SUBSCRIPTION_REQUEST, PERSONAL_SUBSCRIPTIONS,
+                        CHOOSE_LESSON_DATETIME_PAGE));
 
         availableCommands.put(UserRole.TEACHER,
-                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
+                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, TEACHER_INIT, TEACHER_LESSON_SCHEDULE,
                         SEND_TEACHER_INIT_DESCRIPTION, TEACHER_SCHEDULE, ALTER_TEACHER_SCHEDULE, TEACHER_PERSONAL_INFO,
                         UPDATE_TEACHER_DESCRIPTION));
 
         availableCommands.put(UserRole.ADMIN,
-                List.of(CHANGE_LANGUAGE, LOGOUT, PERSONAL_PAGE, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
+                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE));
     }
@@ -95,12 +97,12 @@ public class PageAccessFilter implements Filter {
 
         if (role == UserRole.TEACHER) {
             boolean descriptionExists = (boolean) session.getAttribute(SessionAttribute.DESCRIPTION_EXISTS);
-            if (teacherWithDescriptionOnlyAvailableCommands.contains(currentCommand) && !descriptionExists){
+            if (teacherWithDescriptionOnlyAvailableCommands.contains(currentCommand) && !descriptionExists) {
                 httpServletResponse.sendRedirect(httpServletRequest.getContextPath()
                         + PagePath.TEACHER_INIT_PAGE_REDIRECT);
                 return;
             }
-            if(teacherWithoutDescriptionOnlyAvailableCommands.contains(currentCommand) && descriptionExists){
+            if (teacherWithoutDescriptionOnlyAvailableCommands.contains(currentCommand) && descriptionExists) {
                 httpServletResponse.sendRedirect(httpServletRequest.getContextPath()
                         + PagePath.TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT);
                 return;

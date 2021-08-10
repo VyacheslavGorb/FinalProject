@@ -1,6 +1,7 @@
 package edu.gorb.musicstudio.model.service;
 
 import edu.gorb.musicstudio.dto.LessonScheduleDto;
+import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.exception.ServiceException;
 
 import java.time.LocalDate;
@@ -13,5 +14,8 @@ public interface LessonScheduleService {
     Map<String, List<LessonScheduleDto>> mapLessonDtosToByDate(List<LessonScheduleDto> lessonScheduleDtos);
 
     List<String> findDistinctDateLines(List<LessonScheduleDto> lessonScheduleDtos);
-//    List<LessonSchedule> findAllSchedulesByStudentId() throws ServiceException;
+
+    List<LessonSchedule> findTeacherLessonsForDate(long teacherId, LocalDate date) throws ServiceException;
+
+    List<LessonSchedule> findLessonSchedulesBySubscription(long subscriptionId) throws ServiceException;
 }

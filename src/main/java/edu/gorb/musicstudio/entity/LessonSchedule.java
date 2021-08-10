@@ -7,6 +7,7 @@ public class LessonSchedule extends AbstractEntity {
     private long studentId;
     private long teacherId;
     private long courseId;
+    private long subscriptionId;
     private LocalDateTime startDateTime;
     private LocalTime duration;
     private LessonStatus status;
@@ -15,12 +16,13 @@ public class LessonSchedule extends AbstractEntity {
         NORMAL, CANCELLED
     }
 
-    public LessonSchedule(long entityId, long studentId, long teacherId, long courseId, LocalDateTime startDateTime,
-                          LocalTime duration, LessonStatus status) {
+    public LessonSchedule(long entityId, long studentId, long teacherId, long courseId, long subscriptionId,
+                          LocalDateTime startDateTime, LocalTime duration, LessonStatus status) {
         super(entityId);
         this.studentId = studentId;
         this.teacherId = teacherId;
         this.courseId = courseId;
+        this.subscriptionId = subscriptionId;
         this.startDateTime = startDateTime;
         this.duration = duration;
         this.status = status;
@@ -48,6 +50,14 @@ public class LessonSchedule extends AbstractEntity {
 
     public void setCourseId(long courseId) {
         this.courseId = courseId;
+    }
+
+    public long getSubscriptionId() {
+        return subscriptionId;
+    }
+
+    public void setSubscriptionId(long subscriptionId) {
+        this.subscriptionId = subscriptionId;
     }
 
     public LocalDateTime getStartDateTime() {
@@ -85,6 +95,7 @@ public class LessonSchedule extends AbstractEntity {
         if (studentId != that.studentId) return false;
         if (teacherId != that.teacherId) return false;
         if (courseId != that.courseId) return false;
+        if (subscriptionId != that.subscriptionId) return false;
         if (startDateTime != null ? !startDateTime.equals(that.startDateTime) : that.startDateTime != null)
             return false;
         if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
@@ -97,6 +108,7 @@ public class LessonSchedule extends AbstractEntity {
         result = 31 * result + (int) (studentId ^ (studentId >>> 32));
         result = 31 * result + (int) (teacherId ^ (teacherId >>> 32));
         result = 31 * result + (int) (courseId ^ (courseId >>> 32));
+        result = 31 * result + (int) (subscriptionId ^ (subscriptionId >>> 32));
         result = 31 * result + (startDateTime != null ? startDateTime.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
@@ -109,6 +121,7 @@ public class LessonSchedule extends AbstractEntity {
         sb.append("studentId=").append(studentId);
         sb.append(", teacherId=").append(teacherId);
         sb.append(", courseId=").append(courseId);
+        sb.append(", subscriptionId=").append(subscriptionId);
         sb.append(", startDateTime=").append(startDateTime);
         sb.append(", duration=").append(duration);
         sb.append(", status=").append(status);

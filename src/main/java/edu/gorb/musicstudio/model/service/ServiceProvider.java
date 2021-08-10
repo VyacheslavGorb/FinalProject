@@ -10,6 +10,7 @@ public class ServiceProvider {
     private final TeacherDescriptionService teacherDescriptionService = new TeacherDescriptionServiceImpl();
     private final LessonScheduleService lessonScheduleService = new LessonScheduleServiceImpl();
     private final TeacherScheduleService teacherScheduleService = new TeacherScheduleServiceImpl();
+    private final SubscriptionService scheduleService = new SubscriptionServiceImpl();
 
     private ServiceProvider() {
     }
@@ -48,5 +49,9 @@ public class ServiceProvider {
 
     public LessonScheduleService getLessonScheduleService() {
         return lessonScheduleService;
+    }
+
+    public SubscriptionService getScheduleService() {
+        return scheduleService;
     }
 }

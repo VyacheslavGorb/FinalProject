@@ -7,6 +7,8 @@ import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.entity.UserToken;
 import edu.gorb.musicstudio.exception.ServiceException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +42,10 @@ public interface UserService {
     List<TeacherDto> trimTeachersDescriptionForPreview(List<TeacherDto> teachers);
 
     Optional<TeacherDto> findTeacherById(long teacherId) throws ServiceException;
+
+    List<LocalTime> findTeacherFreeSlotsForDate(long teacherId, LocalDate date) throws ServiceException;
+
+    int findTeacherFreeSlotCountForNextMonth(long teacherId) throws ServiceException;
+
+    List<User> findTeachersForCourse(long courseId) throws ServiceException;
 }

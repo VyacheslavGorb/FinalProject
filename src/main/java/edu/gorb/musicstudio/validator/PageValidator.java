@@ -7,7 +7,7 @@ public class PageValidator {
     }
 
     public static boolean isValidPageParameter(String pageParameter, int pageCount) {
-        if (!IntegerNumberValidator.isIntegerNumber(pageParameter)) {
+        if (!IntegerNumberValidator.isNonNegativeIntegerNumber(pageParameter)) {
             return false;
         }
         int pageNumber = Integer.parseInt(pageParameter);

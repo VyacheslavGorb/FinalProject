@@ -32,8 +32,15 @@ public class PagePath {
     public static final String TEACHER_SCHEDULE_PAGE = "WEB-INF/pages/teacher/teacher_schedule.jsp";
     public static final String TEACHER_SCHEDULE_PAGE_REDIRECT = "/controller?command=teacher_schedule";
 
-    public static final String TEACHER_PERSONAL_INFO_REDIRECT = "/controller?command=teacher_personal_info";
     public static final String TEACHER_PERSONAL_INFO = "WEB-INF/pages/teacher/teacher_personal_info.jsp";
+    public static final String TEACHER_PERSONAL_INFO_REDIRECT = "/controller?command=teacher_personal_info";
+
+    public static final String SUBSCRIPTION_PAGE = "WEB-INF/pages/student/subscription_page.jsp";
+    public static final String SUBSCRIPTION_PAGE_REDIRECT = "/controller?command=subscription_page&course_id=";
+
+    public static final String PERSONAL_SUBSCRIPTIONS_PAGE = "WEB-INF/pages/student/personal_subscriptions.jsp";
+
+    public static final String CHOOSE_LESSON_TIMEDATE_PAGE = "WEB-INF/pages/student/choose_lesson_timedate.jsp";
 
     private PagePath() {
     }

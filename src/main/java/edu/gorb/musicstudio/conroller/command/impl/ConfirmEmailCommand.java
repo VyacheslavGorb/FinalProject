@@ -30,7 +30,7 @@ public class ConfirmEmailCommand implements Command {
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 
-        if(!IntegerNumberValidator.isIntegerNumber(userIdParameter)){
+        if(!IntegerNumberValidator.isNonNegativeIntegerNumber(userIdParameter)){
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.INVALID_ACTIVATION_LINK);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.REDIRECT);
         }

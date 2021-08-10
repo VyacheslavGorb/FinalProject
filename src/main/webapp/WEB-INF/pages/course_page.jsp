@@ -82,12 +82,6 @@
     </c:if>
 </div>
 
-<%--<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>--%>
-<%--<script>--%>
-<%--    document.getElementById('content').innerHTML =--%>
-<%--        marked('${requestScope.course.description}');--%>
-<%--</script>TODO--%>
-
 <jsp:include page="parts/footer.jsp"/>
 </body>
 </html>

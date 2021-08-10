@@ -8,6 +8,9 @@ import edu.gorb.musicstudio.model.dao.DaoProvider;
 import edu.gorb.musicstudio.model.dao.TeacherDescriptionDao;
 import edu.gorb.musicstudio.model.dao.UserDao;
 import edu.gorb.musicstudio.model.dao.UserTokenDao;
+import edu.gorb.musicstudio.model.service.LessonScheduleService;
+import edu.gorb.musicstudio.model.service.ServiceProvider;
+import edu.gorb.musicstudio.model.service.TeacherScheduleService;
 import edu.gorb.musicstudio.model.service.UserService;
 import edu.gorb.musicstudio.util.DescriptionUtil;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -15,7 +18,9 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private static final int LINK_EXPIRE_TIMEOUT = 10; // minutes
     private static final int ITEMS_ON_PAGE_COUNT = 1;
     private static final int MIN_PAGE_COUNT = 1;
+    private static final int DEFAULT_SUBSCRIPTION_LENGTH_DAYS = 30;
 
 
     public Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
@@ -253,6 +259,58 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public List<LocalTime> findTeacherFreeSlotsForDate(long teacherId, LocalDate date) throws ServiceException {
+        TeacherScheduleService scheduleService = ServiceProvider.getInstance().getTeacherScheduleService();
+        UserService userService = ServiceProvider.getInstance().getUserService();
+        Optional<User> teacher = userService.findUserById(teacherId);
+        if (teacher.isEmpty() || teacher.get().getRole() != UserRole.TEACHER) {
+            logger.log(Level.ERROR, "Invalid teacher id={}", teacherId);
+            throw new ServiceException("Invalid teacher id=" + teacherId);
+        }
+        int dayOfWeek = date.getDayOfWeek().getValue();
+        Optional<TeacherSchedule> scheduleOptional = scheduleService.findScheduleForDay(teacherId, dayOfWeek);
+        if (scheduleOptional.isEmpty()) {
+            return new ArrayList<>();
+        }
+        TeacherSchedule teacherSchedule = scheduleOptional.get();
+        List<LocalTime> freeSlots = new ArrayList<>();
+        LocalTime startTime = teacherSchedule.getStartTime();
+        LocalTime endTime = teacherSchedule.getEndTime();
+        while (startTime.isBefore(endTime)) {
+            freeSlots.add(startTime);
+            startTime = startTime.plusHours(1);
+        }
+        LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
+        List<LessonSchedule> teacherScheduleForDate = lessonScheduleService.findTeacherLessonsForDate(teacherId, date);
+        List<LocalTime> busySlots = teacherScheduleForDate.stream()
+                .map(lessonSchedule -> lessonSchedule.getStartDateTime().toLocalTime())
+                .collect(Collectors.toList());
+        freeSlots.removeAll(busySlots);
+        return freeSlots;
+    }
+
+    @Override
+    public int findTeacherFreeSlotCountForNextMonth(long teacherId) throws ServiceException {
+        LocalDate date = LocalDate.now().plusDays(1);
+        int slotCount = 0;
+        for (int i = 0; i < DEFAULT_SUBSCRIPTION_LENGTH_DAYS; i++) {
+            slotCount += findTeacherFreeSlotsForDate(teacherId, date).size();
+            date = date.plusDays(1);
+        }
+        return slotCount;
+    }
+
+    @Override
+    public List<User> findTeachersForCourse(long courseId) throws ServiceException {
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        try {
+            return userDao.selectTeachersForCourse(courseId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for teacher for course id={}. {}", courseId, e.getMessage());
+            throw new ServiceException("Error while searching for teacher for course id=" + courseId, e);
+        }
+    }
 
     private TeacherDto createTeacherDto(User user, TeacherDescription teacherDescription) {
         TeacherDto teacherDto = new TeacherDto();

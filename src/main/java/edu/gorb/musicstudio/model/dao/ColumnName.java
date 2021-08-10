@@ -48,14 +48,12 @@ public class ColumnName {
     public static final String LESSON_COURSE_ID = "id_course";
 
     /*Subscriptions table*/
-    public static final String SUBSCRIPTION_ID = "id_subscriptions";
+    public static final String SUBSCRIPTION_ID = "id_subscription";
     public static final String SUBSCRIPTION_DATE_START = "date_start";
     public static final String SUBSCRIPTION_DATE_END = "date_end";
     public static final String SUBSCRIPTION_LESSON_AMOUNT = "lesson_amount";
-    public static final String SUBSCRIPTION_LESSON_DURATION = "lesson_duration";
-    public static final String SUBSCRIPTION_FREE_TRANSFER_AMOUNT = "free_transfer_amount";
-    public static final String SUBSCRIPTION_STUDENT_DISCOUNT = "student_discount";
-    public static final String SUBSCRIPTION_SUBSCRIPTION_DISCOUNT = "subscription_discount";
+    public static final String SUBSCRIPTION_STATUS = "status";
+
 
     /*Teacher descriptions table*/
     public static final String TEACHER_ID = "id_teacher";

@@ -4,13 +4,13 @@ public class IntegerNumberValidator {
     private IntegerNumberValidator() {
     }
 
-    public static boolean isIntegerNumber(String line) {
-        boolean result = true;
+    public static boolean isNonNegativeIntegerNumber(String line) {
+        long number;
         try {
-            Long.parseLong(line);
+            number = Long.parseLong(line);
         } catch (NumberFormatException e) {
-            result = false;
+            return false;
         }
-        return result;
+        return number >= 0 ;
     }
 }
