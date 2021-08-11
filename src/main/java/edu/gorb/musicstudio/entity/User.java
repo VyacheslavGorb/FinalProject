@@ -3,6 +3,8 @@ package edu.gorb.musicstudio.entity;
 import java.io.Serializable;
 
 public class User extends AbstractEntity implements Serializable {
+    private static final long serialVersionUID = 2017964826433870L;
+
     private String login;
     private String password;
     private String name;

@@ -44,7 +44,7 @@
     <c:forEach items="${requestScope.subscriptions}" var="subscription">
         <div class="d-flex justify-content-center flex-column align-items-center card m-5 bg-light">
             <div class="d-flex w-100 mt-4 flex-column justify-content-between align-items-center">
-                <h1 class="display-5">${subscription.courseId}</h1>
+                <h1 class="display-5">${subscription.courseId}</h1> <!--TODO-->
                 <div class="d-flex justify-content-around w-75 mt-4">
                     <p class="display-1 fs-4"><fmt:message key="subscription.start_date"
                                                            bundle="${rb}"/>: ${subscription.startDate}</p>
@@ -76,7 +76,8 @@
                     <tr>
                         <th scope="col"><fmt:message key="teacher.schedule.teacher_name" bundle="${rb}"/></th>
                         <th scope="col"><fmt:message key="teacher.schedule.teacher_surname" bundle="${rb}"/></th>
-                        <th scope="col"><fmt:message key="teacher.schedule.start_time" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="subscription.date" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="teacher.lesson_schedule.start_time" bundle="${rb}"/></th>
                         <th scope="col"><fmt:message key="teacher.lesson_schedule.duration" bundle="${rb}"/></th>
                     </tr>
                     </thead>
@@ -85,8 +86,9 @@
                         <tr>
                             <td>${lessonSchedule.teacherName}</td>
                             <td>${lessonSchedule.teacherSurname}</td>
+                            <td>${lessonSchedule.startDateTime.toLocalDate()}</td>
                             <td>${lessonSchedule.startDateTime.toLocalTime()}</td>
-                            <td>${lessonSchedule.duration.minute}</td>
+                            <td>${lessonSchedule.duration.hour}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

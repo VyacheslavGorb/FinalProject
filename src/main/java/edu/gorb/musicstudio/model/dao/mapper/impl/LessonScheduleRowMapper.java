@@ -21,6 +21,15 @@ public class LessonScheduleRowMapper implements RowMapper<LessonSchedule> {
         LocalTime duration = resultSet.getTime(ColumnName.LESSON_DURATION).toLocalTime();
         LessonSchedule.LessonStatus status =
                 LessonSchedule.LessonStatus.valueOf(resultSet.getString((ColumnName.LESSON_STATUS)));
-        return new LessonSchedule(scheduleId, studentId, teacherId, courseId, subscriptionId, startDateTime, duration, status);
+        return new LessonSchedule.Builder()
+                .setEntityId(scheduleId)
+                .setStudentId(studentId)
+                .setTeacherId(teacherId)
+                .setCourseId(courseId)
+                .setSubscriptionId(subscriptionId)
+                .setStartDateTime(startDateTime)
+                .setDuration(duration)
+                .setStatus(status)
+                .build();
     }
 }

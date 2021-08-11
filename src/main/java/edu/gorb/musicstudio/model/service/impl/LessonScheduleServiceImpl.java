@@ -213,8 +213,15 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
             throws ServiceException {
         LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
         try {
-            lessonScheduleDao.insert(new LessonSchedule(0, studentId, teacherId, courseId, subscriptionId,
-                    startDateTime, LocalTime.MIDNIGHT.plusMinutes(DEFAULT_LESSON_DURATION_MINUTES), status));
+            lessonScheduleDao.insert(new LessonSchedule.Builder()
+                    .setStudentId(studentId)
+                    .setTeacherId(teacherId)
+                    .setCourseId(courseId)
+                    .setSubscriptionId(subscriptionId)
+                    .setStartDateTime(startDateTime)
+                    .setDuration(LocalTime.MIDNIGHT.plusMinutes(DEFAULT_LESSON_DURATION_MINUTES))
+                    .setStatus(status)
+                    .build());
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while inserting lesson schedule. {}", e.getMessage());
             throw new ServiceException("Error while inserting lesson schedule.", e);

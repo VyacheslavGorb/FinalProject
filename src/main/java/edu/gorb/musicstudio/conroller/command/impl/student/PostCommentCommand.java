@@ -42,6 +42,5 @@ public class PostCommentCommand implements Command {
 
         String previousQueryLine = (String) session.getAttribute(SessionAttribute.PREVIOUS_QUERY);
         return new CommandResult(previousQueryLine, CommandResult.RoutingType.REDIRECT);
-
     }
 }

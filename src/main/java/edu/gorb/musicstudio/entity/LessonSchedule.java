@@ -12,20 +12,19 @@ public class LessonSchedule extends AbstractEntity {
     private LocalTime duration;
     private LessonStatus status;
 
-    public enum LessonStatus {
-        NORMAL, CANCELLED
+    private LessonSchedule(Builder builder) {
+        super(builder.entityId);
+        setStudentId(builder.studentId);
+        setTeacherId(builder.teacherId);
+        setCourseId(builder.courseId);
+        setSubscriptionId(builder.subscriptionId);
+        setStartDateTime(builder.startDateTime);
+        setDuration(builder.duration);
+        setStatus(builder.status);
     }
 
-    public LessonSchedule(long entityId, long studentId, long teacherId, long courseId, long subscriptionId,
-                          LocalDateTime startDateTime, LocalTime duration, LessonStatus status) {
-        super(entityId);
-        this.studentId = studentId;
-        this.teacherId = teacherId;
-        this.courseId = courseId;
-        this.subscriptionId = subscriptionId;
-        this.startDateTime = startDateTime;
-        this.duration = duration;
-        this.status = status;
+    public enum LessonStatus {
+        NORMAL, CANCELLED
     }
 
     public long getStudentId() {
@@ -127,5 +126,64 @@ public class LessonSchedule extends AbstractEntity {
         sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
+    }
+
+
+    public static final class Builder {
+        private long entityId;
+        private long studentId;
+        private long teacherId;
+        private long courseId;
+        private long subscriptionId;
+        private LocalDateTime startDateTime;
+        private LocalTime duration;
+        private LessonStatus status;
+
+        public Builder() {
+        }
+
+        public Builder setEntityId(long val) {
+            entityId = val;
+            return this;
+        }
+
+        public Builder setStudentId(long val) {
+            studentId = val;
+            return this;
+        }
+
+        public Builder setTeacherId(long val) {
+            teacherId = val;
+            return this;
+        }
+
+        public Builder setCourseId(long val) {
+            courseId = val;
+            return this;
+        }
+
+        public Builder setSubscriptionId(long val) {
+            subscriptionId = val;
+            return this;
+        }
+
+        public Builder setStartDateTime(LocalDateTime val) {
+            startDateTime = val;
+            return this;
+        }
+
+        public Builder setDuration(LocalTime val) {
+            duration = val;
+            return this;
+        }
+
+        public Builder setStatus(LessonStatus val) {
+            status = val;
+            return this;
+        }
+
+        public LessonSchedule build() {
+            return new LessonSchedule(this);
+        }
     }
 }

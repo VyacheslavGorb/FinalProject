@@ -2,7 +2,6 @@ package edu.gorb.musicstudio.conroller.command.impl.student;
 
 import edu.gorb.musicstudio.conroller.command.*;
 import edu.gorb.musicstudio.dto.LessonScheduleDto;
-import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.exception.ServiceException;
@@ -25,14 +24,14 @@ public class PersonalSubscriptionsCommand implements Command {
         LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
         Map<Subscription, List<LessonScheduleDto>> subscriptionLessonSchedules = new HashMap<>();
         List<Subscription> subscriptions;
-        try{
+        try {
             subscriptions = subscriptionService.findAllCurrentStudentSubscriptions(student.getId());
-            for(Subscription subscription: subscriptions){
+            for (Subscription subscription : subscriptions) {
                 List<LessonScheduleDto> schedules =
                         lessonScheduleService.findLessonSchedulesBySubscription(subscription.getId());
                 subscriptionLessonSchedules.put(subscription, schedules);
             }
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         //TODO add course name map

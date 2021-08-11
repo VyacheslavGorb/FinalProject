@@ -28,18 +28,19 @@ public class PagesTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
+        int pageCount;
+        try {
+            pageCount = Integer.parseInt(pagesCountAttribute);
+        } catch (NumberFormatException e) {
+            logger.log(Level.ERROR, "Illegal attribute value");
+            throw new JspException(e.getMessage());
+        }
+
         try {
             StringBuilder stringBuilder =
                     new StringBuilder("<nav class=\"mt-4\" aria-label=\"Page navigation example\">\n" +
                             "                <ul class=\"pagination pagination-lg flex-wrap justify-content-center\">");
 
-            int pageCount;
-            try {
-                pageCount = Integer.parseInt(pagesCountAttribute);
-            } catch (NumberFormatException e) {
-                logger.log(Level.ERROR, "Illegal attribute value");
-                throw new JspException(e.getMessage());
-            }
 
             String contextPath = pageContext.getServletContext().getContextPath();
 

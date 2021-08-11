@@ -5,6 +5,9 @@ import java.util.Objects;
 public abstract class AbstractEntity {
     private long entityId;
 
+    protected AbstractEntity() {
+    }
+
     protected AbstractEntity(long entityId) {
         this.entityId = entityId;
     }
