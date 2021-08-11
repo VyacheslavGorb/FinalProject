@@ -73,7 +73,7 @@
                     <td>${lessonSchedule.studentSurname}</td>
                     <td>${lessonSchedule.courseName}</td>
                     <td>${lessonSchedule.startDateTime.toLocalTime()}</td>
-                    <td>${lessonSchedule.duration.minute}</td>
+                    <td>${lessonSchedule.duration.hour}</td>
                     <td><fmt:message key="teacher.lesson_schedule.status.${lessonSchedule.status}"
                                      bundle="${rb}"/></td>
                 </tr>

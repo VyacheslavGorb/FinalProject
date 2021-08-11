@@ -36,8 +36,10 @@
                            class="btn btn-success"><fmt:message key="header.login" bundle="${ rb }"/></a>
                     </c:when>
                     <c:when test="${sessionScope.user.role eq UserRole.STUDENT}">
-                        <a class="nav-link " aria-current="page" href="#"><fmt:message key="header.profile"
-                                                                                       bundle="${ rb }"/></a>
+                        <a class="nav-link " aria-current="page"
+                           href="${pageContext.request.contextPath}/controller?command=student_lesson_schedule"><fmt:message
+                                key="header.profile"
+                                bundle="${ rb }"/></a>
                     </c:when>
                     <c:when test="${sessionScope.user.role eq UserRole.TEACHER}">
                         <a class="nav-link " aria-current="page"

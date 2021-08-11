@@ -15,7 +15,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/form_page.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.teacher"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.choose_lesson"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
@@ -23,14 +23,14 @@
 
 <c:if test="${requestScope.available_dates.size() == 0}">
     <div class="d-flex align-items-center justify-content-center min-vh-100">
-        <h1 class="display-3 mt-4">No time is available. Please contact admin.</h1>
+        <h1 class="display-3 mt-4"><fmt:message key="lesson.not_available" bundle="${rb}"/></h1>
     </div>
 </c:if>
 
 <c:if test="${requestScope.available_dates.size() != 0}">
     <div class="min-vh-100 d-flex flex-column align-items-center">
         <div class="d-flex justify-content-center w-25 align-items-center flex-column">
-            <h1 class="display-3 mt-4">Select date</h1>
+            <h1 class="display-3 mt-4"><fmt:message key="lesson.choose_date" bundle="${rb}"/></h1>
 
             <form class="w-100" id="date_form" method="get" action="${pageContext.request.contextPath}/controller">
                 <input type="hidden" name="command" value="choose_lesson_datetime_page">
@@ -51,9 +51,9 @@
         <table class="table mb-5 w-75 mt-5">
             <thead>
             <tr>
-                <th class="" scope="col">Teacher name</th>
-                <th scope="col">Teacher surname</th>
-                <th scope="col">Available slots</th>
+                <th class="" scope="col"><fmt:message key="teacher.schedule.teacher_name" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="teacher.schedule.teacher_surname" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="lesson.available_slots" bundle="${rb}"/></th>
             </tr>
             </thead>
 

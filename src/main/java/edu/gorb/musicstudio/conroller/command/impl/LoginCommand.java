@@ -63,6 +63,10 @@ public class LoginCommand implements Command {
                 return new CommandResult(PagePath.TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
+            if(userRole == UserRole.STUDENT){
+                return new CommandResult(PagePath.STUDENT_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
+            }
+
             return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT); //FIXME change to personal page
 
         } catch (ServiceException e) {

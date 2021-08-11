@@ -35,6 +35,7 @@ public class PersonalSubscriptionsCommand implements Command {
         }catch (ServiceException e){
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
+        //TODO add course name map
         request.setAttribute(RequestAttribute.SUBSCRIPTIONS, subscriptions);
         request.setAttribute(RequestAttribute.SUBSCRIPTION_SCHEDULES, subscriptionLessonSchedules);
         return new CommandResult(PagePath.PERSONAL_SUBSCRIPTIONS_PAGE, CommandResult.RoutingType.FORWARD);

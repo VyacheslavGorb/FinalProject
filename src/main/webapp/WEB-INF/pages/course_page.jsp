@@ -36,22 +36,27 @@
 
         <p id="content" class="m-4 fs-4 text-start">${requestScope.course.description}</p>
 
-        <c:if test="${sessionScope.user == null || sessionScope.user.role == UserRole.STUDENT}">
+        <c:if test="${sessionScope.user.role == UserRole.STUDENT}">
             <div class="d-flex align-items-center justify-content-center w-100 mt-4 mb-4">
-                <a class="fs-4 display-1 w-25 btn btn-success ms-4 me-4 mb-4"><fmt:message
+                <a href="${pageContext.request.contextPath}/controller?command=subscription_page&course_id=${requestScope.course.id}"
+                   class="fs-4 display-1 w-25 btn btn-success ms-4 me-4 mb-4"><fmt:message
                         key="course_page.enroll"
                         bundle="${rb}"/></a>
             </div>
+        </c:if>
+
+        <c:if test="${sessionScope.user == null}">
+            <p class="display-4 fs-1 mt-4 mb-5"><fmt:message key="course.login_message.register" bundle="${rb}"/></p>
         </c:if>
     </div>
 </div>
 
 
 <div class="d-flex flex-column justify-content-center align-items-center">
-    <h2 class="display-4 mt-4">Comments</h2>
+    <h2 class="display-4 mt-4"><fmt:message key="course.comments" bundle="${rb}"/></h2>
 
     <c:if test="${sessionScope.user == null}">
-        <p class="display-4 fs-1 mt-4 mb-5">Login to leave a comment</p>
+        <p class="display-4 fs-1 mt-4 mb-5"><fmt:message key="course.login_message.comment" bundle="${rb}"/></p>
     </c:if>
 
     <c:if test="${sessionScope.user != null && sessionScope.user.role == UserRole.STUDENT}">
@@ -61,12 +66,14 @@
             <div class="mb-3">
                 <textarea placeholder="Enter your comment" class="form-control" name="content" rows="5"></textarea>
             </div>
-            <button type="submit" class="btn btn-outline-success w-25">Post a comment</button>
+            <button type="submit" class="btn btn-outline-success w-25"><fmt:message key="course.post_comment"
+                                                                                    bundle="${rb}"/></button>
         </form>
     </c:if>
 
     <c:if test="${requestScope.comments.size() == 0}">
-        <p class="display-4 fs-3 mt-5 mb-4">No comments yet</p>
+        <p class="display-4 fs-3 mt-5 mb-4"><fmt:message key="course.no_comments_yet"
+                                                         bundle="${rb}"/></p>
     </c:if>
 
     <c:if test="${requestScope.comments.size() != 0}">

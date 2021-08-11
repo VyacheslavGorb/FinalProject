@@ -15,7 +15,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/form_page.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.teacher"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.subscription"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
@@ -25,8 +25,10 @@
 
     <c:if test="${requestScope.max_available_lesson_count == 0}">
         <div class="d-flex align-items-center justify-content-center flex-column">
-            <h1 class="display-3 text-center">No avaliable subscriptions found. Please try again later</h1>
-            <a class="mt-4 display-3 fs-3 link" href="lskdfj">Go to courses page</a>
+            <h1 class="display-3 text-center"><fmt:message key="subscription.not_found_later" bundle="${rb}"/></h1>
+            <a class="mt-4 display-3 fs-3 link"
+               href="${pageContext.request.contextPath}/controller?command=courses&page=1"><fmt:message
+                    key="subscription.go_to_courses" bundle="${rb}"/></a>
         </div>
     </c:if>
 
@@ -58,7 +60,8 @@
                         available: ${requestScope.max_available_lesson_count})</label>
                     <input name="lesson_count" class="form-control" type="number" min="1"
                            max=${requestScope.max_available_lesson_count}>
-                    <button class="btn btn-success w-25 mt-4" type="submit">Select</button>
+                    <button class="btn btn-success w-25 mt-4" type="submit"><fmt:message key="subscription.select"
+                                                                                         bundle="${rb}"/></button>
                 </form>
             </div>
         </div>
