@@ -67,8 +67,9 @@ public class LoginCommand implements Command {
                 return new CommandResult(PagePath.STUDENT_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
-            return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT); //FIXME change to personal page
+            //TODO add admin page redirect
 
+            return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e.getMessage());
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);

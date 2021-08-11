@@ -66,6 +66,6 @@ public class SendSubscriptionRequestCommand implements Command {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 
-        return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT); // TODO change to personal page
+        return new CommandResult(PagePath.PERSONAL_SUBSCRIPTIONS_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
     }
 }

@@ -107,11 +107,3 @@
         crossorigin="anonymous"></script>
 <script src="script/pagination.js"></script>
 </html>
-
-<%--                        <nav class="mt-4" aria-label="Page navigation example"TODO remove>--%>
-<%--                            <ul class="pagination flex-wrap justify-content-center">--%>
-<%--                                <c:forEach begin="0" end="${requestScope.page_count - 1}" varStatus="status">--%>
-<%--                                    <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/contoller?command=courses&page=&search=">${status.count}</a></li>--%>
-<%--                                </c:forEach>--%>
-<%--                            </ul>--%>
-<%--                        </nav>--%>
