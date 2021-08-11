@@ -12,6 +12,7 @@ import edu.gorb.musicstudio.model.service.LessonScheduleService;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
 import edu.gorb.musicstudio.model.service.TeacherScheduleService;
 import edu.gorb.musicstudio.model.service.UserService;
+import edu.gorb.musicstudio.util.DateUtil;
 import edu.gorb.musicstudio.util.DescriptionUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.Level;
@@ -21,9 +22,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
@@ -32,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private static final int ITEMS_ON_PAGE_COUNT = 1;
     private static final int MIN_PAGE_COUNT = 1;
     private static final int DEFAULT_SUBSCRIPTION_LENGTH_DAYS = 30;
+    private static final int ENROLLMENT_DELAY_HOURS = 2;
 
 
     public Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
@@ -310,6 +310,50 @@ public class UserServiceImpl implements UserService {
             logger.log(Level.ERROR, "Error while searching for teacher for course id={}. {}", courseId, e.getMessage());
             throw new ServiceException("Error while searching for teacher for course id=" + courseId, e);
         }
+    }
+
+    @Override
+    public List<LocalDate> findAllAvailableDatesForTeachers(List<User> teachers, LocalDate startDate, LocalDate endDate)
+            throws ServiceException {
+        List<LocalDate> allSubscriptionAvailableDates = DateUtil.generateDateRage(startDate, endDate);
+        List<LocalDate> courseAvailableDates = new ArrayList<>();
+        LocalTime minimalTodayAvailableTime = LocalTime.now().plusHours(ENROLLMENT_DELAY_HOURS);
+        LocalDate dateNow = LocalDate.now();
+        for (LocalDate date : allSubscriptionAvailableDates) {
+            for (User teacher : teachers) {
+                List<LocalTime> freeSlots = findTeacherFreeSlotsForDate(teacher.getId(), date);
+                if(date.isEqual(dateNow)){
+                    freeSlots = freeSlots.stream()
+                            .filter(slot -> slot.isAfter(minimalTodayAvailableTime))
+                            .collect(Collectors.toList());
+                }
+                if (!freeSlots.isEmpty()) {
+                    courseAvailableDates.add(date);
+                    break;
+                }
+            }
+        }
+        return courseAvailableDates;
+    }
+
+    @Override
+    public Map<User, List<LocalTime>> findFreeSlotsForTeachersForDate(List<User> teachers, LocalDate date)
+            throws ServiceException {
+        LocalDate dateNow = LocalDate.now();
+        LocalTime minimalTodayAvailableTime = LocalTime.now().plusHours(ENROLLMENT_DELAY_HOURS);
+        Map<User, List<LocalTime>> allFreeSlots = new HashMap<>();
+        for (User teacher : teachers) {
+            List<LocalTime> teacherFreeSlots = findTeacherFreeSlotsForDate(teacher.getId(), date);
+            if(date.isEqual(dateNow)){
+                teacherFreeSlots = teacherFreeSlots.stream()
+                        .filter(slot -> slot.isAfter(minimalTodayAvailableTime))
+                        .collect(Collectors.toList());
+            }
+            if (!teacherFreeSlots.isEmpty()) {
+                allFreeSlots.put(teacher, teacherFreeSlots);
+            }
+        }
+        return allFreeSlots;
     }
 
     private TeacherDto createTeacherDto(User user, TeacherDescription teacherDescription) {

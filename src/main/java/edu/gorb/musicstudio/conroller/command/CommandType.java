@@ -31,7 +31,10 @@ public enum CommandType {
     SUBSCRIPTION_PAGE,
     SEND_SUBSCRIPTION_REQUEST,
     PERSONAL_SUBSCRIPTIONS,
-    CHOOSE_LESSON_DATETIME_PAGE;
+    CHOOSE_LESSON_DATETIME_PAGE,
+    CHOOSE_LESSON_DATETIME,
+    STUDENT_LESSON_SCHEDULE,
+    STUDENT_CANCEL_LESSON;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {

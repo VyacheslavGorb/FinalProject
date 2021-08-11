@@ -25,6 +25,13 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
                     "WHERE DATE(date_time) >= CURDATE() and TIME(date_time) > CURTIME()\n" +
                     "  and id_teacher = ?";
 
+    private static final String SELECT_FUTURE_LESSONS_FOR_STUDENT =
+            "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
+                    "FROM lesson_schedules\n" +
+                    "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
+                    "WHERE DATE(date_time) >= CURDATE() and TIME(date_time) > CURTIME()\n" +
+                    "  and id_student = ?";
+
     private static final String SELECT_SCHEDULE_FOR_DATE =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
@@ -45,6 +52,30 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
                     "  and id_student = ?\n" +
                     "  and id_course = ?";
 
+    private static final String INSERT_SCHEDULE =
+            "INSERT INTO lesson_schedules (id_student, id_teacher, id_course, date_time, duration, id_subscription, id_lesson_status\n" +
+                    "                              ) VALUE (?, ?, ?, ?, ?, ?, (SELECT lesson_statuses.id_lesson_status\n" +
+                    "                                                                         FROM lesson_statuses\n" +
+                    "                                                                         WHERE lesson_statuses.status = ?))";
+
+    private static final String SELECT_SCHEDULE_BY_ID =
+            "SELECT id_schedule,\n" +
+                    "       id_student,\n" +
+                    "       id_teacher,\n" +
+                    "       id_course,\n" +
+                    "       date_time,\n" +
+                    "       duration,\n" +
+                    "       status,\n" +
+                    "       id_subscription\n" +
+                    "FROM lesson_schedules\n" +
+                    "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
+                    "WHERE id_schedule = ?";
+
+    private static final String UPDATE_STATUS =
+            "UPDATE lesson_schedules\n" +
+                    "SET id_lesson_status = (SELECT id_lesson_status FROM lesson_statuses WHERE lesson_statuses.status = ?)\n" +
+                    "WHERE id_schedule =?";
+
     private final JdbcHelper<LessonSchedule> jdbcHelper;
 
     public LessonScheduleDaoImpl() {
@@ -58,12 +89,19 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
 
     @Override
     public Optional<LessonSchedule> findEntityById(long id) throws DaoException {
-        throw new UnsupportedOperationException();
+        return jdbcHelper.executeQueryForSingleResult(SELECT_SCHEDULE_BY_ID, id);
     }
 
     @Override
     public int insert(LessonSchedule lessonSchedule) throws DaoException {
-        throw new UnsupportedOperationException();
+        return jdbcHelper.executeInsert(INSERT_SCHEDULE,
+                lessonSchedule.getStudentId(),
+                lessonSchedule.getTeacherId(),
+                lessonSchedule.getCourseId(),
+                lessonSchedule.getStartDateTime(),
+                lessonSchedule.getDuration(),
+                lessonSchedule.getSubscriptionId(),
+                lessonSchedule.getStatus().toString());
     }
 
     @Override
@@ -74,6 +112,11 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
     @Override
     public List<LessonSchedule> findFutureSchedulesForTeacher(long teacherId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_FUTURE_LESSONS_FOR_TEACHER, teacherId);
+    }
+
+    @Override
+    public List<LessonSchedule> findFutureSchedulesForStudent(long studentId) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_FUTURE_LESSONS_FOR_STUDENT, studentId);
     }
 
     @Override
@@ -89,5 +132,10 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
     @Override
     public List<LessonSchedule> findLessonSchedulesBySubscription(long subscriptionId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_SCHEDULE_BY_SUBSCRIPTION, subscriptionId);
+    }
+
+    @Override
+    public void updateStatus(long lessonId, LessonSchedule.LessonStatus status) throws DaoException {
+        jdbcHelper.executeUpdate(UPDATE_STATUS, status.toString(), lessonId);
     }
 }

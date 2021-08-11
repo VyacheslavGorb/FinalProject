@@ -1,10 +1,11 @@
 package edu.gorb.musicstudio.validator;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 
-public class DateValidator {
-    private DateValidator(){
+public class DateTimeValidator {
+    private DateTimeValidator(){
     }
 
     public static boolean isValidDate(String dateString){
@@ -13,6 +14,18 @@ public class DateValidator {
         }
         try{
             LocalDate.parse(dateString);
+        }catch (DateTimeParseException e){
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isValidTime(String timeString){
+        if(timeString == null){
+            return false;
+        }
+        try{
+            LocalTime.parse(timeString);
         }catch (DateTimeParseException e){
             return false;
         }

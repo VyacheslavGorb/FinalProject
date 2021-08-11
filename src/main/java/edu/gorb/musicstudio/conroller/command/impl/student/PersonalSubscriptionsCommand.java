@@ -1,6 +1,7 @@
 package edu.gorb.musicstudio.conroller.command.impl.student;
 
 import edu.gorb.musicstudio.conroller.command.*;
+import edu.gorb.musicstudio.dto.LessonScheduleDto;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.entity.User;
@@ -22,12 +23,12 @@ public class PersonalSubscriptionsCommand implements Command {
         User student = (User) session.getAttribute(SessionAttribute.USER);
         SubscriptionService subscriptionService = ServiceProvider.getInstance().getScheduleService();
         LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
-        Map<Subscription, List<LessonSchedule>> subscriptionLessonSchedules = new HashMap<>();
+        Map<Subscription, List<LessonScheduleDto>> subscriptionLessonSchedules = new HashMap<>();
         List<Subscription> subscriptions;
         try{
             subscriptions = subscriptionService.findAllCurrentStudentSubscriptions(student.getId());
             for(Subscription subscription: subscriptions){
-                List<LessonSchedule> schedules =
+                List<LessonScheduleDto> schedules =
                         lessonScheduleService.findLessonSchedulesBySubscription(subscription.getId());
                 subscriptionLessonSchedules.put(subscription, schedules);
             }

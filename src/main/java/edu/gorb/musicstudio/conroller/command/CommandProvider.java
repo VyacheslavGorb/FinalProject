@@ -10,7 +10,7 @@ import java.util.EnumMap;
 import static edu.gorb.musicstudio.conroller.command.CommandType.*;
 
 public class CommandProvider {
-    private EnumMap<CommandType, Command> commands;
+    private final EnumMap<CommandType, Command> commands;
 
     private CommandProvider() {
         commands = new EnumMap<>(CommandType.class);
@@ -41,6 +41,9 @@ public class CommandProvider {
         commands.put(SEND_SUBSCRIPTION_REQUEST, new SendSubscriptionRequestCommand());
         commands.put(PERSONAL_SUBSCRIPTIONS, new PersonalSubscriptionsCommand());
         commands.put(CHOOSE_LESSON_DATETIME_PAGE, new ChooseLessonDateTimePageCommand());
+        commands.put(CHOOSE_LESSON_DATETIME, new ChooseLessonDateTimeCommand());
+        commands.put(STUDENT_LESSON_SCHEDULE, new StudentLessonSchedulePageCommand());
+        commands.put(STUDENT_CANCEL_LESSON, new StudentCancelLessonCommand());
     }
 
     public static CommandProvider getInstance() {

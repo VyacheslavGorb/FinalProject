@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class LessonScheduleDto {
+    private long scheduleId;
     private String studentName;
     private String studentSurname;
     private String teacherName;
@@ -14,6 +15,18 @@ public class LessonScheduleDto {
     private LocalDateTime startDateTime;
     private LocalTime duration;
     private LessonSchedule.LessonStatus status;
+
+    public LessonScheduleDto(){
+
+    }
+
+    public long getScheduleId() {
+        return scheduleId;
+    }
+
+    public void setScheduleId(long scheduleId) {
+        this.scheduleId = scheduleId;
+    }
 
     public String getStudentName() {
         return studentName;

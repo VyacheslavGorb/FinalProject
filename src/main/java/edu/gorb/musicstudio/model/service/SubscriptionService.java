@@ -17,4 +17,6 @@ public interface SubscriptionService {
     List<Subscription> findAllCurrentStudentSubscriptions(long studentId) throws ServiceException;
 
     Optional<Subscription> findActiveSubscriptionById(long subscriptionId) throws ServiceException;
+
+    void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws ServiceException;
 }

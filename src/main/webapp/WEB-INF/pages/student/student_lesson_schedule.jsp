@@ -23,22 +23,10 @@
 
 <ul class="nav nav-tabs mb-5">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page"
-           href="${pageContext.request.contextPath}/controller?command=teacher_lesson_schedule"><fmt:message
-                key="teacher.tabs.lesson_schedule"
-                bundle="${rb}"/></a>
+        <a class="nav-link active" aria-current="page" href="#">Расписание занятий</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link"
-           href="${pageContext.request.contextPath}/controller?command=teacher_schedule"><fmt:message
-                key="teacher.tabs.teacher_schedule"
-                bundle="${rb}"/></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link"
-           href="${pageContext.request.contextPath}/controller?command=teacher_personal_info"><fmt:message
-                key="teacher.tabs.personal_info"
-                bundle="${rb}"/></a>
+        <a class="nav-link" href="#">Расписание преподавателя</a>
     </li>
 </ul>
 
@@ -64,23 +52,34 @@
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.start_time" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.duration" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.status" bundle="${rb}"/></th>
+                <th>Cancel</th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${requestScope.lesson_schedule_map.get(date)}" var="lessonSchedule">
+
                 <tr>
-                    <td>${lessonSchedule.studentName}</td>
-                    <td>${lessonSchedule.studentSurname}</td>
+                    <td>${lessonSchedule.teacherName}</td>
+                    <td>${lessonSchedule.teacherSurname}</td>
                     <td>${lessonSchedule.courseName}</td>
                     <td>${lessonSchedule.startDateTime.toLocalTime()}</td>
-                    <td>${lessonSchedule.duration.minute}</td>
+                    <td>60</td>
                     <td><fmt:message key="teacher.lesson_schedule.status.${lessonSchedule.status}"
                                      bundle="${rb}"/></td>
+                    <td>
+                        <c:if test="${lessonSchedule.status == 'NORMAL'}">
+                            <form method="post" action="${pageContext.request.contextPath}/controller">
+                                <input type="hidden" name="command" value="student_cancel_lesson">
+                                <input type="hidden" name="lesson_id" value="${lessonSchedule.scheduleId}">
+                                <button type="submit" class="btn btn-outline-danger">Cancel lesson</button>
+                            </form>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
-
             </tbody>
         </table>
+
     </c:forEach>
 </div>
 

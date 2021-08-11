@@ -12,4 +12,6 @@ public interface SubscriptionDao extends BaseDao<Subscription> {
     List<Subscription> findActiveStudentSubscriptions(long studentId) throws DaoException;
 
     Optional<Subscription> findActiveSubscriptionById(long subscriptionId) throws DaoException;
+
+    void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws DaoException;
 }

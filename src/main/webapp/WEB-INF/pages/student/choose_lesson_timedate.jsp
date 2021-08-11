@@ -32,12 +32,17 @@
         <div class="d-flex justify-content-center w-25 align-items-center flex-column">
             <h1 class="display-3 mt-4">Select date</h1>
 
-            <form class="w-100" id="date_form" method="get" action="/controller">
-                <input type="hidden" name="command" value="command_name">
-                <input type="hidden" name="course_id" value="1">
+            <form class="w-100" id="date_form" method="get" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="choose_lesson_datetime_page">
+                <input type="hidden" name="subscription_id" value="${requestScope.subscription.id}">
                 <select name="date" id="date_select" class="form-select mt-4 w-100">
                     <c:forEach items="${requestScope.available_dates}" var="date">
-                        <option value="${date}">${date}</option>
+                        <c:if test="${requestScope.date.isEqual(date)}">
+                            <option selected value="${date}">${date}</option>
+                        </c:if>
+                        <c:if test="${!requestScope.date.isEqual(date)}">
+                            <option value="${date}">${date}</option>
+                        </c:if>
                     </c:forEach>
                 </select>
             </form>
@@ -48,7 +53,7 @@
             <tr>
                 <th class="" scope="col">Teacher name</th>
                 <th scope="col">Teacher surname</th>
-                <th scope="col">Avaliable slots</th>
+                <th scope="col">Available slots</th>
             </tr>
             </thead>
 
@@ -59,7 +64,14 @@
                     <td class="fs-4">${teacher.surname}</td>
                     <td class="w-75">
                         <c:forEach items="${requestScope.teachers_schedules.get(teacher)}" var="slot">
-                            <a class="btn btn-outline-success m-1" href="#">${slot}</a>
+                            <form style="display: inline;" action="${pageContext.request.contextPath}/controller">
+                                <input name="command" value="choose_lesson_datetime" type="hidden">
+                                <input type="hidden" name="subscription_id" value="${requestScope.subscription.id}">
+                                <input type="hidden" name="teacher_id" value="${teacher.id}">
+                                <input type="hidden" name="time" value="${slot}">
+                                <input type="hidden" name="date" value="${requestScope.date}">
+                                <button type="submit" class="btn btn-outline-success m-1">${slot}</button>
+                            </form>
                         </c:forEach>
                     </td>
                 </tr>

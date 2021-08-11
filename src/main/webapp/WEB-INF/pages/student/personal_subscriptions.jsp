@@ -69,14 +69,12 @@
                     <tbody>
                     <c:forEach items="${requestScope.subscription_schedules.get(subscription)}" var="lessonSchedule">
                         <tr>
-                            <td>${lessonSchedule.studentName}</td>
-                            <td>${lessonSchedule.studentSurname}</td>
-                            <td>${lessonSchedule.courseName}</td>
-                            <td>${lessonSchedule.startDateTime.hour}:${lessonSchedule.startDateTime.minute}</td>
-                            <td>${lessonSchedule.duration.minute}</td>
+                            <td>${lessonSchedule.teacherName}</td>
+                            <td>${lessonSchedule.teacherSurname}</td>
+                            <td>${lessonSchedule.startDateTime.toLocalTime()}</td>
+                            <td>60</td>
                         </tr>
                     </c:forEach>
-
                     </tbody>
                 </table>
             </c:if>

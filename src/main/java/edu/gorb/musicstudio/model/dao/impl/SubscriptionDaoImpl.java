@@ -38,6 +38,11 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
                     "WHERE DATE(date_end) >= CURDATE()\n" +
                     "  and id_student = ?";
 
+    private static final String UPDATE_STATUS =
+            "UPDATE subscriptions\n" +
+                    "SET status = ?\n" +
+                    "WHERE id_subscription = ?";
+
 
     private final JdbcHelper<Subscription> jdbcHelper;
 
@@ -86,5 +91,10 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     @Override
     public Optional<Subscription> findActiveSubscriptionById(long subscriptionId) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_ACTIVE_SUBSCRIPTION_BY_ID, subscriptionId);
+    }
+
+    @Override
+    public void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws DaoException {
+        jdbcHelper.executeUpdate(UPDATE_STATUS, status.toString(), subscriptionId);
     }
 }

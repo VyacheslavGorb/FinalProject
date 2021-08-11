@@ -10,6 +10,7 @@ import edu.gorb.musicstudio.exception.ServiceException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
@@ -48,4 +49,10 @@ public interface UserService {
     int findTeacherFreeSlotCountForNextMonth(long teacherId) throws ServiceException;
 
     List<User> findTeachersForCourse(long courseId) throws ServiceException;
+
+    List<LocalDate> findAllAvailableDatesForTeachers(List<User> teachers, LocalDate startDate, LocalDate endDate)
+            throws ServiceException;
+
+    Map<User, List<LocalTime>> findFreeSlotsForTeachersForDate(List<User> teachers, LocalDate date)
+            throws ServiceException;
 }

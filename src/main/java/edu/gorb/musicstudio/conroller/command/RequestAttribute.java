@@ -18,6 +18,8 @@ public class RequestAttribute {
     public static final String SUBSCRIPTION_SCHEDULES = "subscription_schedules";
     public static final String TEACHERS_SCHEDULES = "teachers_schedules";
     public static final String AVAILABLE_DATES = "available_dates";
+    public static final String SUBSCRIPTION = "subscription";
+    public static final String DATE = "date";
 
 
     private RequestAttribute() {

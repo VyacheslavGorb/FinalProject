@@ -64,6 +64,18 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         }
     }
 
+    @Override
+    public void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws ServiceException {
+        SubscriptionDao subscriptionDao = DaoProvider.getInstance().getSubscriptionDao();
+        try {
+            subscriptionDao.updateStatus(subscriptionId, status);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while updating subscription status, id={}. {}",
+                    subscriptionId, e.getMessage());
+            throw new ServiceException("Error while updating subscription status, id=" + subscriptionId);
+        }
+    }
+
 
     @Override
     public boolean isNewCourseSubscriptionAvailable(long studentId, long courseId) throws ServiceException {
