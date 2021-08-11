@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 public class HomePageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        //TODO add dynamic content (courses)
         return new CommandResult(PagePath.HOME_PAGE, CommandResult.RoutingType.FORWARD);
     }
 }

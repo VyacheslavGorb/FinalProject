@@ -16,7 +16,7 @@
                 <a class="nav-link active" aria-current="page"
                    href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message key="header.home"
                                                                                                        bundle="${ rb }"/></a>
-                <a class="nav-link " aria-current="page" href="#"><fmt:message key="header.aboutus"
+                <a class="nav-link " aria-current="page" href="${pageContext.request.contextPath}/static_pages/aboutus.jsp"><fmt:message key="header.aboutus"
                                                                                bundle="${ rb }"/></a>
                 <a class="nav-link " aria-current="page"
                    href="${pageContext.request.contextPath}/controller?command=courses&page=1"><fmt:message

@@ -1,0 +1,6 @@
+.about_img{
+    object-fit: cover;
+    width: 80%;
+    height: 50vh;
+    border-radius: 20px;
+}

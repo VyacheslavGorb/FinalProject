@@ -1,5 +1,9 @@
 .carousel-item {
-    height: 80vh;
+    height: 100%;
+}
+
+.carousel-inner {
+    height: 95vh;
 }
 
 .carousel_image {
@@ -9,7 +13,6 @@
 .teachers_outer {
     align-items: center;
 }
-
 .carousel-caption {
     border-radius: 7px;
     left: 35%;

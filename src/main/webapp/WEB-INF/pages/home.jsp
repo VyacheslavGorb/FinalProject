@@ -33,21 +33,29 @@
             <div class="carousel-caption d-none d-md-block">
                 <h5 class="fs-1 mb-4"><fmt:message key="slide.first.label" bundle="${ rb }"/></h5>
                 <p class="fs-5"><fmt:message key="slide.first.content" bundle="${ rb }"/></p>
-                <a class="btn btn-success w-50" href="#"><fmt:message key="header.aboutus" bundle="${rb}"/></a>
+                <a class="btn btn-success w-50" href="${pageContext.request.contextPath}/static_pages/aboutus.jsp"><fmt:message key="header.aboutus" bundle="${rb}"/></a>
             </div>
         </div>
+
         <div class="carousel-item">
             <img src="pic/slide2.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h5 class="fs-3">First slide label</h5>
-                <p class="fs-5">Some representative placeholder content for the first slide.</p>
+                <h5 class="fs-1 mb-4"><fmt:message key="slide.second.label" bundle="${ rb }"/></h5>
+                <p class="fs-5"><fmt:message key="slide.second.content" bundle="${ rb }"/></p>
+                <a class="btn btn-success w-50"
+                   href="${pageContext.request.contextPath}/controller?command=teachers&page=1"><fmt:message
+                        key="header.teachers" bundle="${rb}"/></a>
             </div>
         </div>
+
         <div class="carousel-item">
             <img src="pic/slide3.jpg" class="d-block w-100" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h5 class="fs-3">First slide label</h5>
-                <p class="fs-5">Some representative placeholder content for the first slide.</p>
+                <h5 class="fs-1 mb-4"><fmt:message key="slide.third.label" bundle="${ rb }"/></h5>
+                <p class="fs-5"><fmt:message key="slide.third.content" bundle="${ rb }"/></p>
+                <a class="btn btn-success w-50"
+                   href="${pageContext.request.contextPath}/controller?command=courses&page=1"><fmt:message
+                        key="header.courses" bundle="${rb}"/></a>
             </div>
         </div>
     </div>
