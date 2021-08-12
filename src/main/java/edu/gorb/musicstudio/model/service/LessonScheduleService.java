@@ -20,6 +20,8 @@ public interface LessonScheduleService {
 
     List<LessonScheduleDto> findActiveFutureSchedulesByStudentId(long studentId) throws ServiceException;
 
+    List<LessonScheduleDto> findAllActiveFutureSchedules() throws ServiceException;
+
     Map<String, List<LessonScheduleDto>> mapLessonDtosToDate(List<LessonScheduleDto> lessonScheduleDtos);
 
     List<String> findDistinctDateLines(List<LessonScheduleDto> lessonScheduleDtos);

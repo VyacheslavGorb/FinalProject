@@ -1,10 +1,10 @@
 package edu.gorb.musicstudio.conroller.command;
 
 import edu.gorb.musicstudio.conroller.command.impl.*;
-import edu.gorb.musicstudio.conroller.command.impl.admin.ActivateUserCommand;
-import edu.gorb.musicstudio.conroller.command.impl.admin.DeactivateUserCommand;
-import edu.gorb.musicstudio.conroller.command.impl.admin.ManageUsersPageCommand;
-import edu.gorb.musicstudio.conroller.command.impl.go.*;
+import edu.gorb.musicstudio.conroller.command.impl.admin.*;
+import edu.gorb.musicstudio.conroller.command.impl.GoToLoginPageCommand;
+import edu.gorb.musicstudio.conroller.command.impl.GoToSendEmailAgainPageCommand;
+import edu.gorb.musicstudio.conroller.command.impl.GoToSignUpPageCommand;
 import edu.gorb.musicstudio.conroller.command.impl.student.*;
 import edu.gorb.musicstudio.conroller.command.impl.teacher.*;
 
@@ -50,6 +50,8 @@ public class CommandProvider {
         commands.put(MANAGE_USERS_PAGE, new ManageUsersPageCommand());
         commands.put(ACTIVATE_USER, new ActivateUserCommand());
         commands.put(DEACTIVATE_USER, new DeactivateUserCommand());
+        commands.put(ALL_LESSONS_PAGE, new AllLessonsPageCommand());
+        commands.put(ADMIN_CANCEL_LESSON, new AdminCancelLessonCommand());
     }
 
     public static CommandProvider getInstance() {

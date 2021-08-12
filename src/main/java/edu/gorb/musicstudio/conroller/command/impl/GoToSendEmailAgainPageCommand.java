@@ -1,4 +1,4 @@
-package edu.gorb.musicstudio.conroller.command.impl.go;
+package edu.gorb.musicstudio.conroller.command.impl;
 
 import edu.gorb.musicstudio.conroller.command.Command;
 import edu.gorb.musicstudio.conroller.command.CommandResult;

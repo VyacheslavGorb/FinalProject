@@ -62,88 +62,67 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
     @Override
     public List<LessonScheduleDto> findActiveFutureSchedulesByTeacherId(long teacherId) throws ServiceException {
         LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
-        List<LessonSchedule> lessons;
+        List<LessonSchedule> lessonSchedules;
         try {
-            lessons = lessonScheduleDao.findActiveFutureSchedulesForTeacher(teacherId);
+            lessonSchedules = lessonScheduleDao.findActiveFutureSchedulesForTeacher(teacherId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting lessons for teacher id={}. {}", teacherId,
                     e.getMessage());
             throw new ServiceException("Error while selecting lessons for teacher id=" + teacherId, e);
         }
 
-        List<LessonScheduleDto> lessonScheduleDtos = new ArrayList<>();
         UserDao userDao = DaoProvider.getInstance().getUserDao();
-        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
-
         try {
             Optional<User> optionalTeacher = userDao.findEntityById(teacherId);
             if (optionalTeacher.isEmpty()) {
                 logger.log(Level.ERROR, "Teacher not found, id={}", teacherId);
                 throw new ServiceException("Teacher not found, id=" + teacherId);
             }
-            User teacher = optionalTeacher.get();
-
-            for (LessonSchedule lessonSchedule : lessons) {
-                Optional<User> optionalStudent = userDao.findEntityById(lessonSchedule.getStudentId());
-                Optional<Course> optionalCourse = courseDao.findEntityById(lessonSchedule.getCourseId());
-                if (optionalCourse.isEmpty() || optionalStudent.isEmpty()) {
-                    logger.log(Level.ERROR, "Lesson schedule contains invalid data, schedule id={}",
-                            lessonSchedule.getId());
-                    throw new ServiceException("Lesson schedule contains invalid data, schedule id="
-                            + lessonSchedule.getId());
-                }
-                LessonScheduleDto lessonScheduleDto = createLessonScheduleDto(teacher, optionalStudent.get(),
-                        optionalCourse.get(), lessonSchedule);
-                lessonScheduleDtos.add(lessonScheduleDto);
-            }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting user, {}", e.getMessage());
             throw new ServiceException("Error while selecting user", e);
         }
-        return lessonScheduleDtos;
+        return convertLessonSchedulesToLessonScheduleDtos(lessonSchedules);
     }
 
     @Override
     public List<LessonScheduleDto> findActiveFutureSchedulesByStudentId(long studentId) throws ServiceException {
         LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
-        List<LessonSchedule> lessons;
+        List<LessonSchedule> lessonSchedules;
         try {
-            lessons = lessonScheduleDao.findActiveFutureSchedulesForStudent(studentId);
+            lessonSchedules = lessonScheduleDao.findActiveFutureSchedulesForStudent(studentId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting lessons for student id={}. {}", studentId,
                     e.getMessage());
             throw new ServiceException("Error while selecting lessons for student id=" + studentId, e);
         }
-        List<LessonScheduleDto> lessonScheduleDtos = new ArrayList<>();
         UserDao userDao = DaoProvider.getInstance().getUserDao();
-        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
         try {
             Optional<User> optionalStudent = userDao.findEntityById(studentId);
             if (optionalStudent.isEmpty()) {
                 logger.log(Level.ERROR, "Student not found, id={}", studentId);
                 throw new ServiceException("Student not found, id=" + studentId);
             }
-            User student = optionalStudent.get();
-
-            for (LessonSchedule lessonSchedule : lessons) {
-                Optional<User> optionalTeacher = userDao.findEntityById(lessonSchedule.getTeacherId());
-                Optional<Course> optionalCourse = courseDao.findEntityById(lessonSchedule.getCourseId());
-                if (optionalCourse.isEmpty() || optionalTeacher.isEmpty()) {
-                    logger.log(Level.ERROR, "Lesson schedule contains invalid data, schedule id={}",
-                            lessonSchedule.getId());
-                    throw new ServiceException("Lesson schedule contains invalid data, schedule id="
-                            + lessonSchedule.getId());
-                }
-                LessonScheduleDto lessonScheduleDto = createLessonScheduleDto(optionalTeacher.get(), student,
-                        optionalCourse.get(), lessonSchedule);
-                lessonScheduleDtos.add(lessonScheduleDto);
-            }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting user, {}", e.getMessage());
             throw new ServiceException("Error while selecting user", e);
         }
-        return lessonScheduleDtos;
+        return convertLessonSchedulesToLessonScheduleDtos(lessonSchedules);
     }
+
+    @Override
+    public List<LessonScheduleDto> findAllActiveFutureSchedules() throws ServiceException {
+        LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
+        List<LessonSchedule> lessonSchedules;
+        try {
+            lessonSchedules = lessonScheduleDao.findAllActiveFutureSchedules();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while selecting all lessons. {}", e.getMessage());
+            throw new ServiceException("Error while selecting all lessons", e);
+        }
+        return convertLessonSchedulesToLessonScheduleDtos(lessonSchedules);
+    }
+
 
     @Override
     public Map<String, List<LessonScheduleDto>> mapLessonDtosToDate(List<LessonScheduleDto> lessonScheduleDtos) {
@@ -226,6 +205,33 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
             logger.log(Level.ERROR, "Error while inserting lesson schedule. {}", e.getMessage());
             throw new ServiceException("Error while inserting lesson schedule.", e);
         }
+    }
+
+    List<LessonScheduleDto> convertLessonSchedulesToLessonScheduleDtos(List<LessonSchedule> lessonSchedules)
+            throws ServiceException {
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        List<LessonScheduleDto> lessonScheduleDtos = new ArrayList<>();
+        for (LessonSchedule lessonSchedule : lessonSchedules) {
+            try {
+                Optional<User> optionalTeacher = userDao.findEntityById(lessonSchedule.getTeacherId());
+                Optional<User> optionalStudent = userDao.findEntityById(lessonSchedule.getStudentId());
+                Optional<Course> optionalCourse = courseDao.findEntityById(lessonSchedule.getCourseId());
+                if (optionalCourse.isEmpty() || optionalTeacher.isEmpty() || optionalStudent.isEmpty()) {
+                    logger.log(Level.ERROR, "Lesson schedule contains invalid data, schedule id={}",
+                            lessonSchedule.getId());
+                    throw new ServiceException("Lesson schedule contains invalid data, schedule id="
+                            + lessonSchedule.getId());
+                }
+                LessonScheduleDto lessonScheduleDto = createLessonScheduleDto(optionalTeacher.get(), optionalStudent.get(),
+                        optionalCourse.get(), lessonSchedule);
+                lessonScheduleDtos.add(lessonScheduleDto);
+            } catch (DaoException e) {
+                logger.log(Level.ERROR, "Error while searching for entity by id. {}", e.getMessage());
+                throw new ServiceException("Error while searching for entity by id. {}", e);
+            }
+        }
+        return lessonScheduleDtos;
     }
 
     private LessonScheduleDto createLessonScheduleDto(User teacher, User student, Course course,

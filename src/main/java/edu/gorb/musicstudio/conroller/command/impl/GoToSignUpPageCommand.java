@@ -1,4 +1,4 @@
-package edu.gorb.musicstudio.conroller.command.impl.go;
+package edu.gorb.musicstudio.conroller.command.impl;
 
 import edu.gorb.musicstudio.conroller.command.Command;
 import edu.gorb.musicstudio.conroller.command.CommandResult;
@@ -6,9 +6,9 @@ import edu.gorb.musicstudio.conroller.command.PagePath;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class GoToLoginPageCommand implements Command {
+public class GoToSignUpPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
-        return new CommandResult(PagePath.LOGIN_PAGE, CommandResult.RoutingType.FORWARD);
+        return new CommandResult(PagePath.SIGN_UP_PAGE, CommandResult.RoutingType.FORWARD);
     }
 }

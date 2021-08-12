@@ -52,6 +52,12 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
                     "  and id_student = ?\n" +
                     "  and id_course = ?";
 
+    private static final String SELECT_ALL_FUTURE_LESSONS =
+            "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
+                    "FROM lesson_schedules\n" +
+                    "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
+                    "WHERE DATE(date_time) >= CURDATE() and TIME(date_time) > CURTIME() and status='NORMAL'";
+
     private static final String INSERT_SCHEDULE =
             "INSERT INTO lesson_schedules (id_student, id_teacher, id_course, date_time, duration, id_subscription, id_lesson_status\n" +
                     "                              ) VALUE (?, ?, ?, ?, ?, ?, (SELECT lesson_statuses.id_lesson_status\n" +
@@ -132,6 +138,11 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
     @Override
     public List<LessonSchedule> findLessonSchedulesBySubscription(long subscriptionId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_SCHEDULE_BY_SUBSCRIPTION, subscriptionId);
+    }
+
+    @Override
+    public List<LessonSchedule> findAllActiveFutureSchedules() throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_ALL_FUTURE_LESSONS);
     }
 
     @Override

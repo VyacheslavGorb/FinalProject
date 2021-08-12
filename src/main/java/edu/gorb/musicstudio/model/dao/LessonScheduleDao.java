@@ -17,5 +17,7 @@ public interface LessonScheduleDao extends BaseDao<LessonSchedule> {
 
     List<LessonSchedule> findLessonSchedulesBySubscription(long subscriptionId) throws DaoException;
 
+    List<LessonSchedule> findAllActiveFutureSchedules() throws DaoException;
+
     void updateStatus(long lessonId, LessonSchedule.LessonStatus status) throws DaoException;
 }

@@ -48,7 +48,7 @@ public class CourseDaoImpl implements CourseDao {
 
     private static final String SELECT_COURSES_FOR_PAGE =
             "SELECT id_course, name, description, picture_path, price_per_hour, is_active\n" +
-                    "FROM courses  and is_active=1\n" +
+                    "FROM courses  WHERE is_active=1\n" +
                     "LIMIT ?, ?";
 
     private static final String COUNT_ALL_COURSES = "SELECT COUNT(name) FROM courses WHERE is_active=1";

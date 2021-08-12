@@ -39,7 +39,9 @@ public enum CommandType {
     /*Admin commands*/
     MANAGE_USERS_PAGE,
     ACTIVATE_USER,
-    DEACTIVATE_USER;
+    DEACTIVATE_USER,
+    ALL_LESSONS_PAGE,
+    ADMIN_CANCEL_LESSON;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {
