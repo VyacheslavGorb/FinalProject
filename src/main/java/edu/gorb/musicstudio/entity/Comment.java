@@ -7,13 +7,16 @@ public class Comment extends AbstractEntity {
     private long courseId;
     private String content;
     private LocalDateTime dateTime;
+    private boolean isActive;
 
-    public Comment(long entityId, long studentId, long courseId, String content, LocalDateTime dateTime) {
+
+    public Comment(long entityId, long studentId, long courseId, String content, LocalDateTime dateTime, boolean isActive) {
         super(entityId);
         this.studentId = studentId;
         this.courseId = courseId;
         this.content = content;
         this.dateTime = dateTime;
+        this.isActive = isActive;
     }
 
     public long getStudentId() {
@@ -48,6 +51,14 @@ public class Comment extends AbstractEntity {
         this.dateTime = dateTime;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,6 +69,7 @@ public class Comment extends AbstractEntity {
 
         if (studentId != comment.studentId) return false;
         if (courseId != comment.courseId) return false;
+        if (isActive != comment.isActive) return false;
         if (content != null ? !content.equals(comment.content) : comment.content != null) return false;
         return dateTime != null ? dateTime.equals(comment.dateTime) : comment.dateTime == null;
     }
@@ -69,6 +81,7 @@ public class Comment extends AbstractEntity {
         result = 31 * result + (int) (courseId ^ (courseId >>> 32));
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
+        result = 31 * result + (isActive ? 1 : 0);
         return result;
     }
 
@@ -79,6 +92,7 @@ public class Comment extends AbstractEntity {
         sb.append(", courseId=").append(courseId);
         sb.append(", content='").append(content).append('\'');
         sb.append(", dateTime=").append(dateTime);
+        sb.append(", isActive=").append(isActive);
         sb.append('}');
         return sb.toString();
     }

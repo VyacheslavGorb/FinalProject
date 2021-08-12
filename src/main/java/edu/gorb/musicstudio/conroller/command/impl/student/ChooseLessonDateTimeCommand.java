@@ -46,7 +46,7 @@ public class ChooseLessonDateTimeCommand implements Command {
         HttpSession session = request.getSession();
         User student = (User) session.getAttribute(SessionAttribute.USER);
         try {
-            Optional<Subscription> optionalSubscription = subscriptionService.findActiveSubscriptionById(subscriptionId);
+            Optional<Subscription> optionalSubscription = subscriptionService.findContinuingActiveSubscriptionById(subscriptionId);
             if (optionalSubscription.isEmpty()) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }

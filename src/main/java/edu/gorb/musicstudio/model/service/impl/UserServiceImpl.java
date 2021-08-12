@@ -27,14 +27,25 @@ import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
-    private static final int LINK_EXPIRE_TIMEOUT = 10; // minutes
+    private static final int LINK_EXPIRE_TIMEOUT_MINUTES = 10;
     private static final int ITEMS_ON_PAGE_COUNT = 1;
     private static final int MIN_PAGE_COUNT = 1;
     private static final int DEFAULT_SUBSCRIPTION_LENGTH_DAYS = 30;
     private static final int ENROLLMENT_DELAY_HOURS = 2;
 
 
-    public Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
+    @Override
+    public List<User> findAllUsers() throws ServiceException {
+        try {
+            UserDao userDao = DaoProvider.getInstance().getUserDao();
+            return userDao.findAll();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for all users. {}", e.getMessage());
+            throw new ServiceException("Error while searching for all users", e);
+        }
+    }
+
+    public Optional<User> findActiveRegisteredUser(String login, String password) throws ServiceException {
         if (login == null || password == null) {
             return Optional.empty();
         }
@@ -47,11 +58,12 @@ public class UserServiceImpl implements UserService {
                 return Optional.empty();
             }
 
-            if (hashString(password).equals(user.get().getPassword())) {
+            if (user.get().getStatus() == UserStatus.ACTIVE
+                    && hashString(password).equals(user.get().getPassword())) {
                 return user;
-            } else {
-                return Optional.empty();
             }
+
+            return Optional.empty();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for registered user login={}. {}", login, e.getMessage());
             throw new ServiceException("Error while searching for registered user login=" + login, e);
@@ -81,6 +93,17 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error during user registration, login=" + login, e);
         }
         return user;
+    }
+
+    @Override
+    public void updateUserStatus(long userId, UserStatus status) throws ServiceException {
+        try {
+            UserDao userDao = DaoProvider.getInstance().getUserDao();
+            userDao.updateUserStatus(userId, status);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while updating user status id={}: {}", userId, e.getMessage());
+            throw new ServiceException("Error while updating user status id=" + userId, e);
+        }
     }
 
     @Override
@@ -130,7 +153,7 @@ public class UserServiceImpl implements UserService {
             }
             String tokenValue = userToken.get().getToken();
             LocalDateTime timestamp = userToken.get().getCreationTimestamp();
-            if (!tokenValue.equals(token) || timestamp.plusMinutes(LINK_EXPIRE_TIMEOUT).isBefore(LocalDateTime.now())) {
+            if (!tokenValue.equals(token) || timestamp.plusMinutes(LINK_EXPIRE_TIMEOUT_MINUTES).isBefore(LocalDateTime.now())) {
                 return Optional.empty();
             }
             return userToken;
@@ -187,9 +210,9 @@ public class UserServiceImpl implements UserService {
         int skipAmount = (pageNumber - 1) * ITEMS_ON_PAGE_COUNT;
         try {
             if (searchLine == null) {
-                users = userDao.selectTeachersForPage(skipAmount, ITEMS_ON_PAGE_COUNT);
+                users = userDao.selectActiveTeachersForPage(skipAmount, ITEMS_ON_PAGE_COUNT);
             } else {
-                users = userDao.selectTeachersWithSearchForPage(skipAmount, ITEMS_ON_PAGE_COUNT, searchLine);
+                users = userDao.selectActiveTeachersWithSearchForPage(skipAmount, ITEMS_ON_PAGE_COUNT, searchLine);
             }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting teachers for page. {}", e.getMessage());
@@ -217,9 +240,9 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         try {
             if (searchLine == null) {
-                teacherAmount = userDao.countTeachers();
+                teacherAmount = userDao.countActiveTeachers();
             } else {
-                teacherAmount = userDao.countTeachersWithSearch(searchLine);
+                teacherAmount = userDao.countActiveTeachersWithSearch(searchLine);
             }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while counting courses. {}", e.getMessage());
@@ -282,7 +305,7 @@ public class UserServiceImpl implements UserService {
             startTime = startTime.plusHours(1);
         }
         LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
-        List<LessonSchedule> teacherScheduleForDate = lessonScheduleService.findTeacherLessonsForDate(teacherId, date);
+        List<LessonSchedule> teacherScheduleForDate = lessonScheduleService.findActiveTeacherLessonsForDate(teacherId, date);
         List<LocalTime> busySlots = teacherScheduleForDate.stream()
                 .map(lessonSchedule -> lessonSchedule.getStartDateTime().toLocalTime())
                 .collect(Collectors.toList());
@@ -322,7 +345,7 @@ public class UserServiceImpl implements UserService {
         for (LocalDate date : allSubscriptionAvailableDates) {
             for (User teacher : teachers) {
                 List<LocalTime> freeSlots = findTeacherFreeSlotsForDate(teacher.getId(), date);
-                if(date.isEqual(dateNow)){
+                if (date.isEqual(dateNow)) {
                     freeSlots = freeSlots.stream()
                             .filter(slot -> slot.isAfter(minimalTodayAvailableTime))
                             .collect(Collectors.toList());
@@ -344,7 +367,7 @@ public class UserServiceImpl implements UserService {
         Map<User, List<LocalTime>> allFreeSlots = new HashMap<>();
         for (User teacher : teachers) {
             List<LocalTime> teacherFreeSlots = findTeacherFreeSlotsForDate(teacher.getId(), date);
-            if(date.isEqual(dateNow)){
+            if (date.isEqual(dateNow)) {
                 teacherFreeSlots = teacherFreeSlots.stream()
                         .filter(slot -> slot.isAfter(minimalTodayAvailableTime))
                         .collect(Collectors.toList());

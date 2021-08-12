@@ -14,9 +14,9 @@ public interface SubscriptionService {
 
     boolean isNewCourseSubscriptionAvailable(long studentId, long courseId) throws ServiceException;
 
-    List<Subscription> findAllCurrentStudentSubscriptions(long studentId) throws ServiceException;
+    List<Subscription> findContinuingActiveStudentSubscriptions(long studentId) throws ServiceException;
 
-    Optional<Subscription> findActiveSubscriptionById(long subscriptionId) throws ServiceException;
+    Optional<Subscription> findContinuingActiveSubscriptionById(long subscriptionId) throws ServiceException;
 
     void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws ServiceException;
 }

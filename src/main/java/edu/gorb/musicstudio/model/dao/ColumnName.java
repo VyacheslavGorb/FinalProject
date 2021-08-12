@@ -26,6 +26,7 @@ public class ColumnName {
     public static final String COMMENT_COURSE_ID = "id_course";
     public static final String COMMENT_CONTENT = "content";
     public static final String COMMENT_TIMESTAMP = "date_time";
+    public static final String COMMENT_IS_ACTIVE = "is_active";
 
 
     /*Courses table*/

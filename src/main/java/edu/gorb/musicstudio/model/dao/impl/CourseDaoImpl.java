@@ -43,19 +43,25 @@ public class CourseDaoImpl implements CourseDao {
     private static final String SELECT_COURSES_WITH_SEARCH_FOR_PAGE =
             "SELECT id_course, name, description, picture_path, price_per_hour, is_active\n" +
                     "FROM courses\n" +
-                    "WHERE name LIKE CONCAT('%', ?, '%')\n" +
+                    "WHERE name LIKE CONCAT('%', ?, '%') and is_active=1\n" +
                     "LIMIT ?, ?";
 
     private static final String SELECT_COURSES_FOR_PAGE =
             "SELECT id_course, name, description, picture_path, price_per_hour, is_active\n" +
-                    "FROM courses\n" +
+                    "FROM courses  and is_active=1\n" +
                     "LIMIT ?, ?";
 
-    private static final String COUNT_ALL_COURSES = "SELECT COUNT(name) FROM courses";
+    private static final String COUNT_ALL_COURSES = "SELECT COUNT(name) FROM courses WHERE is_active=1";
 
     private static final String COUNT_COURSES_WITH_SEARCH =
             "SELECT COUNT(name) FROM courses\n" +
-                    "WHERE name LIKE CONCAT('%',?,'%')";
+                    "WHERE name LIKE CONCAT('%',?,'%') and is_active=1";
+
+    private static final String SELECT_COURSES_BY_TEACHER_ID =
+            "SELECT DISTINCT courses.id_course, name, description, picture_path, price_per_hour, is_active\n" +
+                    "FROM courses\n" +
+                    "         JOIN teacher_descriptions_has_courses tdhc on courses.id_course = tdhc.id_course\n" +
+                    "WHERE is_active = 1 and id_teacher=?";
 
     private final JdbcHelper<Course> jdbcHelper;
 
@@ -95,18 +101,18 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<Course> selectCoursesWithSearchForPage(int skipAmount, int coursePerPageAmount, String search)
+    public List<Course> selectActiveCoursesWithSearchForPage(int skipAmount, int coursePerPageAmount, String search)
             throws DaoException {
         return jdbcHelper.executeQuery(SELECT_COURSES_WITH_SEARCH_FOR_PAGE, search, skipAmount, coursePerPageAmount);
     }
 
     @Override
-    public List<Course> selectCoursesForPage(int skipAmount, int coursePerPageAmount) throws DaoException {
+    public List<Course> selectActiveCoursesForPage(int skipAmount, int coursePerPageAmount) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_COURSES_FOR_PAGE, skipAmount, coursePerPageAmount);
     }
 
     @Override
-    public int countAllCourses() throws DaoException {
+    public int countAllActiveCourses() throws DaoException {
         int result;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              Statement statement = connection.createStatement()) {
@@ -121,7 +127,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public int countCoursesWithSearch(String searchParameter) throws DaoException {
+    public int countActiveCoursesWithSearch(String searchParameter) throws DaoException {
         int result;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(COUNT_COURSES_WITH_SEARCH)) {
@@ -134,5 +140,10 @@ public class CourseDaoImpl implements CourseDao {
             throw new DaoException(e);
         }
         return result;
+    }
+
+    @Override
+    public List<Course> selectActiveCoursesByTeacherId(long teacherId) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_COURSES_BY_TEACHER_ID, teacherId);
     }
 }

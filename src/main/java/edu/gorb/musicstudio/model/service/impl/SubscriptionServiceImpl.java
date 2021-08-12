@@ -41,10 +41,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public List<Subscription> findAllCurrentStudentSubscriptions(long studentId) throws ServiceException {
+    public List<Subscription> findContinuingActiveStudentSubscriptions(long studentId) throws ServiceException {
         SubscriptionDao subscriptionDao = DaoProvider.getInstance().getSubscriptionDao();
         try {
-            return subscriptionDao.findActiveStudentSubscriptions(studentId);
+            return subscriptionDao.findContinuingActiveStudentSubscriptions(studentId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for student subscriptions, student id={}. {}",
                     studentId, e.getMessage());
@@ -53,10 +53,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Optional<Subscription> findActiveSubscriptionById(long subscriptionId) throws ServiceException {
+    public Optional<Subscription> findContinuingActiveSubscriptionById(long subscriptionId) throws ServiceException {
         SubscriptionDao subscriptionDao = DaoProvider.getInstance().getSubscriptionDao();
         try {
-            return subscriptionDao.findActiveSubscriptionById(subscriptionId);
+            return subscriptionDao.findContinuingActiveSubscriptionById(subscriptionId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for subscription, id={}. {}",
                     subscriptionId, e.getMessage());
@@ -83,7 +83,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         SubscriptionDao subscriptionDao = DaoProvider.getInstance().getSubscriptionDao();
         Optional<Subscription> optionalSubscription;
         try {
-            optionalSubscription = subscriptionDao.findActiveCourseSubscription(studentId, courseId);
+            optionalSubscription = subscriptionDao.findContinuingActiveCourseSubscription(studentId, courseId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for student subscription, student id={}, {}",
                     studentId, e.getMessage());
@@ -103,7 +103,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         List<LessonSchedule> lessonSchedules;
         try {
             lessonSchedules =
-                    lessonScheduleDao.findFutureSchedulesForStudentForCourse(studentId, courseId);
+                    lessonScheduleDao.findActiveFutureSchedulesForStudentForCourse(studentId, courseId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting lesson schedules for course, student id={}. {}",
                     studentId, e.getMessage());

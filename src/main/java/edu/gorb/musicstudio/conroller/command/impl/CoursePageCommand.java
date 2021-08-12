@@ -40,7 +40,7 @@ public class CoursePageCommand implements Command {
         CommentService commentService = ServiceProvider.getInstance().getCommentService();
         List<CommentDto> comments;
         try {
-            comments = commentService.findCommentsForCourse(courseId);
+            comments = commentService.findActiveCommentsForCourse(courseId);
         } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }

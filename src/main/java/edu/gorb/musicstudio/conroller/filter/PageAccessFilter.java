@@ -57,7 +57,7 @@ public class PageAccessFilter implements Filter {
         availableCommands.put(UserRole.ADMIN,
                 List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
-                        COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE));
+                        COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, MANAGE_USERS_PAGE, ACTIVATE_USER, DEACTIVATE_USER));
     }
 
     @Override

@@ -21,6 +21,7 @@ public class RequestAttribute {
     public static final String SUBSCRIPTION = "subscription";
     public static final String DATE = "date";
     public static final String SUBSCRIPTIONS_COURSES = "subscriptions_courses";
+    public static final String USER_MAP = "user_map";
 
 
     private RequestAttribute() {

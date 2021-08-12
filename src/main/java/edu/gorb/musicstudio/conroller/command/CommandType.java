@@ -34,7 +34,12 @@ public enum CommandType {
     CHOOSE_LESSON_DATETIME_PAGE,
     CHOOSE_LESSON_DATETIME,
     STUDENT_LESSON_SCHEDULE,
-    STUDENT_CANCEL_LESSON;
+    STUDENT_CANCEL_LESSON,
+
+    /*Admin commands*/
+    MANAGE_USERS_PAGE,
+    ACTIVATE_USER,
+    DEACTIVATE_USER;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {

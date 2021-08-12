@@ -108,7 +108,7 @@ public class UserDaoImpl implements UserDao {
             "SET id_user_status = (SELECT us.id_user_status FROM user_statuses us WHERE us.user_status = ?)\n" +
             "WHERE id_user = ?";
 
-    private static final String SELECT_TEACHERS_FOR_PAGE =
+    private static final String SELECT_ACTIVE_TEACHERS_FOR_PAGE =
             "SELECT id_user,\n" +
                     "       login,\n" +
                     "       password_hash,\n" +
@@ -121,10 +121,10 @@ public class UserDaoImpl implements UserDao {
                     "FROM users\n" +
                     "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
                     "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
-                    "WHERE user_role = 'TEACHER'\n" +
+                    "WHERE user_role = 'TEACHER' and user_status = 'ACTIVE'\n" +
                     "LIMIT ?, ?";
 
-    private static final String SELECT_TEACHERS_FOR_PAGE_WITH_SEARCH =
+    private static final String SELECT_ACTIVE_TEACHERS_FOR_PAGE_WITH_SEARCH =
             "SELECT id_user,\n" +
                     "       login,\n" +
                     "       password_hash,\n" +
@@ -137,21 +137,21 @@ public class UserDaoImpl implements UserDao {
                     "FROM users\n" +
                     "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
                     "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
-                    "WHERE user_role = 'TEACHER'\n" +
+                    "WHERE user_role = 'TEACHER' and user_status = 'ACTIVE'\n" +
                     "  and CONCAT(name, ' ', surname, ' ', patronymic) LIKE CONCAT('%', ?, '%')\n" +
                     "LIMIT ?, ?";
 
-    private static final String COUNT_TEACHERS =
+    private static final String COUNT_ACTIVE_TEACHERS =
             "SELECT COUNT(id_user)\n" +
                     "FROM users\n" +
                     "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
-                    "WHERE user_role = 'TEACHER'";
+                    "WHERE user_role = 'TEACHER' and id_user_status = (SELECT user_statuses.id_user_status FROM user_statuses WHERE user_statuses.user_status = 'ACTIVE')";
 
-    private static final String COUNT_TEACHERS_WITH_SEARCH =
+    private static final String COUNT_ACTIVE_TEACHERS_WITH_SEARCH =
             "SELECT COUNT(id_user)\n" +
                     "FROM users\n" +
                     "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
-                    "WHERE user_role = 'TEACHER'\n" +
+                    "WHERE user_role = 'TEACHER' and id_user_status = (SELECT user_statuses.id_user_status FROM user_statuses WHERE user_statuses.user_status = 'ACTIVE')\n" +
                     "  and CONCAT(name, ' ', surname, ' ', patronymic) LIKE CONCAT('%', ?, '%')";
 
     private static final String SELECT_TEACHER_FOR_COURSE =
@@ -234,21 +234,21 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> selectTeachersForPage(int skipAmount, int coursePerPageAmount) throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_TEACHERS_FOR_PAGE, skipAmount, coursePerPageAmount);
+    public List<User> selectActiveTeachersForPage(int skipAmount, int coursePerPageAmount) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_ACTIVE_TEACHERS_FOR_PAGE, skipAmount, coursePerPageAmount);
     }
 
     @Override
-    public List<User> selectTeachersWithSearchForPage(int skipAmount, int coursePerPageAmount, String search) throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_TEACHERS_FOR_PAGE_WITH_SEARCH, search, skipAmount, coursePerPageAmount);
+    public List<User> selectActiveTeachersWithSearchForPage(int skipAmount, int coursePerPageAmount, String search) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_ACTIVE_TEACHERS_FOR_PAGE_WITH_SEARCH, search, skipAmount, coursePerPageAmount);
     }
 
     @Override
-    public int countTeachers() throws DaoException {
+    public int countActiveTeachers() throws DaoException {
         int result;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(COUNT_TEACHERS);
+            ResultSet resultSet = statement.executeQuery(COUNT_ACTIVE_TEACHERS);
             resultSet.next();
             result = resultSet.getInt(FIRST_COLUMN_INDEX);
         } catch (SQLException | DatabaseConnectionException e) {
@@ -260,10 +260,10 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public int countTeachersWithSearch(String searchParameter) throws DaoException {
+    public int countActiveTeachersWithSearch(String searchParameter) throws DaoException {
         int result;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(COUNT_TEACHERS_WITH_SEARCH)) {
+             PreparedStatement statement = connection.prepareStatement(COUNT_ACTIVE_TEACHERS_WITH_SEARCH)) {
             statement.setString(FIRST_COLUMN_INDEX, searchParameter);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();

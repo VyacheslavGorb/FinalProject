@@ -22,9 +22,9 @@ public class StudentLessonSchedulePageCommand implements Command {
         Map<String, List<LessonScheduleDto>> lessonScheduleDtoMap;
         try {
             List<LessonScheduleDto> lessonScheduleDtos =
-                    lessonScheduleService.findFutureSchedulesByStudentId(student.getId());
+                    lessonScheduleService.findActiveFutureSchedulesByStudentId(student.getId());
 
-            lessonScheduleDtoMap = lessonScheduleService.mapLessonDtosToByDate(lessonScheduleDtos);
+            lessonScheduleDtoMap = lessonScheduleService.mapLessonDtosToDate(lessonScheduleDtos);
             lessonScheduleDateLines = lessonScheduleService.findDistinctDateLines(lessonScheduleDtos);
         } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);

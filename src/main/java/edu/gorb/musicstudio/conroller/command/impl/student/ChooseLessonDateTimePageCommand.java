@@ -38,7 +38,7 @@ public class ChooseLessonDateTimePageCommand implements Command {
         List<LocalDate> courseAvailableDates;
         Subscription subscription;
         try {
-            Optional<Subscription> optionalSubscription = subscriptionService.findActiveSubscriptionById(subscriptionId);
+            Optional<Subscription> optionalSubscription = subscriptionService.findContinuingActiveSubscriptionById(subscriptionId);
             if (optionalSubscription.isEmpty()) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }

@@ -27,7 +27,7 @@ public class LoginCommand implements Command {
         UserService userService = ServiceProvider.getInstance().getUserService();
         TeacherDescriptionService descriptionService = ServiceProvider.getInstance().getTeacherDescriptionService();
         try {
-            Optional<User> user = userService.findRegisteredUser(login, password);
+            Optional<User> user = userService.findActiveRegisteredUser(login, password);
             if (user.isEmpty()) {
                 session.setAttribute(SessionAttribute.IS_LOGIN_ERROR, true);
                 session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.LOGIN_ERROR);

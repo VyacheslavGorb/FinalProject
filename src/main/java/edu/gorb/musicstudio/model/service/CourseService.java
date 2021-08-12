@@ -18,4 +18,6 @@ public interface CourseService {
     List<Course> trimCoursesDescriptionForPreview(List<Course> courses);
 
     Optional<Course> findCourseById(long courseId) throws ServiceException;
+
+    List<Course> findActiveCoursesByTeacherId(long teacherId) throws ServiceException;
 }

@@ -17,6 +17,7 @@ public class CommentRowMapperImpl implements RowMapper<Comment> {
         long courseId = resultSet.getLong(COMMENT_COURSE_ID);
         String content = resultSet.getString(COMMENT_CONTENT);
         LocalDateTime dateTime = resultSet.getTimestamp(COMMENT_TIMESTAMP).toLocalDateTime();
-        return new Comment(commentId, studentId, courseId, content, dateTime);
+        boolean isActive = resultSet.getBoolean(COMMENT_IS_ACTIVE);
+        return new Comment(commentId, studentId, courseId, content, dateTime, isActive);
     }
 }

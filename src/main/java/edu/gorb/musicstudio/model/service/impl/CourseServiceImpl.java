@@ -27,9 +27,9 @@ public class CourseServiceImpl implements CourseService {
         int skipAmount = (pageNumber - 1) * ITEMS_ON_PAGE_COUNT;
         try {
             if (searchParameter == null) {
-                courses = courseDao.selectCoursesForPage(skipAmount, ITEMS_ON_PAGE_COUNT);
+                courses = courseDao.selectActiveCoursesForPage(skipAmount, ITEMS_ON_PAGE_COUNT);
             } else {
-                courses = courseDao.selectCoursesWithSearchForPage(skipAmount, ITEMS_ON_PAGE_COUNT, searchParameter);
+                courses = courseDao.selectActiveCoursesWithSearchForPage(skipAmount, ITEMS_ON_PAGE_COUNT, searchParameter);
             }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting courses for page");
@@ -50,9 +50,9 @@ public class CourseServiceImpl implements CourseService {
         CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
         try {
             if (searchParameter == null) {
-                courseAmount = courseDao.countAllCourses();
+                courseAmount = courseDao.countAllActiveCourses();
             } else {
-                courseAmount = courseDao.countCoursesWithSearch(searchParameter);
+                courseAmount = courseDao.countActiveCoursesWithSearch(searchParameter);
             }
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while counting courses");
@@ -80,6 +80,17 @@ public class CourseServiceImpl implements CourseService {
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for course by id={}", courseId);
             throw new ServiceException("Error while searching for course by id=" + courseId, e);
+        }
+    }
+
+    @Override
+    public List<Course> findActiveCoursesByTeacherId(long teacherId) throws ServiceException {
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        try {
+            return courseDao.selectActiveCoursesByTeacherId(teacherId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for course by teacher id={}", teacherId);
+            throw new ServiceException("Error while searching for course by teacher id=" + teacherId, e);
         }
     }
 }

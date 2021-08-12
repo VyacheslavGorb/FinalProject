@@ -16,15 +16,15 @@ public interface LessonScheduleService {
 
     void updateStatus(long lessonId, LessonSchedule.LessonStatus status) throws ServiceException;
 
-    List<LessonScheduleDto> findFutureSchedulesByTeacherId(long teacherId) throws ServiceException;
+    List<LessonScheduleDto> findActiveFutureSchedulesByTeacherId(long teacherId) throws ServiceException;
 
-    List<LessonScheduleDto> findFutureSchedulesByStudentId(long studentId) throws ServiceException;
+    List<LessonScheduleDto> findActiveFutureSchedulesByStudentId(long studentId) throws ServiceException;
 
-    Map<String, List<LessonScheduleDto>> mapLessonDtosToByDate(List<LessonScheduleDto> lessonScheduleDtos);
+    Map<String, List<LessonScheduleDto>> mapLessonDtosToDate(List<LessonScheduleDto> lessonScheduleDtos);
 
     List<String> findDistinctDateLines(List<LessonScheduleDto> lessonScheduleDtos);
 
-    List<LessonSchedule> findTeacherLessonsForDate(long teacherId, LocalDate date) throws ServiceException;
+    List<LessonSchedule> findActiveTeacherLessonsForDate(long teacherId, LocalDate date) throws ServiceException;
 
     List<LessonScheduleDto> findLessonSchedulesBySubscription(long subscriptionId) throws ServiceException;
 

@@ -46,6 +46,9 @@ public class PagePath {
     public static final String STUDENT_LESSON_SCHEDULE_PAGE = "WEB-INF/pages/student/student_lesson_schedule.jsp";
     public static final String STUDENT_LESSON_SCHEDULE_PAGE_REDIRECT = "/controller?command=student_lesson_schedule";
 
+    public static final String MANAGE_USERS = "WEB-INF/pages/admin/manage_users.jsp";
+    public static final String MANAGE_USERS_REDIRECT = "/controller?command=manage_users_page";
+
     private PagePath() {
     }
 }

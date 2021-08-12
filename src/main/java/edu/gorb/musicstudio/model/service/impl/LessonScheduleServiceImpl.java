@@ -60,11 +60,11 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
     }
 
     @Override
-    public List<LessonScheduleDto> findFutureSchedulesByTeacherId(long teacherId) throws ServiceException {
+    public List<LessonScheduleDto> findActiveFutureSchedulesByTeacherId(long teacherId) throws ServiceException {
         LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
         List<LessonSchedule> lessons;
         try {
-            lessons = lessonScheduleDao.findFutureSchedulesForTeacher(teacherId);
+            lessons = lessonScheduleDao.findActiveFutureSchedulesForTeacher(teacherId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting lessons for teacher id={}. {}", teacherId,
                     e.getMessage());
@@ -104,11 +104,11 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
     }
 
     @Override
-    public List<LessonScheduleDto> findFutureSchedulesByStudentId(long studentId) throws ServiceException {
+    public List<LessonScheduleDto> findActiveFutureSchedulesByStudentId(long studentId) throws ServiceException {
         LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
         List<LessonSchedule> lessons;
         try {
-            lessons = lessonScheduleDao.findFutureSchedulesForStudent(studentId);
+            lessons = lessonScheduleDao.findActiveFutureSchedulesForStudent(studentId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while selecting lessons for student id={}. {}", studentId,
                     e.getMessage());
@@ -146,7 +146,7 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
     }
 
     @Override
-    public Map<String, List<LessonScheduleDto>> mapLessonDtosToByDate(List<LessonScheduleDto> lessonScheduleDtos) {
+    public Map<String, List<LessonScheduleDto>> mapLessonDtosToDate(List<LessonScheduleDto> lessonScheduleDtos) {
         return lessonScheduleDtos.stream()
                 .collect(Collectors.groupingBy(lesson -> lesson.getStartDateTime().toLocalDate().format(formatter)));
     }
@@ -171,10 +171,10 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
     }
 
     @Override
-    public List<LessonSchedule> findTeacherLessonsForDate(long teacherId, LocalDate date) throws ServiceException {
+    public List<LessonSchedule> findActiveTeacherLessonsForDate(long teacherId, LocalDate date) throws ServiceException {
         LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
         try {
-            return lessonScheduleDao.findScheduleForTeacherForDate(teacherId, date);
+            return lessonScheduleDao.findActiveScheduleForTeacherForDate(teacherId, date);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for teacher lesson schedule for date. {}", e.getMessage());
             throw new ServiceException("Error while searching for teacher lesson schedule for date", e);

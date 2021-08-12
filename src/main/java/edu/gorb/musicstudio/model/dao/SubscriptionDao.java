@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubscriptionDao extends BaseDao<Subscription> {
-    Optional<Subscription> findActiveCourseSubscription(long studentId, long courseId) throws DaoException;
+    Optional<Subscription> findContinuingActiveCourseSubscription(long studentId, long courseId) throws DaoException;
 
-    List<Subscription> findActiveStudentSubscriptions(long studentId) throws DaoException;
+    List<Subscription> findContinuingActiveStudentSubscriptions(long studentId) throws DaoException;
 
-    Optional<Subscription> findActiveSubscriptionById(long subscriptionId) throws DaoException;
+    Optional<Subscription> findContinuingActiveSubscriptionById(long subscriptionId) throws DaoException;
 
     void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws DaoException;
 }

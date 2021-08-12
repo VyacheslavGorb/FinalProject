@@ -13,33 +13,33 @@ import java.util.Optional;
 public class CommentDaoImpl implements CommentDao {
 
     public static final String INSERT_NEW_COMMENT =
-            "INSERT INTO comments (id_student, id_course, content, date_time) VALUE (?, ?, ?, ?)";
+            "INSERT INTO comments (id_student, id_course, content, date_time, is_active) VALUE (?, ?, ?, ?, ?)";
 
-    public static final String UPDATE_COMMENT = "UPDATE comments\n" +
+    public static final String UPDATE_COMMENT = "UPDATE comments\n" + //TODO remove unused
             "SET id_student=?,\n" +
             "    id_course=?,\n" +
             "    content=?,\n" +
             "    date_time=?\n" +
             "WHERE id_comment = ?";
 
-    private static final String SELECT_ALL_COMMENTS =
-            "SELECT id_comment, id_student, id_course, content, date_time\n" +
+    private static final String SELECT_ALL_COMMENTS = //TODO remove unused
+            "SELECT id_comment, id_student, id_course, content, date_time, is_active\n" +
                     "FROM comments\n" +
                     "ORDER BY date_time DESC";
 
     private static final String SELECT_COMMENT_BY_ID =
-            "SELECT id_comment, id_student, id_course, content, date_time\n" +
+            "SELECT id_comment, id_student, id_course, content, date_time, is_active\n" +
                     "FROM comments\n" +
                     "WHERE id_comment=?";
 
     private static final String SELECT_COMMENTS_BY_COURSE_ID =
-            "SELECT id_comment, id_student, id_course, content, date_time\n" +
+            "SELECT id_comment, id_student, id_course, content, date_time, is_active\n" +
                     "FROM comments\n" +
-                    "WHERE id_course=?\n" +
+                    "WHERE id_course=? and is_active=1\n" +
                     "ORDER BY date_time DESC";
 
-    private static final String SELECT_COMMENTS_BY_STUDENT_ID =
-            "SELECT id_comment, id_student, id_course, content, date_time\n" +
+    private static final String SELECT_COMMENTS_BY_STUDENT_ID = //TODO remove unused
+            "SELECT id_comment, id_student, id_course, content, date_time, is_active\n" +
                     "FROM comments\n" +
                     "WHERE id_student=?\n" +
                     "ORDER BY date_time DESC";
@@ -66,7 +66,8 @@ public class CommentDaoImpl implements CommentDao {
                 comment.getStudentId(),
                 comment.getCourseId(),
                 comment.getContent(),
-                comment.getDateTime());
+                comment.getDateTime(),
+                comment.isActive());
     }
 
     @Override
@@ -80,7 +81,7 @@ public class CommentDaoImpl implements CommentDao {
     }
 
     @Override
-    public List<Comment> findCommentsByCourseId(long courseId) throws DaoException {
+    public List<Comment> findActiveCommentsByCourseId(long courseId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_COMMENTS_BY_COURSE_ID, courseId);
     }
 

@@ -31,7 +31,7 @@ public class PersonalSubscriptionsCommand implements Command {
 
         List<Subscription> subscriptions;
         try {
-            subscriptions = subscriptionService.findAllCurrentStudentSubscriptions(student.getId());
+            subscriptions = subscriptionService.findContinuingActiveStudentSubscriptions(student.getId());
             for (Subscription subscription : subscriptions) {
                 List<LessonScheduleDto> schedules =
                         lessonScheduleService.findLessonSchedulesBySubscription(subscription.getId());

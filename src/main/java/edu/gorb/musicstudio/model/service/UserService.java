@@ -14,11 +14,16 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<User> findRegisteredUser(String login, String password) throws ServiceException;
+
+    List<User> findAllUsers() throws ServiceException;
+
+    Optional<User> findActiveRegisteredUser(String login, String password) throws ServiceException;
 
     User registerUser(UserRole userRole, String login, String password,
                       String name, String surname, String patronymic,
                       String email, UserStatus userStatus) throws ServiceException;
+
+    void updateUserStatus(long userId, UserStatus status) throws ServiceException;
 
     boolean isLoginAvailableForNewUser(String login) throws ServiceException;
 

@@ -16,27 +16,27 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions";
 
-    private static final String SELECT_ACTIVE_SUBSCRIPTION_BY_ID =
+    private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_BY_ID =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
-                    "WHERE DATE(date_end) >= CURDATE() and id_subscription = ?";
+                    "WHERE DATE(date_end) >= CURDATE() and id_subscription = ? and status != 'INTERRUPTED'";
 
     private static final String INSERT_NEW_SUBSCRIPTION =
             "INSERT INTO subscriptions (id_student, id_course, date_start, date_end, lesson_amount, status)\n" +
                     "    VALUE (?, ?, ?, ?, ?, ?)";
 
-    private static final String SELECT_ACTIVE_SUBSCRIPTION_FOR_STUDENT_FOR_COURSE =
+    private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_FOR_STUDENT_FOR_COURSE =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
                     "  and id_student = ?\n" +
-                    "  and id_course = ?";
+                    "  and id_course = ? and status != 'INTERRUPTED'";
 
-    private static final String SELECT_ACTIVE_SUBSCRIPTIONS_FOR_STUDENT =
+    private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_STUDENT =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
-                    "  and id_student = ?";
+                    "  and id_student = ? and status != 'INTERRUPTED'";
 
     private static final String UPDATE_STATUS =
             "UPDATE subscriptions\n" +
@@ -77,20 +77,20 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     }
 
     @Override
-    public Optional<Subscription> findActiveCourseSubscription(long studentId, long courseId) throws DaoException {
-        return jdbcHelper.executeQueryForSingleResult(SELECT_ACTIVE_SUBSCRIPTION_FOR_STUDENT_FOR_COURSE,
+    public Optional<Subscription> findContinuingActiveCourseSubscription(long studentId, long courseId) throws DaoException {
+        return jdbcHelper.executeQueryForSingleResult(SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_FOR_STUDENT_FOR_COURSE,
                 studentId, courseId);
     }
 
     @Override
-    public List<Subscription> findActiveStudentSubscriptions(long studentId) throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_ACTIVE_SUBSCRIPTIONS_FOR_STUDENT,
+    public List<Subscription> findContinuingActiveStudentSubscriptions(long studentId) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_STUDENT,
                 studentId);
     }
 
     @Override
-    public Optional<Subscription> findActiveSubscriptionById(long subscriptionId) throws DaoException {
-        return jdbcHelper.executeQueryForSingleResult(SELECT_ACTIVE_SUBSCRIPTION_BY_ID, subscriptionId);
+    public Optional<Subscription> findContinuingActiveSubscriptionById(long subscriptionId) throws DaoException {
+        return jdbcHelper.executeQueryForSingleResult(SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_BY_ID, subscriptionId);
     }
 
     @Override

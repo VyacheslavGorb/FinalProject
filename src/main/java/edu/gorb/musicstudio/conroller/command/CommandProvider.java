@@ -1,6 +1,9 @@
 package edu.gorb.musicstudio.conroller.command;
 
 import edu.gorb.musicstudio.conroller.command.impl.*;
+import edu.gorb.musicstudio.conroller.command.impl.admin.ActivateUserCommand;
+import edu.gorb.musicstudio.conroller.command.impl.admin.DeactivateUserCommand;
+import edu.gorb.musicstudio.conroller.command.impl.admin.ManageUsersPageCommand;
 import edu.gorb.musicstudio.conroller.command.impl.go.*;
 import edu.gorb.musicstudio.conroller.command.impl.student.*;
 import edu.gorb.musicstudio.conroller.command.impl.teacher.*;
@@ -44,6 +47,9 @@ public class CommandProvider {
         commands.put(CHOOSE_LESSON_DATETIME, new ChooseLessonDateTimeCommand());
         commands.put(STUDENT_LESSON_SCHEDULE, new StudentLessonSchedulePageCommand());
         commands.put(STUDENT_CANCEL_LESSON, new StudentCancelLessonCommand());
+        commands.put(MANAGE_USERS_PAGE, new ManageUsersPageCommand());
+        commands.put(ACTIVATE_USER, new ActivateUserCommand());
+        commands.put(DEACTIVATE_USER, new DeactivateUserCommand());
     }
 
     public static CommandProvider getInstance() {

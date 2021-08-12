@@ -1,5 +1,5 @@
 package edu.gorb.musicstudio.entity;
 
 public enum UserStatus {
-    ACTIVE, INACTIVE, ON_LEAVE, EMAIL_NOT_CONFIRMED, WAITING_FOR_APPROVEMENT
+    WAITING_FOR_APPROVEMENT, ACTIVE, INACTIVE, EMAIL_NOT_CONFIRMED //TODO remove onleave from database
 }

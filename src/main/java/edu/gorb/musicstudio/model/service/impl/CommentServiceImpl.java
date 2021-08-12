@@ -30,12 +30,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> findCommentsForCourse(long courseId) throws ServiceException {
+    public List<CommentDto> findActiveCommentsForCourse(long courseId) throws ServiceException {
         CommentDao commentDao = DaoProvider.getInstance().getCommentDao();
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         List<CommentDto> result = new ArrayList<>();
         try {
-            List<Comment> comments = commentDao.findCommentsByCourseId(courseId);
+            List<Comment> comments = commentDao.findActiveCommentsByCourseId(courseId);
             for (Comment comment : comments) {
                 Optional<User> optionalUser = userDao.findEntityById(comment.getStudentId());
                 if (optionalUser.isEmpty()) {
@@ -62,7 +62,7 @@ public class CommentServiceImpl implements CommentService {
         LocalDateTime dateTime = LocalDateTime.now();
         CommentDao commentDao = DaoProvider.getInstance().getCommentDao();
         String escapedContent = HtmlEscapeUtil.escape(content);
-        Comment comment = new Comment(0, userId, courseId, escapedContent, dateTime);
+        Comment comment = new Comment(0, userId, courseId, escapedContent, dateTime, true);
         try {
             return commentDao.insert(comment);
         } catch (DaoException e) {
