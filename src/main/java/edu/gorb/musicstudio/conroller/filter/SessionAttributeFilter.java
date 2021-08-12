@@ -29,6 +29,7 @@ public class SessionAttributeFilter implements Filter {
         attributesToRemove.put(TEACHER_PERSONAL_INFO, List.of(IS_TEACHER_INFO_ERROR));
         attributesToRemove.put(SUBSCRIPTION_PAGE, List.of(IS_SUBSCRIPTION_ERROR));
         attributesToRemove.put(MANAGE_USERS_PAGE, List.of(IS_USER_MANAGE_ERROR, ERROR_KEY));
+        attributesToRemove.put(ADD_COURSE_PAGE, List.of(IS_ADD_COURSE_ERROR));
     }
 
     @Override

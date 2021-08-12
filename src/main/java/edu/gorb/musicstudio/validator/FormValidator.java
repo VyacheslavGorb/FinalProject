@@ -3,6 +3,8 @@ package edu.gorb.musicstudio.validator;
 import edu.gorb.musicstudio.entity.UserRole;
 import org.apache.commons.io.FilenameUtils;
 
+import java.math.BigDecimal;
+
 public class FormValidator {
 
     private static final String LOGIN_REGEX = "[A-Za-z][0-9a-zA-Z]{2,19}";
@@ -19,6 +21,9 @@ public class FormValidator {
     private static final String DAY_OF_WEEK_REGEX = "[1-7]";
     private static final int MIN_VALID_HOUR = 0;
     private static final int MAX_VALID_HOUR = 24;
+
+    private static final int MAX_COURSE_NAME_LENGTH = 40;
+    private static final int MAX_PRICE_VALUE = 9999;
 
 
     private FormValidator() {
@@ -107,5 +112,26 @@ public class FormValidator {
         }
         String extension = FilenameUtils.getExtension(imageName);
         return extension.equals(JPEG_EXTENSION) || extension.equals(JPG_EXTENSION);
+    }
+
+    public static boolean areAddCourseParametersValid(String name, String description, String priceParameter, String fileName) {
+        if (name == null || description == null || priceParameter == null) {
+            return false;
+        }
+        if (name.length() > MAX_COURSE_NAME_LENGTH || description.length() > MAX_TEXT_DESCRIPTION_LENGTH) {
+            return false;
+        }
+        BigDecimal price;
+        try {
+            price = new BigDecimal(priceParameter);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        if(price.intValue() < 0 || Math.ceil(price.doubleValue()) > MAX_PRICE_VALUE){
+            return false;
+        }
+
+        return isImageFileNameValid(fileName);
     }
 }

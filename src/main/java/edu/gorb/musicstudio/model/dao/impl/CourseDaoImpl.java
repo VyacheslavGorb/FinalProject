@@ -37,7 +37,7 @@ public class CourseDaoImpl implements CourseDao {
             "    description=?,\n" +
             "    picture_path=?,\n" +
             "    price_per_hour=?,\n" +
-            "    is_active=?,\n" +
+            "    is_active=?\n" +
             "WHERE id_course = ?";
 
     private static final String SELECT_COURSES_WITH_SEARCH_FOR_PAGE =

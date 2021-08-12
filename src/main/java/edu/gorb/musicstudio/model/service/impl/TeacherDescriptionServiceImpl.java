@@ -21,11 +21,14 @@ import java.util.Properties;
 public class TeacherDescriptionServiceImpl implements TeacherDescriptionService {
     private static final Logger logger = LogManager.getLogger();
     private static final String PICTURE_PROPERTIES = "properties/picture.properties";
-    private static final String TEACHER_FOLDER = "teacher/";
     private static final String BASE_PATH_PROPERTY = "image.path.base";
+    private static final String TEACHER_FOLDER_PROPERTY = "image.path.teacher";
     private static final String JPEG_EXTENSION = ".jpeg";
+    private static final String DEFAULT_BASE_PATH = "D:/pic/";
+    private static final String DEFAULT_TEACHER_PATH = "teacher/";
 
     private String basePicturePath;
+    private String teacherFolderPath;
 
     public TeacherDescriptionServiceImpl() {
         try {
@@ -33,8 +36,15 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
             Properties properties = new Properties();
             properties.load(classLoader.getResourceAsStream(PICTURE_PROPERTIES));
             basePicturePath = properties.getProperty(BASE_PATH_PROPERTY);
+            teacherFolderPath = properties.getProperty(TEACHER_FOLDER_PROPERTY);
+            if(basePicturePath == null || teacherFolderPath == null){
+                basePicturePath = DEFAULT_BASE_PATH;
+                teacherFolderPath = DEFAULT_TEACHER_PATH;
+            }
         } catch (IOException e) {
-            logger.log(Level.ERROR, "Property file exists");
+            logger.log(Level.ERROR, "Error while reading property file {}. {}", PICTURE_PROPERTIES, e.getMessage());
+            basePicturePath = DEFAULT_BASE_PATH;
+            teacherFolderPath = DEFAULT_TEACHER_PATH;
         }
     }
 
@@ -64,7 +74,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
     public void saveTeacherDescription(long teacherId, List<Part> imageParts, String descriptionContent, int workExperienceYears)
             throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
-        String relativeImagePath = TEACHER_FOLDER + teacherId + JPEG_EXTENSION;
+        String relativeImagePath = teacherFolderPath + teacherId + JPEG_EXTENSION;
         descriptionContent = HtmlEscapeUtil.escape(descriptionContent);
         TeacherDescription teacherDescription = new TeacherDescription(
                 teacherId,
@@ -84,7 +94,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
     public void updateTeacherDescription(long teacherId, List<Part> imageParts, String descriptionContent, int workExperienceYears)
             throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
-        String relativeImagePath = TEACHER_FOLDER + teacherId + JPEG_EXTENSION;
+        String relativeImagePath = teacherFolderPath + teacherId + JPEG_EXTENSION;
         descriptionContent = HtmlEscapeUtil.escape(descriptionContent);
         TeacherDescription teacherDescription = new TeacherDescription(
                 teacherId,
@@ -131,6 +141,5 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
             logger.log(Level.ERROR, "Error while saving image. {}", e.getMessage());
             throw new ServiceException("Error while saving image. " + e.getMessage(), e);
         }
-
     }
 }

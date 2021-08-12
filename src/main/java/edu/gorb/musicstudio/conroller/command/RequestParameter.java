@@ -32,6 +32,8 @@ public class RequestParameter {
     public static final String SUBSCRIPTION_ID = "subscription_id";
     public static final String LESSON_ID = "lesson_id";
     public static final String USER_ID = "user_id";
+    public static final String COURSE_NAME = "course_name";
+    public static final String PRICE = "price";
 
 
 

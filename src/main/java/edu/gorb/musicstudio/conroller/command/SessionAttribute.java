@@ -24,6 +24,7 @@ public class SessionAttribute {
     public static final String IS_TEACHER_INFO_ERROR = "is_teacher_info_error";
     public static final String IS_SUBSCRIPTION_ERROR = "is_subscription_error";
     public static final String IS_USER_MANAGE_ERROR = "is_manage_error";
+    public static final String IS_ADD_COURSE_ERROR = "is_add_course_error";
 
 
     private SessionAttribute() {

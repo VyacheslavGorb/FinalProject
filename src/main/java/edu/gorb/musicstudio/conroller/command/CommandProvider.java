@@ -55,6 +55,9 @@ public class CommandProvider {
         commands.put(ALL_SUBSCRIPTIONS_PAGE, new AllSubscriptionsPageCommand());
         commands.put(ADMIN_APPROVE_SUBSCRIPTION, new ApproveSubscriptionCommand());
         commands.put(ADMIN_CANCEL_SUBSCRIPTION, new CancelSubscriptionCommand());
+        commands.put(ALL_COURSES_PAGE, new AllCoursesPageCommand());
+        commands.put(ADD_COURSE_PAGE, new AddCoursePageCommand());
+        commands.put(ADD_COURSE, new AddCourseCommand());
     }
 
     public static CommandProvider getInstance() {
@@ -65,16 +68,8 @@ public class CommandProvider {
         return commands.get(commandType);
     }
 
-    public Command getCommand(String command) {
-        CommandType commandType;
-        if (command == null) {
-            return commands.get(DEFAULT);
-        }
-        try {
-            commandType = CommandType.valueOf(command.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            commandType = DEFAULT;
-        }
+    public Command getCommand(String commandParameter) {
+        CommandType commandType = CommandType.convertRequestParameterToCommandType(commandParameter);
         return commands.get(commandType);
     }
 
