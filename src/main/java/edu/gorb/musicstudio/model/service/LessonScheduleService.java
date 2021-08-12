@@ -28,7 +28,7 @@ public interface LessonScheduleService {
 
     List<LessonSchedule> findActiveTeacherLessonsForDate(long teacherId, LocalDate date) throws ServiceException;
 
-    List<LessonScheduleDto> findLessonSchedulesBySubscription(long subscriptionId) throws ServiceException;
+    List<LessonScheduleDto> findLessonSchedulesBySubscriptionId(long subscriptionId) throws ServiceException;
 
     void saveNewLessonSchedule(long studentId, long teacherId, long courseId, long subscriptionId,
                                LocalDateTime startDateTime, LessonSchedule.LessonStatus status)

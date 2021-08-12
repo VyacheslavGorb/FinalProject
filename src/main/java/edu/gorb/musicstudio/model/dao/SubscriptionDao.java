@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubscriptionDao extends BaseDao<Subscription> {
+    List<Subscription> findAllContinuingActiveSubscriptions() throws DaoException;
+
     Optional<Subscription> findContinuingActiveCourseSubscription(long studentId, long courseId) throws DaoException;
 
     List<Subscription> findContinuingActiveStudentSubscriptions(long studentId) throws DaoException;
@@ -14,4 +16,6 @@ public interface SubscriptionDao extends BaseDao<Subscription> {
     Optional<Subscription> findContinuingActiveSubscriptionById(long subscriptionId) throws DaoException;
 
     void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws DaoException;
+
+    List<Subscription> findContinuingActiveSubscriptionsForCourse(long courseId) throws DaoException;
 }

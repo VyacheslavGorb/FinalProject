@@ -134,17 +134,7 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
     public List<String> findDistinctDateLines(List<LessonScheduleDto> lessonScheduleDtos) {
         return lessonScheduleDtos.stream()
                 .map(lesson -> lesson.getStartDateTime().toLocalDate())
-                .distinct()
-                .sorted((o1, o2) -> {
-                    int result = 0;
-                    if (o1.isAfter(o2)) {
-                        result = 1;
-                    }
-                    if (o1.isBefore(o2)) {
-                        result = -1;
-                    }
-                    return result;
-                })
+                .distinct().sorted()
                 .map(localDate -> localDate.format(formatter))
                 .collect(Collectors.toList());
     }
@@ -161,7 +151,7 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
     }
 
     @Override
-    public List<LessonScheduleDto> findLessonSchedulesBySubscription(long subscriptionId) throws ServiceException {
+    public List<LessonScheduleDto> findLessonSchedulesBySubscriptionId(long subscriptionId) throws ServiceException {
         LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         CourseDao courseDao = DaoProvider.getInstance().getCourseDao();

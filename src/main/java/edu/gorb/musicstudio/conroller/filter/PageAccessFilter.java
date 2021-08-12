@@ -59,7 +59,8 @@ public class PageAccessFilter implements Filter {
                 List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
                         GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, MANAGE_USERS_PAGE, ACTIVATE_USER, DEACTIVATE_USER,
-                        ALL_LESSONS_PAGE, ADMIN_CANCEL_LESSON));
+                        ALL_LESSONS_PAGE, ADMIN_CANCEL_LESSON, ALL_SUBSCRIPTIONS_PAGE, ADMIN_APPROVE_SUBSCRIPTION,
+                        ADMIN_CANCEL_SUBSCRIPTION));
     }
 
     @Override

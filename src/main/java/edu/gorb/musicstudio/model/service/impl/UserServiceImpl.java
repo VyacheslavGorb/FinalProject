@@ -315,9 +315,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int findTeacherFreeSlotCountForNextMonth(long teacherId) throws ServiceException {
-        LocalDate date = LocalDate.now().plusDays(1);
+        return findTeacherFreeSlotCountForFuturePeriod(LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(DEFAULT_SUBSCRIPTION_LENGTH_DAYS), teacherId);
+    }
+
+    @Override
+    public int findTeacherFreeSlotCountForFuturePeriod(LocalDate start, LocalDate end, long teacherId)
+            throws ServiceException {
+        if(start.isBefore(LocalDate.now().plusDays(1))){
+            start = LocalDate.now().plusDays(1);
+        }
+        LocalDate date = start;
         int slotCount = 0;
-        for (int i = 0; i < DEFAULT_SUBSCRIPTION_LENGTH_DAYS; i++) {
+        while (date.isBefore(end)) {
             slotCount += findTeacherFreeSlotsForDate(teacherId, date).size();
             date = date.plusDays(1);
         }

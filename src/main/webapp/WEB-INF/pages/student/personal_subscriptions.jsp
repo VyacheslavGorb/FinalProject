@@ -34,43 +34,43 @@
     </li>
 </ul>
 
-<c:if test="${requestScope.subscriptions.size() == 0}">
+<c:if test="${requestScope.subscriptions_schedule_map.size() == 0}">
     <div class="min-vh-100 d-flex align-items-center justify-content-center">
         <p class="display-3"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></p>
     </div>
 </c:if>
 
 <div class="min-vh-100">
-    <c:forEach items="${requestScope.subscriptions}" var="subscription">
+    <c:forEach items="${requestScope.subscriptions_schedule_map}" var="entry">
         <div class="d-flex justify-content-center flex-column align-items-center card m-5 bg-light">
             <div class="d-flex w-100 mt-4 flex-column justify-content-between align-items-center">
-                <h1 class="display-5">${requestScope.subscriptions_courses.get(subscription).name}</h1>
+                <h1 class="display-5">${entry.key.courseName}</h1>
                 <div class="d-flex justify-content-around w-75 mt-4">
                     <p class="display-1 fs-4"><fmt:message key="subscription.start_date"
-                                                           bundle="${rb}"/>: ${subscription.startDate}</p>
+                                                           bundle="${rb}"/>: ${entry.key.startDate}</p>
                     <p class="display-1 fs-4"><fmt:message key="subscription.end_date"
-                                                           bundle="${rb}"/>: ${subscription.endDate}</p>
+                                                           bundle="${rb}"/>: ${entry.key.endDate}</p>
                     <p class="display-1 fs-4"><fmt:message key="subscription.lesson_amount"
-                                                           bundle="${rb}"/>: ${subscription.lessonCount}</p>
+                                                           bundle="${rb}"/>: ${entry.key.lessonCount}</p>
                     <p class="display-1 fs-4"><fmt:message key="subscription.status" bundle="${rb}"/>: <fmt:message
-                            key="subscription.status.${subscription.status}" bundle="${rb}"/></p>
+                            key="subscription.status.${entry.key.status}" bundle="${rb}"/></p>
                 </div>
             </div>
 
-            <c:if test="${subscription.status.name() == 'WAITING_FOR_APPROVE' }">
+            <c:if test="${entry.key.status.name() == 'WAITING_FOR_APPROVE' }">
                 <p class="mt-0 mb-0 fs-4">
                     <fmt:message key="subscription.waiting.message" bundle="${rb}"/>
                 </p>
             </c:if>
 
-            <c:if test="${subscription.status.name() == 'REJECTED'}">
+            <c:if test="${entry.key.status.name() == 'REJECTED'}">
                 <p class="mt-0 mb-0 fs-4">
                     <fmt:message key="subscription.rejected.message" bundle="${rb}"/>
                 </p>
             </c:if>
 
 
-            <c:if test="${subscription.status.name() == 'APPROVED' || subscription.status.name() == 'ACTIVATED'}">
+            <c:if test="${entry.key.status.name() == 'APPROVED' || entry.key.status.name() == 'ACTIVATED'}">
                 <table class="table mb-5 w-75 mt-3">
                     <thead>
                     <tr>
@@ -82,7 +82,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${requestScope.subscription_schedules.get(subscription)}" var="lessonSchedule">
+                    <c:forEach items="${entry.value}" var="lessonSchedule">
                         <tr>
                             <td>${lessonSchedule.teacherName}</td>
                             <td>${lessonSchedule.teacherSurname}</td>
@@ -95,10 +95,10 @@
                 </table>
             </c:if>
 
-            <c:if test="${subscription.status.name() == 'APPROVED'}">
+            <c:if test="${entry.key.status.name() == 'APPROVED'}">
                 <div class="d-flex w-50 justify-content-around mt-2 mb-4">
                     <p class="mt-0 mb-0 fs-4">
-                        <fmt:message key="subscription.select_lessons" bundle="${rb}"/>: ${subscription.lessonCount}
+                        <fmt:message key="subscription.select_lessons" bundle="${rb}"/>: ${entry.key.lessonCount}
                     </p>
                     <a class="btn btn-success fs-5"><fmt:message key="subscription.add_lesson" bundle="${rb}"/></a>
                 </div>

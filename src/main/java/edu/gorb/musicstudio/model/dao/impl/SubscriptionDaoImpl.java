@@ -19,7 +19,7 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_BY_ID =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
-                    "WHERE DATE(date_end) >= CURDATE() and id_subscription = ? and status != 'INTERRUPTED'";
+                    "WHERE DATE(date_end) >= CURDATE() and id_subscription = ? and status != 'CANCELLED'";
 
     private static final String INSERT_NEW_SUBSCRIPTION =
             "INSERT INTO subscriptions (id_student, id_course, date_start, date_end, lesson_amount, status)\n" +
@@ -30,13 +30,25 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
                     "  and id_student = ?\n" +
-                    "  and id_course = ? and status != 'INTERRUPTED'";
+                    "  and id_course = ? and status != 'CANCELLED'";
 
     private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_STUDENT =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
-                    "  and id_student = ? and status != 'INTERRUPTED'";
+                    "  and id_student = ? and status != 'CANCELLED'";
+
+    private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_COURSE =
+            "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
+                    "FROM subscriptions\n" +
+                    "WHERE DATE(date_end) >= CURDATE()\n" +
+                    "  and id_course = ? and status != 'CANCELLED'";
+
+    private static final String SELECT_ALL_CONTINUING_ACTIVE_SUBSCRIPTIONS =
+            "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
+                    "FROM subscriptions\n" +
+                    "WHERE DATE(date_end) >= CURDATE()\n" +
+                    "  and status != 'CANCELLED'";
 
     private static final String UPDATE_STATUS =
             "UPDATE subscriptions\n" +
@@ -77,6 +89,11 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     }
 
     @Override
+    public List<Subscription> findAllContinuingActiveSubscriptions() throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_ALL_CONTINUING_ACTIVE_SUBSCRIPTIONS);
+    }
+
+    @Override
     public Optional<Subscription> findContinuingActiveCourseSubscription(long studentId, long courseId) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_FOR_STUDENT_FOR_COURSE,
                 studentId, courseId);
@@ -96,5 +113,10 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     @Override
     public void updateStatus(long subscriptionId, Subscription.SubscriptionStatus status) throws DaoException {
         jdbcHelper.executeUpdate(UPDATE_STATUS, status.toString(), subscriptionId);
+    }
+
+    @Override
+    public List<Subscription> findContinuingActiveSubscriptionsForCourse(long courseId) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_COURSE, courseId);
     }
 }

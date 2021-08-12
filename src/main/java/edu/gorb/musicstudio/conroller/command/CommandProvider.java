@@ -52,6 +52,9 @@ public class CommandProvider {
         commands.put(DEACTIVATE_USER, new DeactivateUserCommand());
         commands.put(ALL_LESSONS_PAGE, new AllLessonsPageCommand());
         commands.put(ADMIN_CANCEL_LESSON, new AdminCancelLessonCommand());
+        commands.put(ALL_SUBSCRIPTIONS_PAGE, new AllSubscriptionsPageCommand());
+        commands.put(ADMIN_APPROVE_SUBSCRIPTION, new ApproveSubscriptionCommand());
+        commands.put(ADMIN_CANCEL_SUBSCRIPTION, new CancelSubscriptionCommand());
     }
 
     public static CommandProvider getInstance() {

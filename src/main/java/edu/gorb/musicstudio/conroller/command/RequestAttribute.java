@@ -15,13 +15,16 @@ public class RequestAttribute {
     public static final String TEACHER_SCHEDULE = "teacher_schedules";
     public static final String MAX_AVAILABLE_LESSON_COUNT = "max_available_lesson_count";
     public static final String SUBSCRIPTIONS = "subscriptions";
-    public static final String SUBSCRIPTION_SCHEDULES = "subscription_schedules";
     public static final String TEACHERS_SCHEDULES = "teachers_schedules";
     public static final String AVAILABLE_DATES = "available_dates";
     public static final String SUBSCRIPTION = "subscription";
+    public static final String ACTIVE_SUBSCRIPTIONS = "active_subscriptions";
     public static final String DATE = "date";
-    public static final String SUBSCRIPTIONS_COURSES = "subscriptions_courses";
     public static final String USER_MAP = "user_map";
+    public static final String SUBSCRIPTIONS_FOR_SURE_LESSON_COUNT = "for_sure_lesson_count";
+    public static final String SUBSCRIPTIONS_LESSON_COUNT = "total_lesson_count";
+    public static final String SUBSCRIPTION_SCHEDULE_MAP = "subscriptions_schedule_map";
+    public static final String WAITING_FOR_APPROVE_SUBSCRIPTIONS = "waiting_for_approve_subscriptions";
 
 
     private RequestAttribute() {

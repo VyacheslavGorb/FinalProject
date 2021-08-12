@@ -2,6 +2,7 @@ package edu.gorb.musicstudio.conroller.command.impl.admin;
 
 import edu.gorb.musicstudio.conroller.command.*;
 import edu.gorb.musicstudio.dto.LessonScheduleDto;
+import edu.gorb.musicstudio.dto.SubscriptionDto;
 import edu.gorb.musicstudio.entity.*;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.*;
@@ -52,7 +53,8 @@ public class DeactivateUserCommand implements Command {
                     return new CommandResult(PagePath.MANAGE_USERS_REDIRECT, CommandResult.RoutingType.REDIRECT);
                 }
             } else if (user.getRole() == UserRole.STUDENT) {
-                List<Subscription> studentSubscriptions = subscriptionService.findContinuingActiveStudentSubscriptions(userId);
+                List<SubscriptionDto> studentSubscriptions =
+                        subscriptionService.findContinuingActiveStudentSubscriptions(userId);
                 if (!studentSubscriptions.isEmpty()) {
                     session.setAttribute(SessionAttribute.IS_USER_MANAGE_ERROR, true);
                     session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.STUDENT_HAS_SUBSCRIPTIONS);

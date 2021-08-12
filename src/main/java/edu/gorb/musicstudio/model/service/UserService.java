@@ -53,6 +53,8 @@ public interface UserService {
 
     int findTeacherFreeSlotCountForNextMonth(long teacherId) throws ServiceException;
 
+    int findTeacherFreeSlotCountForFuturePeriod(LocalDate start, LocalDate end, long teacherId) throws ServiceException;
+
     List<User> findTeachersForCourse(long courseId) throws ServiceException;
 
     List<LocalDate> findAllAvailableDatesForTeachers(List<User> teachers, LocalDate startDate, LocalDate endDate)

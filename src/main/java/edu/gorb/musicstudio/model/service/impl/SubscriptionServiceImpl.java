@@ -1,25 +1,41 @@
 package edu.gorb.musicstudio.model.service.impl;
 
+import edu.gorb.musicstudio.dto.LessonScheduleDto;
+import edu.gorb.musicstudio.dto.SubscriptionDto;
+import edu.gorb.musicstudio.entity.Course;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;
+import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.ServiceException;
-import edu.gorb.musicstudio.model.dao.DaoProvider;
-import edu.gorb.musicstudio.model.dao.LessonScheduleDao;
-import edu.gorb.musicstudio.model.dao.SubscriptionDao;
+import edu.gorb.musicstudio.model.dao.*;
 import edu.gorb.musicstudio.model.service.SubscriptionService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SubscriptionServiceImpl implements SubscriptionService {
     private static final Logger logger = LogManager.getLogger();
     private static final int MAX_LESSON_PER_SUBSCRIPTION_COUNT = 8;
     private static final int DEFAULT_SUBSCRIPTION_LENGTH_DAYS = 30;
+
+    @Override
+    public List<SubscriptionDto> findAllContinuingActiveSubscriptions() throws ServiceException {
+        SubscriptionDao subscriptionDao = DaoProvider.getInstance().getSubscriptionDao();
+        try {
+            List<Subscription> subscriptions = subscriptionDao.findAllContinuingActiveSubscriptions();
+            return createSubscriptionDtosFromSubscriptions(subscriptions);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while selecting all active subscriptions. {}", e.getMessage());
+            throw new ServiceException("Error while selecting all active subscriptions.", e);
+        }
+    }
 
     @Override
     public int calcMaxLessonPerSubscriptionCount(int freeSlotCount) {
@@ -41,10 +57,11 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public List<Subscription> findContinuingActiveStudentSubscriptions(long studentId) throws ServiceException {
+    public List<SubscriptionDto> findContinuingActiveStudentSubscriptions(long studentId) throws ServiceException {
         SubscriptionDao subscriptionDao = DaoProvider.getInstance().getSubscriptionDao();
         try {
-            return subscriptionDao.findContinuingActiveStudentSubscriptions(studentId);
+            List<Subscription> subscriptions = subscriptionDao.findContinuingActiveStudentSubscriptions(studentId);
+            return createSubscriptionDtosFromSubscriptions(subscriptions);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for student subscriptions, student id={}. {}",
                     studentId, e.getMessage());
@@ -73,6 +90,29 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             logger.log(Level.ERROR, "Error while updating subscription status, id={}. {}",
                     subscriptionId, e.getMessage());
             throw new ServiceException("Error while updating subscription status, id=" + subscriptionId);
+        }
+    }
+
+    @Override
+    public int findPotentiallyBusySlotCountForCourse(long courseId) throws ServiceException {
+        SubscriptionDao subscriptionDao = DaoProvider.getInstance().getSubscriptionDao();
+        LessonScheduleDao lessonScheduleDao = DaoProvider.getInstance().getLessonScheduleDao();
+        try {
+            List<Subscription> subscriptions = subscriptionDao.findContinuingActiveSubscriptionsForCourse(courseId)
+                    .stream()
+                    .filter(subscription -> subscription.getStatus() != Subscription.SubscriptionStatus.CANCELLED
+                            && subscription.getStatus() != Subscription.SubscriptionStatus.ACTIVATED)
+                    .collect(Collectors.toList());
+            int totalSubscriptionLessonCount = subscriptions.stream().mapToInt(Subscription::getLessonCount).sum();
+            int activatedLessonCount = 0;
+            for (Subscription subscription : subscriptions) {
+                activatedLessonCount += lessonScheduleDao.findLessonSchedulesBySubscription(subscription.getId()).size();
+            }
+            return totalSubscriptionLessonCount - activatedLessonCount;
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for potentially busy slots for course id={}. {}",
+                    courseId, e.getMessage());
+            throw new ServiceException("Error while searching for potentially busy slots for course id=" + courseId);
         }
     }
 
@@ -111,4 +151,47 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         }
         return lessonSchedules.isEmpty();
     }
+
+
+    private List<SubscriptionDto> createSubscriptionDtosFromSubscriptions(List<Subscription> subscriptions)
+            throws ServiceException{
+        UserDao userDao = DaoProvider.getInstance().getUserDao();
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        List<SubscriptionDto> subscriptionDtos = new ArrayList<>();
+        for (Subscription subscription : subscriptions) {
+            try {
+                Optional<User> optionalStudent = userDao.findEntityById(subscription.getStudentId());
+                Optional<Course> optionalCourse = courseDao.findEntityById(subscription.getCourseId());
+                if (optionalCourse.isEmpty() || optionalStudent.isEmpty()) {
+                    logger.log(Level.ERROR, "Lesson schedule contains invalid data, schedule id={}",
+                            subscription.getId());
+                    throw new ServiceException("Lesson schedule contains invalid data, schedule id="
+                            + subscription.getId());
+                }
+                SubscriptionDto subscriptionDto =
+                        createSubscription(subscription,optionalStudent.get(), optionalCourse.get());
+                subscriptionDtos.add(subscriptionDto);
+            } catch (DaoException e) {
+                logger.log(Level.ERROR, "Error while searching for entity by id. {}", e.getMessage());
+                throw new ServiceException("Error while searching for entity by id. {}", e);
+            }
+        }
+        return subscriptionDtos;
+    }
+
+
+    private SubscriptionDto createSubscription(Subscription subscription, User student, Course course){
+        return new SubscriptionDto.Builder()
+                .setSubscriptionId(subscription.getId())
+                .setCourseId(course.getId())
+                .setStartDate(subscription.getStartDate())
+                .setEndDate(subscription.getEndDate())
+                .setStatus(subscription.getStatus())
+                .setLessonCount(subscription.getLessonCount())
+                .setCourseName(course.getName())
+                .setStudentName(student.getName())
+                .setStudentSurname(student.getSurname())
+                .build();
+    }
+
 }

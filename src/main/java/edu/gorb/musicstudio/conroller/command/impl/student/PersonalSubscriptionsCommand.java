@@ -2,6 +2,7 @@ package edu.gorb.musicstudio.conroller.command.impl.student;
 
 import edu.gorb.musicstudio.conroller.command.*;
 import edu.gorb.musicstudio.dto.LessonScheduleDto;
+import edu.gorb.musicstudio.dto.SubscriptionDto;
 import edu.gorb.musicstudio.entity.Course;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.entity.User;
@@ -24,27 +25,19 @@ public class PersonalSubscriptionsCommand implements Command {
         User student = (User) session.getAttribute(SessionAttribute.USER);
         SubscriptionService subscriptionService = ServiceProvider.getInstance().getScheduleService();
         LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
-        CourseService courseService = ServiceProvider.getInstance().getCourseService();
-
-        Map<Subscription, List<LessonScheduleDto>> subscriptionLessonSchedules = new HashMap<>();
-        Map<Subscription, Course> subscriptionCourses = new HashMap<>();
-
-        List<Subscription> subscriptions;
+        Map<SubscriptionDto, List<LessonScheduleDto>> subscriptionLessonSchedules = new HashMap<>();
         try {
-            subscriptions = subscriptionService.findContinuingActiveStudentSubscriptions(student.getId());
-            for (Subscription subscription : subscriptions) {
+            List<SubscriptionDto> subscriptionDtos =
+                    subscriptionService.findContinuingActiveStudentSubscriptions(student.getId());
+            for (SubscriptionDto subscriptionDto : subscriptionDtos) {
                 List<LessonScheduleDto> schedules =
-                        lessonScheduleService.findLessonSchedulesBySubscription(subscription.getId());
-                Course course = courseService.findCourseById(subscription.getCourseId()).get(); //Course always exists
-                subscriptionLessonSchedules.put(subscription, schedules);
-                subscriptionCourses.put(subscription, course);
+                        lessonScheduleService.findLessonSchedulesBySubscriptionId(subscriptionDto.getSubscriptionId());
+                subscriptionLessonSchedules.put(subscriptionDto, schedules);
             }
         } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
-        request.setAttribute(RequestAttribute.SUBSCRIPTIONS_COURSES, subscriptionCourses);
-        request.setAttribute(RequestAttribute.SUBSCRIPTIONS, subscriptions);
-        request.setAttribute(RequestAttribute.SUBSCRIPTION_SCHEDULES, subscriptionLessonSchedules);
+        request.setAttribute(RequestAttribute.SUBSCRIPTION_SCHEDULE_MAP, subscriptionLessonSchedules);
         return new CommandResult(PagePath.PERSONAL_SUBSCRIPTIONS_PAGE, CommandResult.RoutingType.FORWARD);
     }
 }

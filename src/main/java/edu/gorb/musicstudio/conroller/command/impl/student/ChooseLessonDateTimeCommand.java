@@ -77,7 +77,7 @@ public class ChooseLessonDateTimeCommand implements Command {
             lessonScheduleService.saveNewLessonSchedule(student.getId(), teacherId, subscription.getCourseId(),
                     subscriptionId, LocalDateTime.of(date, time), LessonSchedule.LessonStatus.NORMAL);
 
-            List<LessonScheduleDto> lessonSchedules = lessonScheduleService.findLessonSchedulesBySubscription(subscriptionId);
+            List<LessonScheduleDto> lessonSchedules = lessonScheduleService.findLessonSchedulesBySubscriptionId(subscriptionId);
             if(lessonSchedules.size() == subscription.getLessonCount()){
                 subscriptionService.updateStatus(subscriptionId, Subscription.SubscriptionStatus.ACTIVATED);
             }

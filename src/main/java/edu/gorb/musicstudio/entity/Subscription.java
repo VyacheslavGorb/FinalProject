@@ -11,7 +11,7 @@ public class Subscription extends AbstractEntity {
     private int lessonCount;
 
     public enum SubscriptionStatus {
-        APPROVED, REJECTED, ACTIVATED, WAITING_FOR_APPROVE, INTERRUPTED
+        APPROVED, ACTIVATED, WAITING_FOR_APPROVE, CANCELLED
     }
 
     public Subscription(long entityId, long studentId, long courseId, LocalDate startDate, LocalDate endDate, SubscriptionStatus status, int lessonCount) {

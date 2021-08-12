@@ -52,6 +52,9 @@ public class PagePath {
     public static final String ALL_LESSONS = "WEB-INF/pages/admin/all_lessons.jsp";
     public static final String ALL_LESSONS_REDIRECT = "/controller?command=all_lessons_page";
 
+    public static final String ALL_SUBSCRIPTIONS = "WEB-INF/pages/admin/all_subscriptions.jsp";
+    public static final String ALL_SUBSCRIPTIONS_REDIRECT = "/controller?command=all_subscriptions_page";
+
     private PagePath() {
     }
 }
