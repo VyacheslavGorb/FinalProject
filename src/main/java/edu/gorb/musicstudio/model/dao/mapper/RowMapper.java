@@ -1,7 +1,5 @@
 package edu.gorb.musicstudio.model.dao.mapper;
 
-import edu.gorb.musicstudio.entity.AbstractEntity;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

@@ -139,9 +139,6 @@ public class LessonSchedule extends AbstractEntity {
         private LocalTime duration;
         private LessonStatus status;
 
-        public Builder() {
-        }
-
         public Builder setEntityId(long val) {
             entityId = val;
             return this;

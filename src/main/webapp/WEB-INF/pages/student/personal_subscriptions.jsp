@@ -44,7 +44,7 @@
     <c:forEach items="${requestScope.subscriptions}" var="subscription">
         <div class="d-flex justify-content-center flex-column align-items-center card m-5 bg-light">
             <div class="d-flex w-100 mt-4 flex-column justify-content-between align-items-center">
-                <h1 class="display-5">${subscription.courseId}</h1> <!--TODO-->
+                <h1 class="display-5">${requestScope.subscriptions_courses.get(subscription).name}</h1>
                 <div class="d-flex justify-content-around w-75 mt-4">
                     <p class="display-1 fs-4"><fmt:message key="subscription.start_date"
                                                            bundle="${rb}"/>: ${subscription.startDate}</p>

@@ -1,6 +1,5 @@
 package edu.gorb.musicstudio.model.dao;
 
-import edu.gorb.musicstudio.entity.AbstractEntity;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.DatabaseConnectionException;
 import edu.gorb.musicstudio.model.dao.mapper.RowMapper;

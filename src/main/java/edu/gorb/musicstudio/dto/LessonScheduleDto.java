@@ -16,10 +16,6 @@ public class LessonScheduleDto {
     private LocalTime duration;
     private LessonSchedule.LessonStatus status;
 
-    public LessonScheduleDto(){
-
-    }
-
     public long getScheduleId() {
         return scheduleId;
     }

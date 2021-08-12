@@ -5,7 +5,6 @@ import edu.gorb.musicstudio.entity.TeacherSchedule;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
-import edu.gorb.musicstudio.model.service.TeacherDescriptionService;
 import edu.gorb.musicstudio.model.service.TeacherScheduleService;
 
 import javax.servlet.http.HttpServletRequest;
