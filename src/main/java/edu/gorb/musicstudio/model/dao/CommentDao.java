@@ -9,4 +9,6 @@ public interface CommentDao extends BaseDao<Comment> {
     List<Comment> findActiveCommentsByCourseId(long teacherId) throws DaoException;
 
     List<Comment> findCommentsByStudentId(long teacherId) throws DaoException;
+
+    void deactivateComment(long commentId) throws DaoException;
 }

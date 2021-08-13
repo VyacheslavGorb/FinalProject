@@ -44,6 +44,10 @@ public class CommentDaoImpl implements CommentDao {
                     "WHERE id_student=?\n" +
                     "ORDER BY date_time DESC";
 
+    private static final String DEACTIVATE_COMMENT = "UPDATE comments\n" +
+            "SET is_active = 0\n" +
+            "WHERE id_comment = ?";
+
     private final JdbcHelper<Comment> jdbcHelper;
 
     public CommentDaoImpl() {
@@ -88,5 +92,10 @@ public class CommentDaoImpl implements CommentDao {
     @Override
     public List<Comment> findCommentsByStudentId(long studentId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_COMMENTS_BY_STUDENT_ID, studentId);
+    }
+
+    @Override
+    public void deactivateComment(long commentId) throws DaoException {
+        jdbcHelper.executeUpdate(DEACTIVATE_COMMENT, commentId);
     }
 }

@@ -54,7 +54,9 @@ public enum CommandType {
     CHANGE_COURSE,
     MANAGE_TEACHERS_COURSE_PAGE,
     ADD_TEACHER_TO_COURSE,
-    REMOVE_TEACHER_FROM_COURSE;
+    REMOVE_TEACHER_FROM_COURSE,
+    MANAGE_COMMENTS,
+    REMOVE_COMMENT;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {

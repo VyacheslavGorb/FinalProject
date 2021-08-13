@@ -1,8 +1,8 @@
 package edu.gorb.musicstudio.model.service.impl;
 
-import edu.gorb.musicstudio.entity.dto.CommentDto;
 import edu.gorb.musicstudio.entity.Comment;
 import edu.gorb.musicstudio.entity.User;
+import edu.gorb.musicstudio.entity.dto.CommentDto;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.dao.CommentDao;
@@ -44,6 +44,7 @@ public class CommentServiceImpl implements CommentService {
                 }
                 User user = optionalUser.get();
                 CommentDto commentDto = new CommentDto();
+                commentDto.setCommentId(comment.getId());
                 commentDto.setStudentName(user.getName());
                 commentDto.setStudentSurname(user.getSurname());
                 commentDto.setContent(comment.getContent());
@@ -68,6 +69,28 @@ public class CommentServiceImpl implements CommentService {
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while adding comment content={}", content);
             throw new ServiceException("Error while adding comment content=" + content, e);
+        }
+    }
+
+    @Override
+    public Optional<Comment> findCommentById(long commentId) throws ServiceException {
+        CommentDao commentDao = DaoProvider.getInstance().getCommentDao();
+        try {
+            return commentDao.findEntityById(commentId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for comment by id={}. {}", commentId, e.getMessage());
+            throw new ServiceException("Error while searching for comment by id="+commentId, e);
+        }
+    }
+
+    @Override
+    public void deactivateComment(long commentId) throws ServiceException {
+        CommentDao commentDao = DaoProvider.getInstance().getCommentDao();
+        try {
+            commentDao.deactivateComment(commentId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for comment by id={}. {}", commentId, e.getMessage());
+            throw new ServiceException("Error while searching for comment by id="+commentId, e);
         }
     }
 }

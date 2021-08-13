@@ -68,6 +68,9 @@ public class PagePath {
     public static final String MANAGE_TEACHERS_COURSE = "WEB-INF/pages/admin/manage_teachers_course.jsp";
     public static final String MANAGE_TEACHERS_COURSE_REDIRECT = "/controller?command=manage_teachers_course_page&course_id=";
 
+    public static final String MANAGE_COMMENTS = "WEB-INF/pages/admin/manage_comments.jsp";
+    public static final String MANAGE_COMMENTS_REDIRECT = "/controller?command=manage_comments&course_id=";
+
     private PagePath() {
     }
 }

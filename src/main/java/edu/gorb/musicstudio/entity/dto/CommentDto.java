@@ -1,10 +1,19 @@
 package edu.gorb.musicstudio.entity.dto;
 
 public class CommentDto {
+    private long commentId;
     private String studentName;
     private String studentSurname;
     private String content;
     private String dateTime;
+
+    public long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(long commentId) {
+        this.commentId = commentId;
+    }
 
     public String getStudentName() {
         return studentName;
@@ -45,6 +54,7 @@ public class CommentDto {
 
         CommentDto that = (CommentDto) o;
 
+        if (commentId != that.commentId) return false;
         if (studentName != null ? !studentName.equals(that.studentName) : that.studentName != null) return false;
         if (studentSurname != null ? !studentSurname.equals(that.studentSurname) : that.studentSurname != null)
             return false;
@@ -54,7 +64,8 @@ public class CommentDto {
 
     @Override
     public int hashCode() {
-        int result = studentName != null ? studentName.hashCode() : 0;
+        int result = (int) (commentId ^ (commentId >>> 32));
+        result = 31 * result + (studentName != null ? studentName.hashCode() : 0);
         result = 31 * result + (studentSurname != null ? studentSurname.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
@@ -64,10 +75,11 @@ public class CommentDto {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CommentDto{");
-        sb.append("studentName='").append(studentName).append('\'');
+        sb.append("commentId=").append(commentId);
+        sb.append(", studentName='").append(studentName).append('\'');
         sb.append(", studentSurname='").append(studentSurname).append('\'');
         sb.append(", content='").append(content).append('\'');
-        sb.append(", dateTime=").append(dateTime);
+        sb.append(", dateTime='").append(dateTime).append('\'');
         sb.append('}');
         return sb.toString();
     }

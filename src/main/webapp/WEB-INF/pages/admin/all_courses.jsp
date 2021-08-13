@@ -66,6 +66,7 @@
                 <th scope="col"><fmt:message key="course.change_status" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="course.change" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="course.manage_teachers" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="course.edit" bundle="${rb}"/></th>
             </tr>
             </thead>
             <tbody>
@@ -101,6 +102,10 @@
                            href="${pageContext.request.contextPath}/controller?command=manage_teachers_course_page&course_id=${course.id}"><fmt:message
                                 key="course.manage"
                                 bundle="${rb}"/></a>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-success"
+                           href="${pageContext.request.contextPath}/controller?command=manage_comments&course_id=${course.id}"><fmt:message key="comment.comments" bundle="${rb}"/></a>
                     </td>
                 </tr>
             </c:forEach>

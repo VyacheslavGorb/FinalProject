@@ -34,6 +34,7 @@ public class RequestParameter {
     public static final String USER_ID = "user_id";
     public static final String COURSE_NAME = "course_name";
     public static final String PRICE = "price";
+    public static final String COMMENT_ID = "comment_id";
 
 
 

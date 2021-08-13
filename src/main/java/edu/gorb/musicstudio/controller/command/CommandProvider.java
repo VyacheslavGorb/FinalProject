@@ -65,6 +65,8 @@ public class CommandProvider {
         commands.put(MANAGE_TEACHERS_COURSE_PAGE, new ManageTeachersCoursePageCommand());
         commands.put(ADD_TEACHER_TO_COURSE, new AddTeacherToCourseCommand());
         commands.put(REMOVE_TEACHER_FROM_COURSE, new RemoveTeacherFromCourseCommand());
+        commands.put(MANAGE_COMMENTS, new CommentsForCoursePageCommand());
+        commands.put(REMOVE_COMMENT, new RemoveCommentCommand());
     }
 
     public static CommandProvider getInstance() {
