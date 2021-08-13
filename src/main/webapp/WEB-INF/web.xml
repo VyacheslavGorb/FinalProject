@@ -6,7 +6,7 @@
 
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>edu.gorb.musicstudio.conroller.Controller</servlet-class>
+        <servlet-class>edu.gorb.musicstudio.controller.Controller</servlet-class>
         <multipart-config>
             <max-file-size>20848820</max-file-size>
             <max-request-size>418018841</max-request-size>
@@ -22,7 +22,7 @@
 
     <servlet>
         <servlet-name>ImageServlet</servlet-name>
-        <servlet-class>edu.gorb.musicstudio.conroller.ImageServlet</servlet-class>
+        <servlet-class>edu.gorb.musicstudio.controller.ImageServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -33,7 +33,7 @@
 
     <filter>
         <filter-name>EncodingFilter</filter-name>
-        <filter-class>edu.gorb.musicstudio.conroller.filter.EncodingFilter</filter-class>
+        <filter-class>edu.gorb.musicstudio.controller.filter.EncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
@@ -49,7 +49,7 @@
 
     <filter>
         <filter-name>ResponseCacheFilter</filter-name>
-        <filter-class>edu.gorb.musicstudio.conroller.filter.ResponseCacheFilter</filter-class>
+        <filter-class>edu.gorb.musicstudio.controller.filter.ResponseCacheFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -62,7 +62,7 @@
 
     <filter>
         <filter-name>SessionAttributeFilter</filter-name>
-        <filter-class>edu.gorb.musicstudio.conroller.filter.SessionAttributeFilter</filter-class>
+        <filter-class>edu.gorb.musicstudio.controller.filter.SessionAttributeFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -73,7 +73,7 @@
 
     <filter>
         <filter-name>PreviousCommandFilter</filter-name>
-        <filter-class>edu.gorb.musicstudio.conroller.filter.PreviousCommandFilter</filter-class>
+        <filter-class>edu.gorb.musicstudio.controller.filter.PreviousCommandFilter</filter-class>
     </filter>
 
 
@@ -86,7 +86,7 @@
 
     <filter>
         <filter-name>PageAccessFilter</filter-name>
-        <filter-class>edu.gorb.musicstudio.conroller.filter.PageAccessFilter</filter-class>
+        <filter-class>edu.gorb.musicstudio.controller.filter.PageAccessFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -95,7 +95,7 @@
     </filter-mapping>
 
     <listener>
-        <listener-class>edu.gorb.musicstudio.conroller.listener.HttpSessionListenerImpl</listener-class>
+        <listener-class>edu.gorb.musicstudio.controller.listener.HttpSessionListenerImpl</listener-class>
     </listener>
 
 

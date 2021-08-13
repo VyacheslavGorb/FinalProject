@@ -1,6 +1,6 @@
 package edu.gorb.musicstudio.model.service.impl;
 
-import edu.gorb.musicstudio.dto.TeacherDto;
+import edu.gorb.musicstudio.entity.Teacher;
 import edu.gorb.musicstudio.entity.*;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.ServiceException;
@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TeacherDto> findTeachersForRequest(int pageNumber, String searchLine) throws ServiceException {
+    public List<Teacher> findTeachersForRequest(int pageNumber, String searchLine) throws ServiceException {
         List<User> users;
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         int skipAmount = (pageNumber - 1) * ITEMS_ON_PAGE_COUNT;
@@ -219,13 +219,13 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error while selecting teachers for page", e);
         }
 
-        List<TeacherDto> teacherDtos = new ArrayList<>(users.size());
+        List<Teacher> teachers = new ArrayList<>(users.size());
         for (User user : users) {
             Optional<TeacherDescription> optionalDescription = findTeacherDescriptionByTeacherId(user.getId());
-            TeacherDto teacherDto = createTeacherDto(user, optionalDescription.orElse(null));
-            teacherDtos.add(teacherDto);
+            Teacher teacher = createTeacherDto(user, optionalDescription.orElse(null));
+            teachers.add(teacher);
         }
-        return teacherDtos;
+        return teachers;
     }
 
     @Override
@@ -252,7 +252,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TeacherDto> trimTeachersDescriptionForPreview(List<TeacherDto> teachers) {
+    public List<Teacher> trimTeachersDescriptionForPreview(List<Teacher> teachers) {
         return teachers.stream()
                 .map(teacherDto -> {
                     if (teacherDto.isDescriptionProvided()) {
@@ -265,7 +265,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<TeacherDto> findTeacherById(long teacherId) throws ServiceException {
+    public Optional<Teacher> findTeacherById(long teacherId) throws ServiceException {
 
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         try {
@@ -389,21 +389,21 @@ public class UserServiceImpl implements UserService {
         return allFreeSlots;
     }
 
-    private TeacherDto createTeacherDto(User user, TeacherDescription teacherDescription) {
-        TeacherDto teacherDto = new TeacherDto();
-        teacherDto.setTeacherId(user.getId());
-        teacherDto.setName(user.getName());
-        teacherDto.setSurname(user.getSurname());
-        teacherDto.setPatronymic(user.getPatronymic());
-        teacherDto.setStatus(user.getStatus());
+    private Teacher createTeacherDto(User user, TeacherDescription teacherDescription) {
+        Teacher teacher = new Teacher();
+        teacher.setTeacherId(user.getId());
+        teacher.setName(user.getName());
+        teacher.setSurname(user.getSurname());
+        teacher.setPatronymic(user.getPatronymic());
+        teacher.setStatus(user.getStatus());
         boolean isDescriptionProvided = teacherDescription != null;
-        teacherDto.setDescriptionProvided(isDescriptionProvided);
+        teacher.setDescriptionProvided(isDescriptionProvided);
         if (isDescriptionProvided) {
-            teacherDto.setExperienceYears(teacherDescription.getExperience());
-            teacherDto.setPicturePath(teacherDescription.getPicturePath());
-            teacherDto.setSelfDescription(teacherDescription.getDescription());
+            teacher.setExperienceYears(teacherDescription.getExperience());
+            teacher.setPicturePath(teacherDescription.getPicturePath());
+            teacher.setSelfDescription(teacherDescription.getDescription());
         }
-        return teacherDto;
+        return teacher;
     }
 
     private Optional<TeacherDescription> findTeacherDescriptionByTeacherId(long id) throws ServiceException {

@@ -1,6 +1,6 @@
 package edu.gorb.musicstudio.model.service;
 
-import edu.gorb.musicstudio.dto.TeacherDto;
+import edu.gorb.musicstudio.entity.Teacher;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserRole;
 import edu.gorb.musicstudio.entity.UserStatus;
@@ -39,15 +39,15 @@ public interface UserService {
 
     Optional<User> findUserById(Long id) throws ServiceException;
 
-    List<TeacherDto> findTeachersForRequest(int pageNumber, String searchLine) throws ServiceException;
+    List<Teacher> findTeachersForRequest(int pageNumber, String searchLine) throws ServiceException;
 
     int calcPagesCount(int teacherCount);
 
     int countTeachersForRequest(String searchLine) throws ServiceException;
 
-    List<TeacherDto> trimTeachersDescriptionForPreview(List<TeacherDto> teachers);
+    List<Teacher> trimTeachersDescriptionForPreview(List<Teacher> teachers);
 
-    Optional<TeacherDto> findTeacherById(long teacherId) throws ServiceException;
+    Optional<Teacher> findTeacherById(long teacherId) throws ServiceException;
 
     List<LocalTime> findTeacherFreeSlotsForDate(long teacherId, LocalDate date) throws ServiceException;
 
