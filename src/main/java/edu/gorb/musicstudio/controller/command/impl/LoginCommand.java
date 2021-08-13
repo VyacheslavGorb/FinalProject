@@ -67,7 +67,9 @@ public class LoginCommand implements Command {
                 return new CommandResult(PagePath.STUDENT_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
-            //TODO add admin page redirect
+            if(userRole == UserRole.ADMIN){
+                return new CommandResult(PagePath.ALL_LESSONS_REDIRECT, CommandResult.RoutingType.REDIRECT);
+            }
 
             return new CommandResult(PagePath.HOME_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
         } catch (ServiceException e) {

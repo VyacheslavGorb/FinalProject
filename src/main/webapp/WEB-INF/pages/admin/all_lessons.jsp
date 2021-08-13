@@ -15,11 +15,34 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/form_page.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="teacher.tabs.lesson_schedule"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="admin.tabs.lessons"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" aria-current="page"
+           href="${pageContext.request.contextPath}/controller?command=all_lessons_page">
+            <fmt:message key="admin.tabs.lessons" bundle="${rb}"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"
+           href="${pageContext.request.contextPath}/controller?command=all_subscriptions_page">
+            <fmt:message key="admin.tabs.subscriptions" bundle="${rb}"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link "
+           href="${pageContext.request.contextPath}/controller?command=manage_users_page">
+            <fmt:message key="admin.tabs.users" bundle="${rb}"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"
+           href="${pageContext.request.contextPath}/controller?command=all_courses_page">
+            <fmt:message key="admin.tabs.courses" bundle="${rb}"/></a>
+    </li>
+</ul>
 
 <div class="w-100 d-flex align-items-center flex-column vh-100 p-4">
 
@@ -75,7 +98,6 @@
             </c:forEach>
             </tbody>
         </table>
-
     </c:forEach>
 </div>
 

@@ -21,7 +21,7 @@
 <jsp:include page="../WEB-INF/pages/parts/header.jsp" flush="true"/>
 <div>
     <div class="d-flex w-100 align-items-center justify-content-center flex-column">
-        <h1 class="display-1 mt-4 mb-4"><fmt:message key="aboutus.main" bundle="${rb}"/></h1>
+        <h1 class="display-3 text-center mt-4 mb-4 w-75"><fmt:message key="aboutus.main" bundle="${rb}"/></h1>
         <img class="about_img" alt="welcome" src="../pic/slide1.jpg">
         <p class="display-4 mt-4"><fmt:message key="aboutus.message" bundle="${rb}"/></p>
         <div class="d-flex w-100 justify-content-around mb-4 mt-4">

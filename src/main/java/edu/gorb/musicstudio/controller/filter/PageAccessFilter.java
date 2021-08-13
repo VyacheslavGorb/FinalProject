@@ -86,7 +86,7 @@ public class PageAccessFilter implements Filter {
 
         List<CommandType> availableCommandsForCurrentUser = availableCommands.get(role);
 
-        logger.log(Level.DEBUG, "Role: {} | Command: {}", role, currentCommand);
+        logger.log(Level.ERROR, "Role: {} | Command: {}", role, currentCommand);
 
         if (role != UserRole.GUEST && guestOnlyAvailableCommands.contains(currentCommand)) {
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.ALREADY_LOGGED_IN);

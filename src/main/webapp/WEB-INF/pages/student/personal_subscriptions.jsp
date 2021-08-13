@@ -100,7 +100,7 @@
                     <p class="mt-0 mb-0 fs-4">
                         <fmt:message key="subscription.select_lessons" bundle="${rb}"/>: ${entry.key.lessonCount}
                     </p>
-                    <a class="btn btn-success fs-5"><fmt:message key="subscription.add_lesson" bundle="${rb}"/></a>
+                    <a href="${pageContext.request.contextPath}/controller?command=choose_lesson_datetime_page&subscription_id=${entry.key.subscriptionId}" class="btn btn-success fs-5"><fmt:message key="subscription.add_lesson" bundle="${rb}"/></a>
                 </div>
             </c:if>
 

@@ -15,7 +15,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/form_page.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="teacher.tabs.lesson_schedule"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="course.manage_teachers"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
@@ -25,20 +25,20 @@
 
     <c:if test="${requestScope.on_course_teachers.size() == 0 && requestScope.not_on_course_teachers.size() == 0}">
         <div class="d-flex mt-5 align-items-center flex-column">
-            <h1 class="display-1"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
+            <h1 class="display-1"><fmt:message key="teachers.not_found" bundle="${rb}"/></h1>
         </div>
     </c:if>
 
     <c:if test="${requestScope.on_course_teachers.size() != 0}">
         <div class="d-flex mt-5 align-items-center flex-column mt-4">
-            <h1 class="display-4 fs-2"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
+            <h1 class="display-4 fs-2"><fmt:message key="course.manage_teachers" bundle="${rb}"/></h1>
         </div>
         <table class="table mb-5 w-100 mt-4">
             <thead>
             <tr>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.course_name" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.student_name" bundle="${rb}"/></th>
-                <th>Approve</th>
+                <th><fmt:message key="course.add_to_course" bundle="${rb}"/></th>
             </tr>
             </thead>
             <tbody>
@@ -51,7 +51,7 @@
                             <input type="hidden" name="command" value="remove_teacher_from_course">
                             <input type="hidden" name="course_id" value="${requestScope.course.id}">
                             <input type="hidden" name="teacher_id" value="${teacher.id}">
-                            <button type="submit" class="btn btn-outline-danger">Remove</button>
+                            <button type="submit" class="btn btn-outline-danger"><fmt:message key="course.remove" bundle="${rb}"/></button>
                         </form>
                     </td>
                 </tr>
@@ -68,9 +68,9 @@
         <table class="table mb-5 w-100 mt-4">
             <thead>
             <tr>
-                <th scope="col"><fmt:message key="teacher.lesson_schedule.course_name" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="teacher.lesson_schedule.student_name" bundle="${rb}"/></th>
-                <th>Approve</th>
+                <th scope="col"><fmt:message key="teacher.name" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="teacher.surname" bundle="${rb}"/></th>
+                <th><fmt:message key="subscription.approve.btn" bundle="${rb}"/></th>
             </tr>
             </thead>
             <tbody>
@@ -83,7 +83,7 @@
                             <input type="hidden" name="command" value="add_teacher_to_course">
                             <input type="hidden" name="course_id" value="${requestScope.course.id}">
                             <input type="hidden" name="teacher_id" value="${teacher.id}">
-                            <button type="submit" class="btn btn-outline-success">Add</button>
+                            <button type="submit" class="btn btn-outline-success"><fmt:message key="add" bundle="${rb}"/></button>
                         </form>
                     </td>
                 </tr>
@@ -91,6 +91,8 @@
             </tbody>
         </table>
     </c:if>
+    <a class="btn btn-success" href="${pageContext.request.contextPath}/controller?command=all_courses_page"><fmt:message
+            key="course.go_to_page" bundle="${rb}"/></a>
 </div>
 
 <jsp:include page="../parts/footer.jsp"/>

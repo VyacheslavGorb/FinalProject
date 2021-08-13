@@ -22,14 +22,14 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
-                    "WHERE DATE(date_time) >= CURDATE() and TIME(date_time) > CURTIME() and status='NORMAL'\n" +
+                    "WHERE date_time > NOW() and status='NORMAL'\n" +
                     "  and id_teacher = ?";
 
     private static final String SELECT_FUTURE_LESSONS_FOR_STUDENT =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
-                    "WHERE DATE(date_time) >= CURDATE() and TIME(date_time) > CURTIME()  and status='NORMAL'\n" +
+                    "WHERE date_time > NOW() and status='NORMAL'\n" +
                     "  and id_student = ?";
 
     private static final String SELECT_SCHEDULE_FOR_DATE =
@@ -48,7 +48,7 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
-                    "WHERE DATE(date_time) >= CURDATE() and TIME(date_time) > CURTIME() and status='NORMAL'\n" +
+                    "WHERE date_time > NOW() and status='NORMAL'\n" +
                     "  and id_student = ?\n" +
                     "  and id_course = ?";
 
@@ -56,7 +56,7 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
-                    "WHERE DATE(date_time) >= CURDATE() and TIME(date_time) > CURTIME() and status='NORMAL'";
+                    "WHERE date_time > NOW() and status='NORMAL'";
 
     private static final String INSERT_SCHEDULE =
             "INSERT INTO lesson_schedules (id_student, id_teacher, id_course, date_time, duration, id_subscription, id_lesson_status\n" +

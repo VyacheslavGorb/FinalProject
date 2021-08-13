@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ChooseLessonDateTimeCommand implements Command {
     @Override
@@ -70,8 +71,20 @@ public class ChooseLessonDateTimeCommand implements Command {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
             List<LocalTime> freeTeacherSlots = userService.findTeacherFreeSlotsForDate(teacherId, date);
+            if(date.isEqual(LocalDate.now())){
+                freeTeacherSlots = freeTeacherSlots.stream().filter(s -> s.isAfter(LocalTime.now())).collect(Collectors.toList());
+            }
             if (!freeTeacherSlots.contains(time)) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
+            }
+
+            boolean isTimeFree = lessonScheduleService.findActiveFutureSchedulesByStudentId(student.getId()).stream()
+                    .filter(l -> l.getStartDateTime().isEqual(LocalDateTime.of(date,time))).findAny().isEmpty();
+
+            if(!isTimeFree){
+                session.setAttribute(SessionAttribute.IS_SUBSCRIPTION_TIME_ERROR, true);
+                return new CommandResult(PagePath.CHOOSE_LESSON_TIMEDATE_PAGE_REDIRECT+subscriptionId,
+                        CommandResult.RoutingType.REDIRECT);
             }
 
             lessonScheduleService.saveNewLessonSchedule(student.getId(), teacherId, subscription.getCourseId(),

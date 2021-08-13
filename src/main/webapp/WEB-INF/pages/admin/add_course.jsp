@@ -15,14 +15,14 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/form_page.css" rel="stylesheet">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="teacher.tabs.lesson_schedule"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.add_course"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
 
 <div class="w-100 d-flex flex-column align-items-center min-vh-100">
-    <p class="display-4 fs-1 mt-4"><fmt:message key="teacher_init.main" bundle="${rb}"/></p>
+    <p class="display-4 fs-1 mt-4"><fmt:message key="course.add_course.main" bundle="${rb}"/></p>
 
     <c:if test="${sessionScope.is_add_course_error != null}">
         <div class="alert alert-danger d-flex align-items-center w-75" role="alert">
@@ -54,16 +54,16 @@
     <form id="teacher-init-form" method="post" class="w-75" action="${pageContext.request.contextPath}/controller"
           enctype='multipart/form-data'>
         <input type="hidden" name="command" value="add_course">
-        <label class="form-label mt-4"><fmt:message key="teacher_init.label.description" bundle="${rb}"/></label>
+        <label class="form-label mt-4"><fmt:message key="course.label.name" bundle="${rb}"/></label>
         <input name="course_name" class="form-control" maxlength="40" required>
 
-        <label class="form-label mt-4"><fmt:message key="teacher_init.label.description" bundle="${rb}"/></label>
+        <label class="form-label mt-4"><fmt:message key="course.label.description" bundle="${rb}"/></label>
         <textarea name="description" class="form-control" rows="5" maxlength="1000" required></textarea>
 
-        <label class="form-label mt-4"><fmt:message key="teacher_init.label.description" bundle="${rb}"/></label>
+        <label class="form-label mt-4"><fmt:message key="course.label.price" bundle="${rb}"/></label>
         <input name="price" class="form-control" type="number" step="0.01" min="0" max="9999" required>
 
-        <label class="form-label mt-4"><fmt:message key="teacher_init.label.image" bundle="${rb}"/></label>
+        <label class="form-label mt-4"><fmt:message key="course.label.image" bundle="${rb}"/></label>
         <input id="fileInput" name="image" type="file" class="form-control" accept="image/jpeg" required>
 
         <button id="submit-btn" type="submit" class="btn btn-success mt-4 mb-4 w-25"><fmt:message

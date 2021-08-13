@@ -48,7 +48,7 @@
                 </div>
 
                 <c:forEach items="${requestScope.courses}" var="course">
-                    <div class="card ">
+                    <div class="card">
                         <img src="${pageContext.request.contextPath}/image?path=${course.picturePath}"
                              class="card-img-top" alt="${course.name}">
                         <div class="card-body">

@@ -42,6 +42,7 @@ public class PagePath {
     public static final String PERSONAL_SUBSCRIPTIONS_PAGE_REDIRECT = "/controller?command=personal_subscriptions";
 
     public static final String CHOOSE_LESSON_TIMEDATE_PAGE = "WEB-INF/pages/student/choose_lesson_timedate.jsp";
+    public static final String CHOOSE_LESSON_TIMEDATE_PAGE_REDIRECT = "/controller?command=choose_lesson_datetime_page&subscription_id=";
 
     public static final String STUDENT_LESSON_SCHEDULE_PAGE = "WEB-INF/pages/student/student_lesson_schedule.jsp";
     public static final String STUDENT_LESSON_SCHEDULE_PAGE_REDIRECT = "/controller?command=student_lesson_schedule";

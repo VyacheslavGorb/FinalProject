@@ -72,9 +72,7 @@ public class ChooseLessonDateTimePageCommand implements Command {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
 
-
             teachersFreeSlots = userService.findFreeSlotsForTeachersForDate(teachersForCourse, requestedDate);
-
         } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }

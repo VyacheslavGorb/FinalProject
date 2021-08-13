@@ -1,6 +1,5 @@
 package edu.gorb.musicstudio.model.service.impl;
 
-import edu.gorb.musicstudio.entity.Teacher;
 import edu.gorb.musicstudio.entity.*;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.ServiceException;
@@ -333,7 +332,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int findTeacherFreeSlotCountForFuturePeriod(LocalDate start, LocalDate end, long teacherId)
             throws ServiceException {
-        if(start.isBefore(LocalDate.now().plusDays(1))){
+        if (start.isBefore(LocalDate.now().plusDays(1))) {
             start = LocalDate.now().plusDays(1);
         }
         LocalDate date = start;
@@ -380,7 +379,6 @@ public class UserServiceImpl implements UserService {
         return courseAvailableDates;
     }
 
-    @Override
     public Map<User, List<LocalTime>> findFreeSlotsForTeachersForDate(List<User> teachers, LocalDate date)
             throws ServiceException {
         LocalDate dateNow = LocalDate.now();

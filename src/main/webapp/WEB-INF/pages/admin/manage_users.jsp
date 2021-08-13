@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="edu.gorb.musicstudio.entity.UserRole" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
@@ -15,11 +14,35 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="style/footer.css" rel="stylesheet">
-    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="page.name.course"
+    <title><fmt:message key="company.name" bundle="${rb}"/> - <fmt:message key="admin.tabs.users"
                                                                            bundle="${rb}"/></title>
 </head>
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
+
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page"
+           href="${pageContext.request.contextPath}/controller?command=all_lessons_page">
+            <fmt:message key="admin.tabs.lessons" bundle="${rb}"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"
+           href="${pageContext.request.contextPath}/controller?command=all_subscriptions_page">
+            <fmt:message key="admin.tabs.subscriptions" bundle="${rb}"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active"
+           href="${pageContext.request.contextPath}/controller?command=manage_users_page">
+            <fmt:message key="admin.tabs.users" bundle="${rb}"/></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link"
+           href="${pageContext.request.contextPath}/controller?command=all_courses_page">
+            <fmt:message key="admin.tabs.courses" bundle="${rb}"/></a>
+    </li>
+</ul>
+
 <c:if test="${sessionScope.is_manage_error != null}">
     <div class="d-flex align-items-center justify-content-center">
         <div id="illegal-datetime" class="d-flex alert alert-danger align-items-center w-75 mt-4" role="alert">
@@ -44,13 +67,13 @@
         <table class="table mb-5 w-75">
             <thead>
             <tr>
-                <th scope="col">User login</th>
-                <th scope="col">User name</th>
-                <th scope="col">User surname</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Status</th>
-                <th scope="col">Change status</th>
+                <th scope="col"><fmt:message key="user.login" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="user.name" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="user.surname" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="user.email" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="user.role" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="user.status" bundle="${rb}"/></th>
+                <th scope="col"><fmt:message key="user.change_status" bundle="${rb}"/></th>
             </tr>
             </thead>
             <tbody>
@@ -60,21 +83,23 @@
                     <td>${user.name}</td>
                     <td>${user.surname}</td>
                     <td>${user.email}</td>
-                    <td>${user.role}</td>
-                    <td>${user.status}</td>
+                    <td><fmt:message key="user.role.${user.role}" bundle="${rb}"/></td>
+                    <td><fmt:message key="user.status.${user.status}" bundle="${rb}"/></td>
                     <td>
                         <c:if test="${user.status.name() == 'INACTIVE'}">
                             <form method="POST" action="${pageContext.request.contextPath}/controller">
                                 <input type="hidden" name="command" value="activate_user">
                                 <input type="hidden" name="user_id" value="${user.id}">
-                                <button class="btn btn-outline-success" type="submit">Activate</button>
+                                <button class="btn btn-outline-success" type="submit"><fmt:message key="user.activate"
+                                                                                                   bundle="${rb}"/></button>
                             </form>
                         </c:if>
                         <c:if test="${user.status.name() != 'INACTIVE'}">
                             <form method="POST" action="${pageContext.request.contextPath}/controller">
                                 <input type="hidden" name="command" value="deactivate_user">
                                 <input type="hidden" name="user_id" value="${user.id}">
-                                <button class="btn btn-outline-danger" type="submit">Deactivate</button>
+                                <button class="btn btn-outline-danger" type="submit"><fmt:message key="user.deactivate"
+                                                                                                  bundle="${rb}"/></button>
                             </form>
                         </c:if>
                     </td>
