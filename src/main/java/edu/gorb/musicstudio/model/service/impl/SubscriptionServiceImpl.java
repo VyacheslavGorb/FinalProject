@@ -1,7 +1,6 @@
 package edu.gorb.musicstudio.model.service.impl;
 
-import edu.gorb.musicstudio.dto.LessonScheduleDto;
-import edu.gorb.musicstudio.dto.SubscriptionDto;
+import edu.gorb.musicstudio.entity.dto.SubscriptionDto;
 import edu.gorb.musicstudio.entity.Course;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;

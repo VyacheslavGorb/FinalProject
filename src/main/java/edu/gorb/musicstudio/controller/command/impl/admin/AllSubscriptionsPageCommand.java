@@ -4,7 +4,7 @@ import edu.gorb.musicstudio.controller.command.Command;
 import edu.gorb.musicstudio.controller.command.CommandResult;
 import edu.gorb.musicstudio.controller.command.PagePath;
 import edu.gorb.musicstudio.controller.command.RequestAttribute;
-import edu.gorb.musicstudio.dto.SubscriptionDto;
+import edu.gorb.musicstudio.entity.dto.SubscriptionDto;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.exception.ServiceException;

@@ -1,6 +1,6 @@
 package edu.gorb.musicstudio.model.service.impl;
 
-import edu.gorb.musicstudio.dto.CommentDto;
+import edu.gorb.musicstudio.entity.dto.CommentDto;
 import edu.gorb.musicstudio.entity.Comment;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.exception.DaoException;

@@ -1,6 +1,6 @@
 package edu.gorb.musicstudio.model.service;
 
-import edu.gorb.musicstudio.dto.CommentDto;
+import edu.gorb.musicstudio.entity.dto.CommentDto;
 import edu.gorb.musicstudio.exception.ServiceException;
 
 import java.util.List;

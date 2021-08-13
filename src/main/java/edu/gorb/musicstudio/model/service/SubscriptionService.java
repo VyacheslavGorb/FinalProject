@@ -1,6 +1,6 @@
 package edu.gorb.musicstudio.model.service;
 
-import edu.gorb.musicstudio.dto.SubscriptionDto;
+import edu.gorb.musicstudio.entity.dto.SubscriptionDto;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.exception.ServiceException;
 

@@ -4,7 +4,7 @@ import edu.gorb.musicstudio.controller.command.Command;
 import edu.gorb.musicstudio.controller.command.CommandResult;
 import edu.gorb.musicstudio.controller.command.PagePath;
 import edu.gorb.musicstudio.controller.command.RequestParameter;
-import edu.gorb.musicstudio.dto.LessonScheduleDto;
+import edu.gorb.musicstudio.entity.dto.LessonScheduleDto;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.exception.ServiceException;

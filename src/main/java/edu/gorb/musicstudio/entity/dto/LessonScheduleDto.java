@@ -1,4 +1,4 @@
-package edu.gorb.musicstudio.dto;
+package edu.gorb.musicstudio.entity.dto;
 
 import edu.gorb.musicstudio.entity.LessonSchedule;
 

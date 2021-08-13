@@ -1,7 +1,7 @@
 package edu.gorb.musicstudio.controller.command.impl.student;
 
 import edu.gorb.musicstudio.controller.command.*;
-import edu.gorb.musicstudio.dto.LessonScheduleDto;
+import edu.gorb.musicstudio.entity.dto.LessonScheduleDto;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.entity.User;

@@ -1,6 +1,6 @@
 package edu.gorb.musicstudio.model.service;
 
-import edu.gorb.musicstudio.dto.LessonScheduleDto;
+import edu.gorb.musicstudio.entity.dto.LessonScheduleDto;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.exception.ServiceException;
 
