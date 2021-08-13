@@ -32,6 +32,20 @@ public class UserDaoImpl implements UserDao {
             "         JOIN user_statuses us on us.id_user_status = users.id_user_status\n" +
             "         JOIN user_roles ur on ur.id_user_role = users.id_user_role";
 
+    private static final String SELECT_ALL_ACTIVE_TEACHERS =
+            "SELECT id_user,\n" +
+                    "       login,\n" +
+                    "       password_hash,\n" +
+                    "       name,\n" +
+                    "       surname,\n" +
+                    "       patronymic,\n" +
+                    "       email,\n" +
+                    "       user_role,\n" +
+                    "       user_status\n" +
+                    "FROM users\n" +
+                    "         JOIN user_statuses us on us.id_user_status = users.id_user_status\n" +
+                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role WHERE user_role='TEACHER' and user_status='ACTIVE'";
+
     private static final String SELECT_USER_BY_ID = "SELECT id_user,\n" +
             "       login,\n" +
             "       password_hash,\n" +
@@ -169,7 +183,7 @@ public class UserDaoImpl implements UserDao {
                     "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
                     "         JOIN teacher_descriptions_has_courses on id_teacher = id_user\n" +
                     "WHERE user_status = 'ACTIVE'\n" +
-                    "  and id_course = ?;";
+                    "  and id_course = ?";
 
     private static final int FIRST_COLUMN_INDEX = 1;
 
@@ -278,5 +292,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> selectTeachersForCourse(long courseId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_TEACHER_FOR_COURSE, courseId);
+    }
+
+    @Override
+    public List<User> findAllActiveTeachers() throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_ALL_ACTIVE_TEACHERS);
     }
 }

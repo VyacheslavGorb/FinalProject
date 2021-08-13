@@ -134,4 +134,22 @@ public class FormValidator {
 
         return isImageFileNameValid(fileName);
     }
+
+    public static boolean areUpdateCourseParametersValid(String name, String description, String priceParameter){
+        if (name == null || description == null || priceParameter == null) {
+            return false;
+        }
+        if (name.length() > MAX_COURSE_NAME_LENGTH || description.length() > MAX_TEXT_DESCRIPTION_LENGTH) {
+            return false;
+        }
+        BigDecimal price;
+        try {
+            price = new BigDecimal(priceParameter);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return price.intValue() >= 0 && Math.ceil(price.doubleValue()) <= MAX_PRICE_VALUE;
+    }
+
 }

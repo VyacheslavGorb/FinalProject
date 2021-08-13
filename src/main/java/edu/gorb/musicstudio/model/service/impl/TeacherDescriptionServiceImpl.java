@@ -91,7 +91,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
     }
 
     @Override
-    public void updateTeacherDescription(long teacherId, List<Part> imageParts, String descriptionContent, int workExperienceYears)
+    public void updateTeacherDescriptionWithImageUpload(long teacherId, List<Part> imageParts, String descriptionContent, int workExperienceYears)
             throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
         String relativeImagePath = teacherFolderPath + teacherId + JPEG_EXTENSION;
@@ -111,7 +111,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
     }
 
     @Override
-    public void updateTeacherDescriptionWithoutImageUpload(long teacherId, String description, int workExperienceYears)
+    public void updateTeacherDescription(long teacherId, String description, int workExperienceYears)
             throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
         try {

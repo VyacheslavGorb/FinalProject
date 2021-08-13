@@ -71,6 +71,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> findAllActiveTeachers() throws ServiceException {
+        try {
+            UserDao userDao = DaoProvider.getInstance().getUserDao();
+            return userDao.findAllActiveTeachers();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while searching for all active teachers. {}", e.getMessage());
+            throw new ServiceException("Error while searching for all active teachers", e);
+        }
+    }
+
+    @Override
     public User registerUser(UserRole userRole, String login, String password,
                              String name, String surname, String patronymic,
                              String email, UserStatus userStatus) throws ServiceException {

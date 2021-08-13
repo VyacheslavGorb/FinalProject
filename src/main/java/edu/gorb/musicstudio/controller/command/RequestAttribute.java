@@ -8,6 +8,8 @@ public class RequestAttribute {
     public static final String COURSE = "course";
     public static final String COMMENTS = "comments";
     public static final String TEACHERS = "teachers";
+    public static final String ON_COURSE_TEACHERS = "on_course_teachers";
+    public static final String NOT_ON_COURSE_TEACHERS = "not_on_course_teachers";
     public static final String TEACHER = "teacher";
     public static final String COMMAND = "command";
     public static final String LESSON_SCHEDULE_MAP = "lesson_schedule_map";

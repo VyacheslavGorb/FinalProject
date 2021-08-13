@@ -44,9 +44,9 @@ public class UpdateTeacherDescriptionCommand implements Command {
 
             int workExperience = Integer.parseInt(experienceParameter);
             if (imageParts.isEmpty()) {
-                descriptionService.updateTeacherDescriptionWithoutImageUpload(teacher.getId(), description, workExperience);
+                descriptionService.updateTeacherDescription(teacher.getId(), description, workExperience);
             } else {
-                descriptionService.updateTeacherDescription(teacher.getId(), imageParts, description, workExperience);
+                descriptionService.updateTeacherDescriptionWithImageUpload(teacher.getId(), imageParts, description, workExperience);
             }
         } catch (ServiceException | ServletException | IOException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);

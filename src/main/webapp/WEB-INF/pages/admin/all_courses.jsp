@@ -32,12 +32,14 @@
     <c:if test="${requestScope.courses.size() != 0}">
         <div class="d-flex align-items-center justify-content-between w-100 mt-4">
             <h1 class="display-4 fs-1"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
-            <a href="${pageContext.request.contextPath}/controller?command=add_course_page" class="btn btn-success">Add course</a>
+            <a href="${pageContext.request.contextPath}/controller?command=add_course_page" class="btn btn-success">Add
+                course</a>
         </div>
         <table class="table mb-5 w-100">
             <thead>
             <tr>
-                <th class="w-75" scope="col"><fmt:message key="teacher.lesson_schedule.student_name" bundle="${rb}"/></th>
+                <th class="w-75" scope="col"><fmt:message key="teacher.lesson_schedule.student_name"
+                                                          bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.student_surname" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="teacher.schedule.teacher_name" bundle="${rb}"/></th>
             </tr>
@@ -47,11 +49,20 @@
                 <tr>
                     <td>${course.name}</td>
                     <td>
-                        <form method="post" action="${pageContext.request.contextPath}/controller">
-                            <input type="hidden" name="command" value="">
-                            <input type="hidden" name="course" value="${course.id}">
-                            <button type="submit" class="btn btn-outline-success">Change smth</button>
-                        </form>
+                        <c:if test="${course.active}">
+                            <form method="post" action="${pageContext.request.contextPath}/controller">
+                                <input type="hidden" name="command" value="deactivate_course">
+                                <input type="hidden" name="course_id" value="${course.id}">
+                                <button type="submit" class="btn btn-outline-danger">Deactivate</button>
+                            </form>
+                        </c:if>
+                        <c:if test="${!course.active}">
+                            <form method="post" action="${pageContext.request.contextPath}/controller">
+                                <input type="hidden" name="command" value="activate_course">
+                                <input type="hidden" name="course_id" value="${course.id}">
+                                <button type="submit" class="btn btn-outline-success">Activate</button>
+                            </form>
+                        </c:if>
                     </td>
                     <td>
                         <form method="post" action="${pageContext.request.contextPath}/controller">

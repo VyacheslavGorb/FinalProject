@@ -47,7 +47,14 @@ public enum CommandType {
     ADMIN_CANCEL_SUBSCRIPTION,
     ALL_COURSES_PAGE,
     ADD_COURSE_PAGE,
-    ADD_COURSE;
+    ADD_COURSE,
+    ACTIVATE_COURSE,
+    DEACTIVATE_COURSE,
+    CHANGE_COURSE_PAGE,
+    CHANGE_COURSE,
+    MANAGE_TEACHERS_COURSE_PAGE,
+    ADD_TEACHER_TO_COURSE,
+    REMOVE_TEACHER_FROM_COURSE;
 
     public static CommandType convertRequestParameterToCommandType(String parameter){
         if (parameter == null) {

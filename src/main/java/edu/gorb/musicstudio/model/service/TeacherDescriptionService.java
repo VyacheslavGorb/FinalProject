@@ -15,9 +15,9 @@ public interface TeacherDescriptionService {
     void saveTeacherDescription(long teacherId, List<Part> imageParts, String description, int workExperienceYears)
             throws ServiceException;
 
-    void updateTeacherDescription(long teacherId, List<Part> imageParts, String description, int workExperienceYears)
+    void updateTeacherDescriptionWithImageUpload(long teacherId, List<Part> imageParts, String description, int workExperienceYears)
             throws ServiceException;
 
-    void updateTeacherDescriptionWithoutImageUpload(long teacherId, String description, int workExperienceYears)
+    void updateTeacherDescription(long teacherId, String description, int workExperienceYears)
             throws ServiceException;
 }

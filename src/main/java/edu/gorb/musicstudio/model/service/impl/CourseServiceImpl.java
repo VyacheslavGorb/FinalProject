@@ -57,6 +57,8 @@ public class CourseServiceImpl implements CourseService {
     public void updateCourse(Course course) throws ServiceException {
         CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
         try {
+            course.setName(HtmlEscapeUtil.escape(course.getName()));
+            course.setDescription(HtmlEscapeUtil.escape(course.getDescription()));
             courseDao.update(course);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while updating course");
@@ -167,6 +169,45 @@ public class CourseServiceImpl implements CourseService {
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while saving new course {}", e.getMessage());
             throw new ServiceException("Error while saving new course", e);
+        }
+    }
+
+    @Override
+    public void updateCourseWithImageUpload(long courseId, String name, String description,
+                                            BigDecimal price, boolean isActive, List<Part> imageParts)
+            throws ServiceException {
+        String escapedName = HtmlEscapeUtil.escape(name);
+        String escapedDescription = HtmlEscapeUtil.escape(description);
+        String relativeImagePath = courseFolderPath + courseId + JPEG_EXTENSION;
+        savePicture(relativeImagePath, imageParts);
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        try {
+            courseDao.update(new Course(courseId, escapedName, escapedDescription, relativeImagePath, price, isActive));
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while updating course. {}", e.getMessage());
+            throw new ServiceException("Error while updating course.", e);
+        }
+    }
+
+    @Override
+    public void addTeacherToCourse(long courseId, long teacherId) throws ServiceException {
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        try {
+            courseDao.addTeacherToCourse(courseId, teacherId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while adding teacher to course");
+            throw new ServiceException("Error while adding teacher to course", e);
+        }
+    }
+
+    @Override
+    public void removeTeacherFromCourse(long courseId, long teacherId) throws ServiceException {
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        try {
+            courseDao.removeTeacherFromCourse(courseId, teacherId);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while removing teacher from course");
+            throw new ServiceException("Error while removing teacher from course", e);
         }
     }
 

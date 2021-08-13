@@ -58,6 +58,13 @@ public class CommandProvider {
         commands.put(ALL_COURSES_PAGE, new AllCoursesPageCommand());
         commands.put(ADD_COURSE_PAGE, new AddCoursePageCommand());
         commands.put(ADD_COURSE, new AddCourseCommand());
+        commands.put(ACTIVATE_COURSE, new ActivateCourseCommand());
+        commands.put(DEACTIVATE_COURSE, new DeactivateCourseCommand());
+        commands.put(CHANGE_COURSE_PAGE, new ChangeCoursePageCommand());
+        commands.put(CHANGE_COURSE, new ChangeCourseCommand());
+        commands.put(MANAGE_TEACHERS_COURSE_PAGE, new ManageTeachersCoursePageCommand());
+        commands.put(ADD_TEACHER_TO_COURSE, new AddTeacherToCourseCommand());
+        commands.put(REMOVE_TEACHER_FROM_COURSE, new RemoveTeacherFromCourseCommand());
     }
 
     public static CommandProvider getInstance() {

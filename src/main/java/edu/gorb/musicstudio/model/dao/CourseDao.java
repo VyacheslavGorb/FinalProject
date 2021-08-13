@@ -2,6 +2,7 @@ package edu.gorb.musicstudio.model.dao;
 
 import edu.gorb.musicstudio.entity.Course;
 import edu.gorb.musicstudio.exception.DaoException;
+import edu.gorb.musicstudio.exception.ServiceException;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface CourseDao extends BaseDao<Course> {
     int countActiveCoursesWithSearch(String searchParameter) throws DaoException;
 
     List<Course> selectActiveCoursesByTeacherId(long teacherId) throws DaoException;
+
+    void addTeacherToCourse(long courseId, long teacherId) throws DaoException;
+
+    void removeTeacherFromCourse(long courseId, long teacherId) throws DaoException;
 }

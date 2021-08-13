@@ -63,6 +63,15 @@ public class CourseDaoImpl implements CourseDao {
                     "         JOIN teacher_descriptions_has_courses tdhc on courses.id_course = tdhc.id_course\n" +
                     "WHERE is_active = 1 and id_teacher=?";
 
+    private static final String ADD_TEACHER_TO_COURSE =
+            "INSERT INTO teacher_descriptions_has_courses (id_teacher, id_course) VALUE (?, ?)";
+
+    private static final String REMOVE_TEACHER_FROM_COURSE =
+            "DELETE\n" +
+                    "FROM teacher_descriptions_has_courses\n" +
+                    "WHERE id_teacher = ?\n" +
+                    "  and id_course = ?";
+
     private final JdbcHelper<Course> jdbcHelper;
 
     public CourseDaoImpl() {
@@ -145,5 +154,15 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public List<Course> selectActiveCoursesByTeacherId(long teacherId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_COURSES_BY_TEACHER_ID, teacherId);
+    }
+
+    @Override
+    public void addTeacherToCourse(long courseId, long teacherId) throws DaoException {
+        jdbcHelper.executeUpdate(ADD_TEACHER_TO_COURSE, teacherId, courseId);
+    }
+
+    @Override
+    public void removeTeacherFromCourse(long courseId, long teacherId) throws DaoException {
+        jdbcHelper.executeUpdate(REMOVE_TEACHER_FROM_COURSE, teacherId, courseId);
     }
 }

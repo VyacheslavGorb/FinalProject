@@ -19,6 +19,8 @@ public interface UserService {
 
     Optional<User> findActiveRegisteredUser(String login, String password) throws ServiceException;
 
+    List<User> findAllActiveTeachers() throws ServiceException;
+
     User registerUser(UserRole userRole, String login, String password,
                       String name, String surname, String patronymic,
                       String email, UserStatus userStatus) throws ServiceException;

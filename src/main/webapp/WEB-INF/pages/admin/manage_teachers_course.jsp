@@ -23,13 +23,13 @@
 
 <div class="w-100 d-flex align-items-center flex-column vh-100 p-4">
 
-    <c:if test="${requestScope.active_subscriptions.size() == 0 && requestScope.waiting_for_approve_subscriptions.size() == 0}">
+    <c:if test="${requestScope.on_course_teachers.size() == 0 && requestScope.not_on_course_teachers.size() == 0}">
         <div class="d-flex mt-5 align-items-center flex-column">
             <h1 class="display-1"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
         </div>
     </c:if>
 
-    <c:if test="${requestScope.waiting_for_approve_subscriptions.size() != 0}">
+    <c:if test="${requestScope.on_course_teachers.size() != 0}">
         <div class="d-flex mt-5 align-items-center flex-column mt-4">
             <h1 class="display-4 fs-2"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
         </div>
@@ -38,31 +38,20 @@
             <tr>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.course_name" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.student_name" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="teacher.lesson_schedule.student_surname" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.start_date" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.end_date" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.lesson_amount" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.status" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.status" bundle="${rb}"/></th>
                 <th>Approve</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.waiting_for_approve_subscriptions}" var="subscription">
+            <c:forEach items="${requestScope.on_course_teachers}" var="teacher">
                 <tr>
-                    <td>${subscription.courseName}</td>
-                    <td>${subscription.studentName}</td>
-                    <td>${subscription.studentSurname}</td>
-                    <td>${subscription.startDate}</td>
-                    <td>${subscription.endDate}</td>
-                    <td>${subscription.lessonCount}</td>
-                    <td>${requestScope.total_lesson_count.get(subscription)}</td>
-                    <td>${requestScope.for_sure_lesson_count.get(subscription)}</td>
+                    <td>${teacher.name}</td>
+                    <td>${teacher.surname}</td>
                     <td>
                         <form method="post" action="${pageContext.request.contextPath}/controller">
-                            <input type="hidden" name="command" value="admin_approve_subscription">
-                            <input type="hidden" name="subscription_id" value="${subscription.subscriptionId}">
-                            <button type="submit" class="btn btn-outline-success">Approve</button>
+                            <input type="hidden" name="command" value="remove_teacher_from_course">
+                            <input type="hidden" name="course_id" value="${requestScope.course.id}">
+                            <input type="hidden" name="teacher_id" value="${teacher.id}">
+                            <button type="submit" class="btn btn-outline-danger">Remove</button>
                         </form>
                     </td>
                 </tr>
@@ -72,7 +61,7 @@
     </c:if>
 
 
-    <c:if test="${requestScope.active_subscriptions.size() != 0}">
+    <c:if test="${requestScope.not_on_course_teachers.size() != 0}">
         <div class="d-flex mt-5 align-items-center flex-column mt-4">
             <h1 class="display-4 fs-2"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
         </div>
@@ -81,29 +70,20 @@
             <tr>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.course_name" bundle="${rb}"/></th>
                 <th scope="col"><fmt:message key="teacher.lesson_schedule.student_name" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="teacher.lesson_schedule.student_surname" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.start_date" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.end_date" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.lesson_amount" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="subscription.status" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="lesson.cancel" bundle="${rb}"/></th>
+                <th>Approve</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${requestScope.active_subscriptions}" var="subscription">
+            <c:forEach items="${requestScope.not_on_course_teachers}" var="teacher">
                 <tr>
-                    <td>${subscription.courseName}</td>
-                    <td>${subscription.studentName}</td>
-                    <td>${subscription.studentSurname}</td>
-                    <td>${subscription.startDate}</td>
-                    <td>${subscription.endDate}</td>
-                    <td>${subscription.lessonCount}</td>
-                    <td>${subscription.status}</td>
+                    <td>${teacher.name}</td>
+                    <td>${teacher.surname}</td>
                     <td>
                         <form method="post" action="${pageContext.request.contextPath}/controller">
-                            <input type="hidden" name="command" value="admin_cancel_subscription">
-                            <input type="hidden" name="subscription_id" value="${subscription.subscriptionId}">
-                            <button type="submit" class="btn btn-outline-danger">Cancel</button>
+                            <input type="hidden" name="command" value="add_teacher_to_course">
+                            <input type="hidden" name="course_id" value="${requestScope.course.id}">
+                            <input type="hidden" name="teacher_id" value="${teacher.id}">
+                            <button type="submit" class="btn btn-outline-success">Add</button>
                         </form>
                     </td>
                 </tr>

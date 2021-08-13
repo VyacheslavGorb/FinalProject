@@ -29,4 +29,12 @@ public interface CourseService {
     List<Course> findActiveCoursesByTeacherId(long teacherId) throws ServiceException;
 
     void saveNewCourse(String name, String description, BigDecimal price, List<Part> imageParts) throws ServiceException;
+
+    void updateCourseWithImageUpload(long courseId, String name, String description, BigDecimal price,
+                                     boolean isActive, List<Part> imageParts) throws ServiceException;
+
+    void addTeacherToCourse(long courseId, long teacherId) throws ServiceException;
+
+    void removeTeacherFromCourse(long courseId, long teacherId) throws ServiceException;
+
 }

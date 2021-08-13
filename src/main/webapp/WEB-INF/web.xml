@@ -73,7 +73,7 @@
 
     <filter>
         <filter-name>PreviousCommandFilter</filter-name>
-        <filter-class>edu.gorb.musicstudio.controller.filter.PreviousCommandFilter</filter-class>
+        <filter-class>edu.gorb.musicstudio.controller.filter.SaveCurrentPageFilter</filter-class>
     </filter>
 
 
