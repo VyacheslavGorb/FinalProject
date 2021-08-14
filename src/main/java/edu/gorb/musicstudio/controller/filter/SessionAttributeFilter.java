@@ -14,10 +14,20 @@ import java.util.Map;
 import static edu.gorb.musicstudio.controller.command.CommandType.*;
 import static edu.gorb.musicstudio.controller.command.SessionAttribute.*;
 
+/**
+ * Removes session error attributes if other page is visited
+ */
 public class SessionAttributeFilter implements Filter {
-
+    /**
+     * Map containing command types mapped to session attributes
+     */
     private Map<CommandType, List<String>> attributesToRemove;
 
+    /**
+     * Initializes {@link SessionAttributeFilter#attributesToRemove}
+     *
+     * @param filterConfig not used
+     */
     @Override
     public void init(FilterConfig filterConfig) {
         attributesToRemove = new EnumMap<>(CommandType.class);

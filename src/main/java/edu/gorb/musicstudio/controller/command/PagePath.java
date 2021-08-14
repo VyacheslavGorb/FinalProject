@@ -1,6 +1,9 @@
 package edu.gorb.musicstudio.controller.command;
 
-public class PagePath {
+/**
+ * Class provides string constants that represent page paths for redirect and forward routing types
+ */
+public final class PagePath {
     public static final String HOME_PAGE = "WEB-INF/pages/home.jsp";
     public static final String HOME_PAGE_REDIRECT = "/controller?command=home_page";
     public static final String LOGIN_PAGE = "WEB-INF/pages/login.jsp";

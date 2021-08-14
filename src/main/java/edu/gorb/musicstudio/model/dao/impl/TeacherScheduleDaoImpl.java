@@ -12,11 +12,6 @@ import java.util.Optional;
 
 public class TeacherScheduleDaoImpl implements TeacherScheduleDao {
 
-    private static final String SELECT_ALL_SCHEDULES =
-            "SELECT id_teacher, day_of_week, interval_start, interval_end\n" +
-                    "FROM teacher_schedules\n" +
-                    "ORDER BY day_of_week";
-
     private static final String SELECT_SCHEDULES_FOR_TEACHER =
             "SELECT id_teacher, day_of_week, interval_start, interval_end FROM teacher_schedules\n" +
                     "WHERE id_teacher = ?\n" +
@@ -50,23 +45,13 @@ public class TeacherScheduleDaoImpl implements TeacherScheduleDao {
     }
 
     @Override
-    public List<TeacherSchedule> findAll() throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_ALL_SCHEDULES);
-    }
-
-    @Override
-    public Optional<TeacherSchedule> findEntityById(long id) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int insert(TeacherSchedule teacherSchedule) throws DaoException {
+    public long insert(TeacherSchedule teacherSchedule) throws DaoException {
         jdbcHelper.executeUpdate(INSERT_SCHEDULE,
                 teacherSchedule.getTeacherId(),
                 teacherSchedule.getDayOfWeek(),
                 teacherSchedule.getStartTime(),
                 teacherSchedule.getEndTime());
-        return 0; //TODO
+        return -1;
     }
 
     @Override
@@ -91,5 +76,15 @@ public class TeacherScheduleDaoImpl implements TeacherScheduleDao {
     @Override
     public void removeSchedule(long teacherId, int dayOfWeek) throws DaoException {
         jdbcHelper.executeUpdate(REMOVE_SCHEDULE, teacherId, dayOfWeek);
+    }
+
+    @Override
+    public List<TeacherSchedule> findAll() throws DaoException {
+        throw new UnsupportedOperationException("findAll method is not implemented");
+    }
+
+    @Override
+    public Optional<TeacherSchedule> findEntityById(long id) throws DaoException {
+        throw new UnsupportedOperationException("findEntityById method is not implemented");
     }
 }

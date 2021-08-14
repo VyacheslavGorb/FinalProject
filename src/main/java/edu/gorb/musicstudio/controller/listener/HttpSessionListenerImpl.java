@@ -11,6 +11,10 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
     private static final String DEFAULT_PREVIOUS_QUERY = "/controller?command=home_page";
     private static final boolean DEFAULT_DESCRIPTION_EXISTS_VALUE = false;
 
+    /**
+     * Sets default session attributes when session is created
+     * @param sessionEvent session creation event
+     */
     @Override
     public void sessionCreated(HttpSessionEvent sessionEvent) {
         HttpSession session = sessionEvent.getSession();

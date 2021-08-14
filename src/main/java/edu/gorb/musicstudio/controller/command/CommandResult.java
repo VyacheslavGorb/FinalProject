@@ -1,9 +1,15 @@
 package edu.gorb.musicstudio.controller.command;
 
-public class CommandResult {
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * Result of {@link Command#execute(HttpServletRequest)} containing routing type and page path
+ */
+public final class CommandResult {
 
     private RoutingType routingType;
     private String page;
+
     public CommandResult(String page, RoutingType routingType) {
         this.routingType = routingType;
         this.page = page;
@@ -17,6 +23,9 @@ public class CommandResult {
         return page;
     }
 
+    /**
+     * Routing type: forward or redirect
+     */
     public enum RoutingType {
         FORWARD, REDIRECT
     }

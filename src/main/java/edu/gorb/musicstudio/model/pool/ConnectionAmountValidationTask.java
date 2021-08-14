@@ -10,6 +10,9 @@ import java.util.Deque;
 import java.util.TimerTask;
 import java.util.concurrent.locks.Lock;
 
+/**
+ * Class for connection amount validation
+ */
 class ConnectionAmountValidationTask extends TimerTask {
     private static final Logger logger = LogManager.getLogger();
 

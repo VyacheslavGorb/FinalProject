@@ -23,14 +23,14 @@ public class UserTokenDaoImpl implements UserTokenDao {
             "ORDER BY timestamp DESC\n" +
             "LIMIT 1";
 
-    private JdbcHelper<UserToken> jdbcHelper;
+    private final JdbcHelper<UserToken> jdbcHelper;
 
     public UserTokenDaoImpl() {
         jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new UserTokenRowMapper());
     }
 
     @Override
-    public int insetUserToken(long userId, String token, LocalDateTime timestamp) throws DaoException {
+    public long insetUserToken(long userId, String token, LocalDateTime timestamp) throws DaoException {
         return jdbcHelper.executeInsert(INSERT_USER_TOKEN, userId, token, Timestamp.valueOf(timestamp));
     }
 

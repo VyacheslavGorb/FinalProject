@@ -11,6 +11,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Class for database connection creation
+ */
 class ConnectionFactory {
     private static final Logger logger = LogManager.getLogger();
     private static final Properties dbProperties = new Properties();
@@ -53,6 +56,12 @@ class ConnectionFactory {
     private ConnectionFactory() {
     }
 
+    /**
+     * Creates database connection
+     *
+     * @return new database connection
+     * @throws SQLException if error while creating connection occurred
+     */
     static Connection createConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, dbProperties);
     }

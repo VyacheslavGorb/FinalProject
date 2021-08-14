@@ -156,7 +156,7 @@ public class LessonScheduleServiceImpl implements LessonScheduleService {
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
         try {
-            List<LessonSchedule> lessonSchedules = lessonScheduleDao.findLessonSchedulesBySubscription(subscriptionId);
+            List<LessonSchedule> lessonSchedules = lessonScheduleDao.findLessonSchedulesBySubscriptionId(subscriptionId);
             List<LessonScheduleDto> lessonScheduleDtos = new ArrayList<>();
             for (LessonSchedule schedule : lessonSchedules) {
                 Optional<User> optionalStudent = userDao.findEntityById(schedule.getStudentId());

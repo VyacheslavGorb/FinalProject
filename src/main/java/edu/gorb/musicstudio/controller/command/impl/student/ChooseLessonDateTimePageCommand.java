@@ -51,7 +51,7 @@ public class ChooseLessonDateTimePageCommand implements Command {
 
             List<User> teachersForCourse = userService.findTeachersForCourse(subscription.getCourseId());
 
-            courseAvailableDates = userService.findAllAvailableDatesForTeachers(teachersForCourse,
+            courseAvailableDates = userService.findAllAvailableDatesForTeachersForPeriod(teachersForCourse,
                     LocalDate.now(), subscription.getEndDate());
 
             if (courseAvailableDates.isEmpty()) {

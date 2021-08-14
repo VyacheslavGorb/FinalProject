@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Handles image upload
+ */
 public class ImageServlet extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
     private static final String PICTURE_PROPERTIES = "properties/picture.properties";
@@ -22,6 +24,9 @@ public class ImageServlet extends HttpServlet {
 
     private String basePicturePath;
 
+    /**
+     * Initializes image properties
+     */
     @Override
     public void init() {
         try {
@@ -34,6 +39,12 @@ public class ImageServlet extends HttpServlet {
         }
     }
 
+    /**
+     * Uploads requested image
+     * @param req http request
+     * @param resp http response
+     * @throws IOException ist thrown when send redirect exception occurs
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String path = req.getParameter(RequestParameter.PATH);

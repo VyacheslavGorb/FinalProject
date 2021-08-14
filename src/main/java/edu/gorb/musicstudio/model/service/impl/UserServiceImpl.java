@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
                 .setStatus(userStatus)
                 .build();
         try {
-            int id = userDao.insert(user);
+            long id = userDao.insert(user);
             user.setId(id);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error during user registration, login={}. {}", login, e.getMessage());
@@ -356,7 +356,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<LocalDate> findAllAvailableDatesForTeachers(List<User> teachers, LocalDate startDate, LocalDate endDate)
+    public List<LocalDate> findAllAvailableDatesForTeachersForPeriod(List<User> teachers, LocalDate startDate, LocalDate endDate)
             throws ServiceException {
         List<LocalDate> allSubscriptionAvailableDates = DateUtil.generateDateRage(startDate, endDate);
         List<LocalDate> courseAvailableDates = new ArrayList<>();
@@ -419,7 +419,7 @@ public class UserServiceImpl implements UserService {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
         Optional<TeacherDescription> description;
         try {
-            description = descriptionDao.findEntityById(id);
+            description = descriptionDao.findEntityByTeacherId(id);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for teacher description, id: {}. {}", id, e.getMessage());
             throw new ServiceException("Error while searching for teacher description, id=" + id, e);

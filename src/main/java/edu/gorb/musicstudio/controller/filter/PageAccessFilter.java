@@ -18,6 +18,9 @@ import java.util.List;
 
 import static edu.gorb.musicstudio.controller.command.CommandType.*;
 
+/**
+ * Checks for command availability for current user
+ */
 public class PageAccessFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();
     private EnumMap<UserRole, List<CommandType>> availableCommands;
@@ -25,6 +28,11 @@ public class PageAccessFilter implements Filter {
     private EnumSet<CommandType> teacherWithDescriptionOnlyAvailableCommands;
     private EnumSet<CommandType> teacherWithoutDescriptionOnlyAvailableCommands;
 
+    /**
+     * Initializes command for each role
+     *
+     * @param filterConfig Not used
+     */
     @Override
     public void init(FilterConfig filterConfig) {
         availableCommands = new EnumMap<>(UserRole.class);
@@ -65,6 +73,15 @@ public class PageAccessFilter implements Filter {
                         ADD_TEACHER_TO_COURSE, REMOVE_TEACHER_FROM_COURSE, MANAGE_COMMENTS, REMOVE_COMMENT));
     }
 
+    /**
+     * Checks for command availability for current user
+     *
+     * @param servletRequest  servlet request
+     * @param servletResponse servlet response
+     * @param filterChain     filter chain
+     * @throws IOException      is thrown when {@link HttpServletResponse#sendRedirect(String)} exception occurs
+     * @throws ServletException is thrown when {@link FilterChain#doFilter(ServletRequest, ServletResponse)} exception occurs
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {

@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * Proxy connection for {@link ConnectionPool}
+ */
 class ProxyConnection implements Connection {
     private static final Logger logger = LogManager.getLogger();
     private Connection connection;
@@ -17,12 +20,18 @@ class ProxyConnection implements Connection {
         this.connection = connection;
     }
 
+    /**
+     * Returns connection to {@link ConnectionPool} instead of closing it
+     */
     @Override
     public void close() {
         ConnectionPool pool = ConnectionPool.getInstance();
         pool.releaseConnection(this);
     }
 
+    /**
+     * Closes connection
+     */
     void reallyClose() {
         try {
             connection.close();

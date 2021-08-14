@@ -1,6 +1,9 @@
 package edu.gorb.musicstudio.controller.command;
 
-public class BundleKey {
+/**
+ * Class provides string constants that represent keys in resource bundle
+ */
+public final class BundleKey {
     public static final String INVALID_ACTIVATION_LINK = "error.invalid_activation_link";
     public static final String INVALID_REQUEST = "error.invalid_request";
     public static final String EMAIL_ALREADY_CONFIRMED = "error.email_already_confirmed";

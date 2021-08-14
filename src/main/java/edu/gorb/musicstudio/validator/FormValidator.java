@@ -29,6 +29,19 @@ public class FormValidator {
     private FormValidator() {
     }
 
+    /**
+     * Validates sign up form
+     *
+     * @param userRoleString   user role
+     * @param login            user login
+     * @param password         user password
+     * @param passwordRepeated repeated password
+     * @param name             user name
+     * @param surname          user surname
+     * @param patronymic       user patronymic
+     * @param email            user email
+     * @return if parameters valid
+     */
     public static boolean areSignUpParametersValid(String userRoleString, String login, String password,
                                                    String passwordRepeated, String name, String surname,
                                                    String patronymic, String email) {
@@ -53,6 +66,14 @@ public class FormValidator {
 
     }
 
+    /**
+     * Validates teacher initialization forms
+     *
+     * @param description         teacher description
+     * @param experienceParameter teacher work experience
+     * @param imageName           teacher image name
+     * @return if teacher initialization parameters valid
+     */
     public static boolean areTeacherInitParametersValid(String description, String experienceParameter, String imageName) {
         if (description == null || experienceParameter == null || imageName == null) {
             return false;
@@ -66,6 +87,15 @@ public class FormValidator {
         return isImageFileNameValid(imageName);
     }
 
+    /**
+     * Validates if teacher schedule alter parameters correct
+     *
+     * @param startHourParam work start hour
+     * @param endHourParam   work end hour
+     * @param removeParam    is schedule removed parameter
+     * @param dayOfWeekParam day of week parameter
+     * @return if teacher schedule alter parameters correct
+     */
     public static boolean areAlterTeacherScheduleParametersValid(String startHourParam, String endHourParam,
                                                                  String removeParam, String dayOfWeekParam) {
 
@@ -96,6 +126,13 @@ public class FormValidator {
         return true;
     }
 
+    /**
+     * Validates teacher update parameters
+     *
+     * @param description         teacher description
+     * @param experienceParameter teacher work experience
+     * @return if teacher update parameters valid
+     */
     public static boolean areTeacherUpdateParametersValid(String description, String experienceParameter) {
         if (description == null || experienceParameter == null) {
             return false;
@@ -106,6 +143,12 @@ public class FormValidator {
         return description.length() <= MAX_TEXT_DESCRIPTION_LENGTH && !description.isBlank();
     }
 
+    /**
+     * Validates if image file name valid
+     *
+     * @param imageName image file name
+     * @return if image file name valid
+     */
     public static boolean isImageFileNameValid(String imageName) {
         if (imageName == null) {
             return false;
@@ -114,6 +157,15 @@ public class FormValidator {
         return extension.equals(JPEG_EXTENSION) || extension.equals(JPG_EXTENSION);
     }
 
+    /**
+     * Validates if add course parameters correct
+     *
+     * @param name           course name
+     * @param description    course description
+     * @param priceParameter course price per hour
+     * @param fileName       course image file name
+     * @return if add course parameters correct
+     */
     public static boolean areAddCourseParametersValid(String name, String description, String priceParameter, String fileName) {
         if (name == null || description == null || priceParameter == null) {
             return false;
@@ -128,14 +180,22 @@ public class FormValidator {
             return false;
         }
 
-        if(price.intValue() < 0 || Math.ceil(price.doubleValue()) > MAX_PRICE_VALUE){
+        if (price.intValue() < 0 || Math.ceil(price.doubleValue()) > MAX_PRICE_VALUE) {
             return false;
         }
 
         return isImageFileNameValid(fileName);
     }
 
-    public static boolean areUpdateCourseParametersValid(String name, String description, String priceParameter){
+    /**
+     * Validates if update course parameters correct
+     *
+     * @param name           course name
+     * @param description    course description
+     * @param priceParameter course price per hour
+     * @return if update course parameters correct
+     */
+    public static boolean areUpdateCourseParametersValid(String name, String description, String priceParameter) {
         if (name == null || description == null || priceParameter == null) {
             return false;
         }

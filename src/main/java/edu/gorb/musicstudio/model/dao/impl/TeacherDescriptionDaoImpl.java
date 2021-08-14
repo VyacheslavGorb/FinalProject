@@ -12,10 +12,6 @@ import java.util.Optional;
 
 public class TeacherDescriptionDaoImpl implements TeacherDescriptionDao {
 
-    private static final String SELECT_ALL_DESCRIPTIONS =
-            "SELECT id_teacher, self_description, experience, picture_path\n" +
-                    "FROM teacher_descriptions";
-
     private static final String SELECT_DESCRIPTION_BY_ID =
             "SELECT id_teacher, self_description, experience, picture_path\n" +
                     "FROM teacher_descriptions\n" +
@@ -38,23 +34,18 @@ public class TeacherDescriptionDaoImpl implements TeacherDescriptionDao {
     }
 
     @Override
-    public List<TeacherDescription> findAll() throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_ALL_DESCRIPTIONS);
-    }
-
-    @Override
-    public Optional<TeacherDescription> findEntityById(long id) throws DaoException {
+    public Optional<TeacherDescription> findEntityByTeacherId(long id) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_DESCRIPTION_BY_ID, id);
     }
 
     @Override
-    public int insert(TeacherDescription teacherDescription) throws DaoException {
+    public long insert(TeacherDescription teacherDescription) throws DaoException {
         jdbcHelper.executeUpdate(INSERT_DESCRIPTION,
                 teacherDescription.getId(),
                 teacherDescription.getDescription(),
                 teacherDescription.getExperience(),
                 teacherDescription.getPicturePath());
-        return 0;//TODO
+        return -1;
     }
 
     @Override
@@ -64,5 +55,15 @@ public class TeacherDescriptionDaoImpl implements TeacherDescriptionDao {
                 teacherDescription.getExperience(),
                 teacherDescription.getPicturePath(),
                 teacherDescription.getId());
+    }
+
+    @Override
+    public List<TeacherDescription> findAll() throws DaoException {
+        throw new UnsupportedOperationException("findAll method is not implemented");
+    }
+
+    @Override
+    public Optional<TeacherDescription> findEntityById(long id) throws DaoException {
+        throw new UnsupportedOperationException("findEntityById method is not implemented");
     }
 }

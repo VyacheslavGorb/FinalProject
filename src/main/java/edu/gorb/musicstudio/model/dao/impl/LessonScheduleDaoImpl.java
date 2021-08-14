@@ -13,11 +13,6 @@ import java.util.Optional;
 
 public class LessonScheduleDaoImpl implements LessonScheduleDao {
 
-    private static final String SELECT_ALL_LESSON_SCHEDULES =
-            "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
-                    "FROM lesson_schedules\n" +
-                    "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status";
-
     private static final String SELECT_FUTURE_LESSONS_FOR_TEACHER =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
@@ -89,17 +84,12 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
     }
 
     @Override
-    public List<LessonSchedule> findAll() throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_ALL_LESSON_SCHEDULES);
-    }
-
-    @Override
     public Optional<LessonSchedule> findEntityById(long id) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_SCHEDULE_BY_ID, id);
     }
 
     @Override
-    public int insert(LessonSchedule lessonSchedule) throws DaoException {
+    public long insert(LessonSchedule lessonSchedule) throws DaoException {
         return jdbcHelper.executeInsert(INSERT_SCHEDULE,
                 lessonSchedule.getStudentId(),
                 lessonSchedule.getTeacherId(),
@@ -108,11 +98,6 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
                 lessonSchedule.getDuration(),
                 lessonSchedule.getSubscriptionId(),
                 lessonSchedule.getStatus().toString());
-    }
-
-    @Override
-    public void update(LessonSchedule lessonSchedule) throws DaoException {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -136,7 +121,7 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
     }
 
     @Override
-    public List<LessonSchedule> findLessonSchedulesBySubscription(long subscriptionId) throws DaoException {
+    public List<LessonSchedule> findLessonSchedulesBySubscriptionId(long subscriptionId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_SCHEDULE_BY_SUBSCRIPTION, subscriptionId);
     }
 
@@ -148,5 +133,15 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
     @Override
     public void updateStatus(long lessonId, LessonSchedule.LessonStatus status) throws DaoException {
         jdbcHelper.executeUpdate(UPDATE_STATUS, status.toString(), lessonId);
+    }
+
+    @Override
+    public List<LessonSchedule> findAll() throws DaoException {
+        throw new UnsupportedOperationException("findAll method is not implemented");
+    }
+
+    @Override
+    public void update(LessonSchedule lessonSchedule) throws DaoException {
+        throw new UnsupportedOperationException("update method is not implemented");
     }
 }

@@ -2,6 +2,9 @@ package edu.gorb.musicstudio.model.dao;
 
 import edu.gorb.musicstudio.model.dao.impl.*;
 
+/**
+ * Provides Dao entities
+ */
 public class DaoProvider {
     private final UserDao userDao = new UserDaoImpl();
     private final UserTokenDao userTokenDao = new UserTokenDaoImpl();
@@ -11,7 +14,6 @@ public class DaoProvider {
     private final LessonScheduleDao lessonScheduleDao = new LessonScheduleDaoImpl();
     private final TeacherScheduleDao teacherScheduleDao = new TeacherScheduleDaoImpl();
     private final SubscriptionDao subscriptionDao = new SubscriptionDaoImpl();
-
 
     private DaoProvider() {
     }

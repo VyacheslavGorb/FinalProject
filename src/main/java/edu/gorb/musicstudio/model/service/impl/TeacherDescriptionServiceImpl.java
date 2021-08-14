@@ -52,7 +52,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
     public Optional<TeacherDescription> findTeacherDescriptionByTeacherId(long teacherId) throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
         try {
-            return descriptionDao.findEntityById(teacherId);
+            return descriptionDao.findEntityByTeacherId(teacherId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for teacher description by id={}", teacherId, e);
             throw new ServiceException("Error while searching for teacher description by id=" + teacherId, e);
@@ -63,7 +63,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
     public boolean teacherDescriptionExists(long teacherId) throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
         try {
-            return descriptionDao.findEntityById(teacherId).isPresent();
+            return descriptionDao.findEntityByTeacherId(teacherId).isPresent();
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for teacher description by id={}", teacherId, e);
             throw new ServiceException("Error while searching for teacher description by id=" + teacherId, e);
@@ -115,7 +115,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
             throws ServiceException {
         TeacherDescriptionDao descriptionDao = DaoProvider.getInstance().getTeacherDescriptionDao();
         try {
-            Optional<TeacherDescription> optionalDescription = descriptionDao.findEntityById(teacherId);
+            Optional<TeacherDescription> optionalDescription = descriptionDao.findEntityByTeacherId(teacherId);
             if (optionalDescription.isEmpty()) {
                 throw new ServiceException();
             }

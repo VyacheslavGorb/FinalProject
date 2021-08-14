@@ -1,6 +1,9 @@
 package edu.gorb.musicstudio.controller.command;
 
-public class RequestAttribute {
+/**
+ * Class provides string constants that represent request attributes
+ */
+public final class RequestAttribute {
     public static final String PAGE_COUNT = "page_count";
     public static final String COURSES = "courses";
     public static final String SEARCH_LINE = "search_line";
@@ -27,7 +30,6 @@ public class RequestAttribute {
     public static final String SUBSCRIPTIONS_LESSON_COUNT = "total_lesson_count";
     public static final String SUBSCRIPTION_SCHEDULE_MAP = "subscriptions_schedule_map";
     public static final String WAITING_FOR_APPROVE_SUBSCRIPTIONS = "waiting_for_approve_subscriptions";
-
 
     private RequestAttribute() {
     }

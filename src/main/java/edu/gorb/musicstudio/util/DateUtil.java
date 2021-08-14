@@ -8,6 +8,12 @@ public class DateUtil {
     private DateUtil(){
     }
 
+    /**
+     * Generates list of dates between <code>start</code> and <code>end</code> inclusive
+     * @param start start date
+     * @param end end date
+     * @return list of {@link LocalDate} representing range
+     */
     public static List<LocalDate> generateDateRage(LocalDate start, LocalDate end){
         List<LocalDate> dates = new ArrayList<>();
         LocalDate date = start;

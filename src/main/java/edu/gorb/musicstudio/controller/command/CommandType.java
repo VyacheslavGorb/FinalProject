@@ -1,5 +1,8 @@
 package edu.gorb.musicstudio.controller.command;
 
+/**
+ * Enum containing all available command types
+ */
 public enum CommandType {
     LOGIN,
     LOGOUT,
@@ -18,7 +21,9 @@ public enum CommandType {
     TEACHERS,
     TEACHER_PAGE,
 
-    /*Teacher commands*/
+    /**
+     * Teacher commands
+     */
     TEACHER_LESSON_SCHEDULE,
     TEACHER_INIT,
     SEND_TEACHER_INIT_DESCRIPTION,
@@ -27,7 +32,9 @@ public enum CommandType {
     TEACHER_PERSONAL_INFO,
     UPDATE_TEACHER_DESCRIPTION,
 
-    /*Student commands*/
+    /**
+     * Student commands
+     */
     SUBSCRIPTION_PAGE,
     SEND_SUBSCRIPTION_REQUEST,
     PERSONAL_SUBSCRIPTIONS,
@@ -36,7 +43,9 @@ public enum CommandType {
     STUDENT_LESSON_SCHEDULE,
     STUDENT_CANCEL_LESSON,
 
-    /*Admin commands*/
+    /**
+     * Admin commands
+     */
     MANAGE_USERS_PAGE,
     ACTIVATE_USER,
     DEACTIVATE_USER,
@@ -58,7 +67,14 @@ public enum CommandType {
     MANAGE_COMMENTS,
     REMOVE_COMMENT;
 
-    public static CommandType convertRequestParameterToCommandType(String parameter){
+    /**
+     * Converts request command parameter to {@link CommandType}
+     *
+     * @param parameter request command parameter
+     * @return returns corresponding {@link CommandType}.
+     * Returns default command if no corresponding {@link CommandType} is found or <code>parameter</code> is null.
+     */
+    public static CommandType convertRequestParameterToCommandType(String parameter) {
         if (parameter == null) {
             return DEFAULT;
         }

@@ -2,6 +2,9 @@ package edu.gorb.musicstudio.model.service;
 
 import edu.gorb.musicstudio.model.service.impl.*;
 
+/**
+ * Class provides services
+ */
 public class ServiceProvider {
     private final UserService userService = new UserServiceImpl();
     private final MailService mailService = new MailServiceImpl();

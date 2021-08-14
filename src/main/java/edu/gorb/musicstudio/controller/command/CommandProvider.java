@@ -2,9 +2,6 @@ package edu.gorb.musicstudio.controller.command;
 
 import edu.gorb.musicstudio.controller.command.impl.*;
 import edu.gorb.musicstudio.controller.command.impl.admin.*;
-import edu.gorb.musicstudio.controller.command.impl.GoToLoginPageCommand;
-import edu.gorb.musicstudio.controller.command.impl.GoToSendEmailAgainPageCommand;
-import edu.gorb.musicstudio.controller.command.impl.GoToSignUpPageCommand;
 import edu.gorb.musicstudio.controller.command.impl.student.*;
 import edu.gorb.musicstudio.controller.command.impl.teacher.*;
 
@@ -12,7 +9,13 @@ import java.util.EnumMap;
 
 import static edu.gorb.musicstudio.controller.command.CommandType.*;
 
+/**
+ * Provides commands by request parameter
+ */
 public class CommandProvider {
+    /**
+     * Map containing command types associated with command instances
+     */
     private final EnumMap<CommandType, Command> commands;
 
     private CommandProvider() {
@@ -69,14 +72,21 @@ public class CommandProvider {
         commands.put(REMOVE_COMMENT, new RemoveCommentCommand());
     }
 
+    /**
+     * Return instance of {@link CommandProvider}
+     *
+     * @return Instance of {@link CommandProvider}
+     */
     public static CommandProvider getInstance() {
         return CommandProviderHolder.instance;
     }
 
-    public Command getCommand(CommandType commandType) {
-        return commands.get(commandType);
-    }
-
+    /**
+     * Get command by request parameter
+     *
+     * @param commandParameter request command parameter
+     * @return instance of {@link Command} interface associated with parameter
+     */
     public Command getCommand(String commandParameter) {
         CommandType commandType = CommandType.convertRequestParameterToCommandType(commandParameter);
         return commands.get(commandType);

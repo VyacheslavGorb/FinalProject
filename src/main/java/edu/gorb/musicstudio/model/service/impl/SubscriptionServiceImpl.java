@@ -105,7 +105,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             int totalSubscriptionLessonCount = subscriptions.stream().mapToInt(Subscription::getLessonCount).sum();
             int activatedLessonCount = 0;
             for (Subscription subscription : subscriptions) {
-                activatedLessonCount += lessonScheduleDao.findLessonSchedulesBySubscription(subscription.getId()).size();
+                activatedLessonCount += lessonScheduleDao.findLessonSchedulesBySubscriptionId(subscription.getId()).size();
             }
             return totalSubscriptionLessonCount - activatedLessonCount;
         } catch (DaoException e) {

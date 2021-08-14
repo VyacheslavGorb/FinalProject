@@ -1,6 +1,9 @@
 package edu.gorb.musicstudio.controller.command;
 
-public class RequestParameter {
+/**
+ * Class provides string constants that represent request parameters
+ */
+public final class RequestParameter {
     public static final String COMMAND = "command";
     public static final String LOGIN = "login";
     public static final String PASSWORD = "password";
@@ -35,10 +38,6 @@ public class RequestParameter {
     public static final String COURSE_NAME = "course_name";
     public static final String PRICE = "price";
     public static final String COMMENT_ID = "comment_id";
-
-
-
-
 
     private RequestParameter() {
     }

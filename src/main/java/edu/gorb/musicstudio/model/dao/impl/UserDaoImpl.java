@@ -60,19 +60,6 @@ public class UserDaoImpl implements UserDao {
             "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
             "WHERE id_user=?";
 
-    private static final String SELECT_USERS_BY_STATUS = "SELECT id_user,\n" +
-            "       login,\n" +
-            "       password_hash,\n" +
-            "       name,\n" +
-            "       surname,\n" +
-            "       patronymic,\n" +
-            "       email,\n" +
-            "       user_status,\n" +
-            "       user_role\n" +
-            "FROM users\n" +
-            "         JOIN user_statuses us on us.id_user_status = users.id_user_status\n" +
-            "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
-            "WHERE user_status=?";
 
     private static final String SELECT_USER_BY_LOGIN = "SELECT id_user,\n" +
             "       login,\n" +
@@ -204,7 +191,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int insert(User user) throws DaoException {
+    public long insert(User user) throws DaoException {
         return jdbcHelper.executeInsert(INSERT_NEW_USER,
                 user.getLogin(),
                 user.getPassword(),
@@ -228,11 +215,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findUsersByStatus(UserStatus status) throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_USERS_BY_STATUS, status.toString());
-    }
-
-    @Override
     public Optional<User> findUserByLogin(String login) throws DaoException {
         return jdbcHelper.executeQueryForSingleResult(SELECT_USER_BY_LOGIN, login);
     }
@@ -248,13 +230,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> selectActiveTeachersForPage(int skipAmount, int coursePerPageAmount) throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_ACTIVE_TEACHERS_FOR_PAGE, skipAmount, coursePerPageAmount);
+    public List<User> selectActiveTeachersForPage(int skipAmount, int teachersPerPageAmount) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_ACTIVE_TEACHERS_FOR_PAGE, skipAmount, teachersPerPageAmount);
     }
 
     @Override
-    public List<User> selectActiveTeachersWithSearchForPage(int skipAmount, int coursePerPageAmount, String search) throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_ACTIVE_TEACHERS_FOR_PAGE_WITH_SEARCH, search, skipAmount, coursePerPageAmount);
+    public List<User> selectActiveTeachersWithSearchForPage(int skipAmount, int teacherPerPageAmount, String search) throws DaoException {
+        return jdbcHelper.executeQuery(SELECT_ACTIVE_TEACHERS_FOR_PAGE_WITH_SEARCH, search, skipAmount, teacherPerPageAmount);
     }
 
     @Override

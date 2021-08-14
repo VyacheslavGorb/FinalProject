@@ -12,10 +12,6 @@ import java.util.Optional;
 
 public class SubscriptionDaoImpl implements SubscriptionDao {
 
-    private static final String SELECT_ALL_SUBSCRIPTIONS =
-            "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
-                    "FROM subscriptions";
-
     private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_BY_ID =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
@@ -63,17 +59,7 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     }
 
     @Override
-    public List<Subscription> findAll() throws DaoException {
-        return jdbcHelper.executeQuery(SELECT_ALL_SUBSCRIPTIONS);
-    }
-
-    @Override
-    public Optional<Subscription> findEntityById(long id) throws DaoException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int insert(Subscription subscription) throws DaoException {
+    public long insert(Subscription subscription) throws DaoException {
         return jdbcHelper.executeInsert(INSERT_NEW_SUBSCRIPTION,
                 subscription.getStudentId(),
                 subscription.getCourseId(),
@@ -81,11 +67,6 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
                 subscription.getEndDate(),
                 subscription.getLessonCount(),
                 subscription.getStatus().toString());
-    }
-
-    @Override
-    public void update(Subscription subscription) throws DaoException {
-        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -118,5 +99,20 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     @Override
     public List<Subscription> findContinuingActiveSubscriptionsForCourse(long courseId) throws DaoException {
         return jdbcHelper.executeQuery(SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_COURSE, courseId);
+    }
+
+    @Override
+    public List<Subscription> findAll() throws DaoException {
+        throw new UnsupportedOperationException("findAll method is not implemented");
+    }
+
+    @Override
+    public Optional<Subscription> findEntityById(long id) throws DaoException {
+        throw new UnsupportedOperationException("findEntityById method is not implemented");
+    }
+
+    @Override
+    public void update(Subscription subscription) throws DaoException {
+        throw new UnsupportedOperationException("update method is not implemented");
     }
 }

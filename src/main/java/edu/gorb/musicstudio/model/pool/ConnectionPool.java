@@ -19,6 +19,9 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Database connection pool
+ */
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
     private static final int DEFAULT_POOL_SIZE = 32;
@@ -42,6 +45,9 @@ public class ConnectionPool {
     private int timerInterval;
     private boolean isValidationTaskUsed;
 
+    /**
+     * Initializes pool from properties file and creates connections
+     */
     private ConnectionPool() {
         try (InputStream inputStream = ConnectionPool.class.getClassLoader().getResourceAsStream(PROPERTY_FILE_PATH)) {
             if (inputStream == null) {
@@ -89,6 +95,11 @@ public class ConnectionPool {
         }
     }
 
+
+    /**
+     * Returns instance of connection pool
+     * @return instance of connection pool
+     */
     public static ConnectionPool getInstance() {
         while (instance == null) {
             if (isInitialised.compareAndSet(false, true)) {
@@ -98,6 +109,11 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Acquires connection
+     * @return database connection
+     * @throws DatabaseConnectionException is thrown if thread is interrupted
+     */
     public Connection getConnection() throws DatabaseConnectionException {
         connectionLock.lock();
         ProxyConnection connection;
@@ -116,6 +132,11 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Returns connection back to connection pool
+     * @param connection connection to be returned
+     * @return true if connection returned successfully
+     */
     public boolean releaseConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
             logger.log(Level.ERROR, "Illegal connection type");
@@ -132,6 +153,9 @@ public class ConnectionPool {
         return true;
     }
 
+    /**
+     * Destroys pool. Closes all connections.
+     */
     public void destroyPool() {
         connectionLock.lock();
         try {
@@ -144,6 +168,7 @@ public class ConnectionPool {
         }
         deregisterDrivers();
     }
+
 
     private void assignDefaultValues() {
         poolSize = DEFAULT_POOL_SIZE;

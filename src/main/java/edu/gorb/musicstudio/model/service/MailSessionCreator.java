@@ -19,6 +19,11 @@ public class MailSessionCreator {
     private String userPassword;
     private Properties sessionProperties;
 
+    /**
+     * Initializes mail properties
+     *
+     * @param configProperties mail properties
+     */
     public MailSessionCreator(Properties configProperties) throws ServiceException {
         smtpHost = configProperties.getProperty("mail.smtp.host");
         smtpPort = configProperties.getProperty("mail.smtp.port");
@@ -43,6 +48,11 @@ public class MailSessionCreator {
         sessionProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
     }
 
+    /**
+     * Creates mail session
+     *
+     * @return created session
+     */
     public Session createSession() {
         return Session.getDefaultInstance(sessionProperties,
                 new javax.mail.Authenticator() {

@@ -8,6 +8,11 @@ public class DateTimeValidator {
     private DateTimeValidator(){
     }
 
+    /**
+     * Validates if date representation is valid
+     * @param dateString date line
+     * @return if <code>dateString</code> is valid date representation
+     */
     public static boolean isValidDate(String dateString){
         if(dateString == null){
             return false;
@@ -20,6 +25,11 @@ public class DateTimeValidator {
         return true;
     }
 
+    /**
+     * Validates if time representation is valid
+     * @param timeString time line
+     * @return if <code>timeString</code> is valid time representation
+     */
     public static boolean isValidTime(String timeString){
         if(timeString == null){
             return false;

@@ -89,7 +89,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public int insert(Course course) throws DaoException {
+    public long insert(Course course) throws DaoException {
         return jdbcHelper.executeInsert(INSERT_COURSE,
                 course.getName(),
                 course.getDescription(),

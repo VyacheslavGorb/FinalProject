@@ -11,6 +11,9 @@ import java.io.IOException;
 
 import static edu.gorb.musicstudio.controller.command.CommandType.CHANGE_LANGUAGE;
 
+/**
+ * Saves current page in session
+ */
 public class SaveCurrentPageFilter implements Filter {
     private static final String GET_METHOD = "GET";
     private static final String QUESTION_MARK = "?";

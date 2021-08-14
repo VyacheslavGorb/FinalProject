@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public int addNewComment(long userId, long courseId, String content) throws ServiceException {
+    public long addNewComment(long userId, long courseId, String content) throws ServiceException {
         LocalDateTime dateTime = LocalDateTime.now();
         CommentDao commentDao = DaoProvider.getInstance().getCommentDao();
         String escapedContent = HtmlEscapeUtil.escape(content);
