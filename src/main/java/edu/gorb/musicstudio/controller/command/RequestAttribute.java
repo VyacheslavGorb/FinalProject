@@ -30,6 +30,7 @@ public final class RequestAttribute {
     public static final String SUBSCRIPTIONS_LESSON_COUNT = "total_lesson_count";
     public static final String SUBSCRIPTION_SCHEDULE_MAP = "subscriptions_schedule_map";
     public static final String WAITING_FOR_APPROVE_SUBSCRIPTIONS = "waiting_for_approve_subscriptions";
+    public static final String ROLE_ORDER = "role_order";
 
     private RequestAttribute() {
     }

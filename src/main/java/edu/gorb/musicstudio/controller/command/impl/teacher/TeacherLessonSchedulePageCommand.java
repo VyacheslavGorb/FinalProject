@@ -16,7 +16,6 @@ public class TeacherLessonSchedulePageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
         LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
-
         HttpSession session = request.getSession();
         User teacher = (User) session.getAttribute(SessionAttribute.USER);
         List<String> lessonScheduleDateLines;
@@ -24,15 +23,11 @@ public class TeacherLessonSchedulePageCommand implements Command {
         try {
             List<LessonScheduleDto> lessonScheduleDtos =
                     lessonScheduleService.findActiveFutureSchedulesByTeacherId(teacher.getId());
-
-
-
             lessonScheduleDtoMap = lessonScheduleService.mapLessonDtosToDate(lessonScheduleDtos);
             lessonScheduleDateLines = lessonScheduleService.findDistinctDateLines(lessonScheduleDtos);
         } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
-
         request.setAttribute(RequestAttribute.LESSON_SCHEDULE_DATES, lessonScheduleDateLines);
         request.setAttribute(RequestAttribute.LESSON_SCHEDULE_MAP, lessonScheduleDtoMap);
         return new CommandResult(PagePath.TEACHER_LESSON_SCHEDULE_PAGE, CommandResult.RoutingType.FORWARD);

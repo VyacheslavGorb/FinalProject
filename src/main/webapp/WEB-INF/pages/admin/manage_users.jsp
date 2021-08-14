@@ -59,57 +59,63 @@
     </div>
 </c:if>
 
-<c:forEach items="${requestScope.user_map}" var="userEntry">
-    <div class="w-100 d-flex justify-content-center align-items-center flex-column">
-        <div class="d-flex w-75">
-            <p class="fs-2 display-1">${userEntry.key}</p>
-        </div>
-        <table class="table mb-5 w-75">
-            <thead>
-            <tr>
-                <th scope="col"><fmt:message key="user.login" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="user.name" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="user.surname" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="user.email" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="user.role" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="user.status" bundle="${rb}"/></th>
-                <th scope="col"><fmt:message key="user.change_status" bundle="${rb}"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${userEntry.value}" var="user">
-                <tr>
-                    <td>${user.login}</td>
-                    <td>${user.name}</td>
-                    <td>${user.surname}</td>
-                    <td>${user.email}</td>
-                    <td><fmt:message key="user.role.${user.role}" bundle="${rb}"/></td>
-                    <td><fmt:message key="user.status.${user.status}" bundle="${rb}"/></td>
-                    <td>
-                        <c:if test="${user.status.name() == 'INACTIVE'}">
-                            <form method="POST" action="${pageContext.request.contextPath}/controller">
-                                <input type="hidden" name="command" value="activate_user">
-                                <input type="hidden" name="user_id" value="${user.id}">
-                                <button class="btn btn-outline-success" type="submit"><fmt:message key="user.activate"
-                                                                                                   bundle="${rb}"/></button>
-                            </form>
-                        </c:if>
-                        <c:if test="${user.status.name() != 'INACTIVE'}">
-                            <form method="POST" action="${pageContext.request.contextPath}/controller">
-                                <input type="hidden" name="command" value="deactivate_user">
-                                <input type="hidden" name="user_id" value="${user.id}">
-                                <button class="btn btn-outline-danger" type="submit"><fmt:message key="user.deactivate"
-                                                                                                  bundle="${rb}"/></button>
-                            </form>
-                        </c:if>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
+<div class="min-vh-100">
+    <c:forEach items="${requestScope.role_order}" var="role">
+        <c:if test="${requestScope.user_map.get(role) != null}">
+            <div class="w-100 d-flex align-items-center flex-column mt-4">
+                <div class="d-flex w-75">
+                    <p class="fs-2 display-1"><fmt:message key="user.role.${role}" bundle="${rb}"/></p>
+                </div>
+                <table class="table mb-5 w-75">
+                    <thead>
+                    <tr>
+                        <th scope="col"><fmt:message key="user.login" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="user.name" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="user.surname" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="user.email" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="user.role" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="user.status" bundle="${rb}"/></th>
+                        <th scope="col"><fmt:message key="user.change_status" bundle="${rb}"/></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${requestScope.user_map.get(role)}" var="user">
+                        <tr>
+                            <td>${user.login}</td>
+                            <td>${user.name}</td>
+                            <td>${user.surname}</td>
+                            <td>${user.email}</td>
+                            <td><fmt:message key="user.role.${user.role}" bundle="${rb}"/></td>
+                            <td><fmt:message key="user.status.${user.status}" bundle="${rb}"/></td>
+                            <td>
+                                <c:if test="${user.status.name() == 'INACTIVE'}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/controller">
+                                        <input type="hidden" name="command" value="activate_user">
+                                        <input type="hidden" name="user_id" value="${user.id}">
+                                        <button class="btn btn-outline-success" type="submit"><fmt:message
+                                                key="user.activate"
+                                                bundle="${rb}"/></button>
+                                    </form>
+                                </c:if>
+                                <c:if test="${user.status.name() != 'INACTIVE'}">
+                                    <form method="POST" action="${pageContext.request.contextPath}/controller">
+                                        <input type="hidden" name="command" value="deactivate_user">
+                                        <input type="hidden" name="user_id" value="${user.id}">
+                                        <button class="btn btn-outline-danger" type="submit"><fmt:message
+                                                key="user.deactivate"
+                                                bundle="${rb}"/></button>
+                                    </form>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </c:if>
+    </c:forEach>
+</div>
 
-</c:forEach>
 
 <jsp:include page="../parts/footer.jsp"/>
 </body>

@@ -53,7 +53,7 @@
 
     <form id="teacher-init-form" method="post" class="w-75" action="${pageContext.request.contextPath}/controller"
           enctype='multipart/form-data'>
-        <input type="hidden" name="command" value="send_description">
+        <input type="hidden" name="command" value="send_teacher_init_description">
         <label class="form-label mt-4"><fmt:message key="teacher_init.label.description" bundle="${rb}"/></label>
         <textarea name="description" class="form-control" rows="5" maxlength="1000" required></textarea>
 

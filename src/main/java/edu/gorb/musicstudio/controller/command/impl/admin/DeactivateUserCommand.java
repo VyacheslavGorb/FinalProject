@@ -37,6 +37,8 @@ public class DeactivateUserCommand implements Command {
 
             if (user.getRole() == UserRole.ADMIN) {
                 if(currentAdminUser.getId() == userId){
+                    session.setAttribute(SessionAttribute.IS_USER_MANAGE_ERROR, true);
+                    session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.CANT_DEACTIVATE_YOURSELF);
                     return new CommandResult(PagePath.MANAGE_USERS_REDIRECT, CommandResult.RoutingType.REDIRECT);
                 }
             } else if (user.getRole() == UserRole.TEACHER) {

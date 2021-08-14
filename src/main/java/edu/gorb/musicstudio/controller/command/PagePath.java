@@ -27,7 +27,7 @@ public final class PagePath {
     public static final String TEACHER_PAGE = "WEB-INF/pages/teacher_page.jsp";
 
     public static final String TEACHER_INIT_PAGE = "WEB-INF/pages/teacher/teacher_init_page.jsp";
-    public static final String TEACHER_INIT_PAGE_REDIRECT = "/controller?command=teacher_init_page";
+    public static final String TEACHER_INIT_PAGE_REDIRECT = "/controller?command=teacher_init";
 
     public static final String TEACHER_LESSON_SCHEDULE_PAGE = "WEB-INF/pages/teacher/teacher_lesson_schedule_page.jsp";
     public static final String TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT = "/controller?command=teacher_lesson_schedule";

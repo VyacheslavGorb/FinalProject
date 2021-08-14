@@ -15,7 +15,7 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
     private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTION_BY_ID =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
-                    "WHERE DATE(date_end) >= CURDATE() and id_subscription = ? and status != 'CANCELLED'";
+                    "WHERE DATE(date_end) >= CURDATE() and id_subscription = ? and status != 'CANCELLED' ORDER BY date_start";
 
     private static final String INSERT_NEW_SUBSCRIPTION =
             "INSERT INTO subscriptions (id_student, id_course, date_start, date_end, lesson_amount, status)\n" +
@@ -26,25 +26,25 @@ public class SubscriptionDaoImpl implements SubscriptionDao {
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
                     "  and id_student = ?\n" +
-                    "  and id_course = ? and status != 'CANCELLED'";
+                    "  and id_course = ? and status != 'CANCELLED' ORDER BY date_start";
 
     private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_STUDENT =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
-                    "  and id_student = ? and status != 'CANCELLED'";
+                    "  and id_student = ? and status != 'CANCELLED' ORDER BY date_start";
 
     private static final String SELECT_CONTINUING_ACTIVE_SUBSCRIPTIONS_FOR_COURSE =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
-                    "  and id_course = ? and status != 'CANCELLED'";
+                    "  and id_course = ? and status != 'CANCELLED' ORDER BY date_start";
 
     private static final String SELECT_ALL_CONTINUING_ACTIVE_SUBSCRIPTIONS =
             "SELECT id_subscription, id_student, id_course, date_start, date_end, lesson_amount, status\n" +
                     "FROM subscriptions\n" +
                     "WHERE DATE(date_end) >= CURDATE()\n" +
-                    "  and status != 'CANCELLED'";
+                    "  and status != 'CANCELLED' ORDER BY date_start";
 
     private static final String UPDATE_STATUS =
             "UPDATE subscriptions\n" +

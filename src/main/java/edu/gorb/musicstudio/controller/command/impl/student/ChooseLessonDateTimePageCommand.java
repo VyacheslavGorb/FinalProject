@@ -58,7 +58,6 @@ public class ChooseLessonDateTimePageCommand implements Command {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
 
-
             if (dateParameter == null) {
                 requestedDate = courseAvailableDates.get(0);
             } else {

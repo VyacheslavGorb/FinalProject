@@ -35,13 +35,13 @@ public class SessionAttributeFilter implements Filter {
         attributesToRemove.put(GO_TO_SIGN_UP_PAGE, List.of(IS_SIGNUP_ERROR));
         attributesToRemove.put(GO_TO_SEND_EMAIL_AGAIN_PAGE, List.of(IS_SEND_EMAIL_AGAIN_ERROR));
         attributesToRemove.put(TEACHER_INIT, List.of(IS_TEACHER_INIT_ERROR));
+        attributesToRemove.put(MANAGE_USERS_PAGE, List.of(IS_USER_MANAGE_ERROR));
         attributesToRemove.put(TEACHER_SCHEDULE, List.of(IS_TEACHER_SCHEDULE_ERROR));
         attributesToRemove.put(TEACHER_PERSONAL_INFO, List.of(IS_TEACHER_INFO_ERROR));
         attributesToRemove.put(SUBSCRIPTION_PAGE, List.of(IS_SUBSCRIPTION_ERROR));
-        attributesToRemove.put(MANAGE_USERS_PAGE, List.of(IS_USER_MANAGE_ERROR, ERROR_KEY));
         attributesToRemove.put(ADD_COURSE_PAGE, List.of(IS_ADD_COURSE_ERROR));
+        attributesToRemove.put(CHOOSE_LESSON_DATETIME_PAGE, List.of(IS_SUBSCRIPTION_TIME_ERROR));
         attributesToRemove.put(CHANGE_COURSE_PAGE, List.of(IS_CHANGE_COURSE_ERROR));
-        attributesToRemove.put(CHOOSE_LESSON_DATETIME_PAGE, List.of(IS_SUBSCRIPTION_ERROR));
     }
 
     @Override

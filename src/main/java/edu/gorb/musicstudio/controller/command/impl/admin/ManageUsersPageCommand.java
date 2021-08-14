@@ -28,7 +28,7 @@ public class ManageUsersPageCommand implements Command {
         Map<UserRole, List<User>> userMap = allUsers.stream()
                 .collect(Collectors.groupingBy(User::getRole));
 
-        //TODO sort and no button for current admin
+        request.setAttribute(RequestAttribute.ROLE_ORDER, List.of(UserRole.ADMIN, UserRole.TEACHER, UserRole.STUDENT));
         request.setAttribute(RequestAttribute.USER_MAP, userMap);
         return new CommandResult(PagePath.MANAGE_USERS, CommandResult.RoutingType.FORWARD);
     }

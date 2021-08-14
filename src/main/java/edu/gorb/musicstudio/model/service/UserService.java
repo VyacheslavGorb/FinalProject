@@ -25,7 +25,7 @@ public interface UserService {
      * @param password user password hash
      * @return optional of {@link User}
      */
-    Optional<User> findActiveRegisteredUser(String login, String password) throws ServiceException;
+    Optional<User> findRegisteredUser(String login, String password) throws ServiceException;
 
     /**
      * Finds all active teachers

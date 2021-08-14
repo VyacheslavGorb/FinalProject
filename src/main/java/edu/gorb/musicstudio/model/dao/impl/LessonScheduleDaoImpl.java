@@ -18,26 +18,26 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
                     "WHERE date_time > NOW() and status='NORMAL'\n" +
-                    "  and id_teacher = ?";
+                    "  and id_teacher = ? ORDER BY date_time";
 
     private static final String SELECT_FUTURE_LESSONS_FOR_STUDENT =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
                     "WHERE date_time > NOW() and status='NORMAL'\n" +
-                    "  and id_student = ?";
+                    "  and id_student = ? ORDER BY date_time";
 
     private static final String SELECT_SCHEDULE_FOR_DATE =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
-                    "WHERE id_teacher = ? and DATE(date_time) = ?  and status='NORMAL'";
+                    "WHERE id_teacher = ? and DATE(date_time) = ?  and status='NORMAL' ORDER BY date_time";
 
     private static final String SELECT_SCHEDULE_BY_SUBSCRIPTION =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
-                    "WHERE id_subscription = ?";
+                    "WHERE id_subscription = ? ORDER BY date_time";
 
     private static final String SELECT_FUTURE_LESSONS_FOR_STUDENT_FOR_COURSE =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
@@ -45,13 +45,13 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
                     "WHERE date_time > NOW() and status='NORMAL'\n" +
                     "  and id_student = ?\n" +
-                    "  and id_course = ?";
+                    "  and id_course = ? ORDER BY date_time";
 
     private static final String SELECT_ALL_FUTURE_LESSONS =
             "SELECT id_schedule, id_student, id_teacher, id_course, date_time, duration, status, id_subscription\n" +
                     "FROM lesson_schedules\n" +
                     "         JOIN lesson_statuses ls on ls.id_lesson_status = lesson_schedules.id_lesson_status\n" +
-                    "WHERE date_time > NOW() and status='NORMAL'";
+                    "WHERE date_time > NOW() and status='NORMAL' ORDER BY date_time";
 
     private static final String INSERT_SCHEDULE =
             "INSERT INTO lesson_schedules (id_student, id_teacher, id_course, date_time, duration, id_subscription, id_lesson_status\n" +

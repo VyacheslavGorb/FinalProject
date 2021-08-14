@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public Optional<User> findActiveRegisteredUser(String login, String password) throws ServiceException {
+    public Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
         if (login == null || password == null) {
             return Optional.empty();
         }
@@ -53,16 +53,11 @@ public class UserServiceImpl implements UserService {
             DaoProvider daoProvider = DaoProvider.getInstance();
             UserDao userDao = daoProvider.getUserDao();
             Optional<User> user = userDao.findUserByLogin(login);
-            if (user.isEmpty()) {
+            if (user.isEmpty()
+                    || !hashString(password).equals(user.get().getPassword())) {
                 return Optional.empty();
             }
-
-            if (user.get().getStatus() == UserStatus.ACTIVE
-                    && hashString(password).equals(user.get().getPassword())) {
-                return user;
-            }
-
-            return Optional.empty();
+            return user;
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for registered user login={}. {}", login, e.getMessage());
             throw new ServiceException("Error while searching for registered user login=" + login, e);

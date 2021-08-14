@@ -19,7 +19,6 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
-
     <servlet>
         <servlet-name>ImageServlet</servlet-name>
         <servlet-class>edu.gorb.musicstudio.controller.ImageServlet</servlet-class>
@@ -45,7 +44,15 @@
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
+    <filter>
+        <filter-name>SessionValidationFilter</filter-name>
+        <filter-class>edu.gorb.musicstudio.controller.filter.SessionValidationFilter</filter-class>
+    </filter>
 
+    <filter-mapping>
+        <filter-name>SessionValidationFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
 
     <filter>
         <filter-name>ResponseCacheFilter</filter-name>
@@ -57,9 +64,6 @@
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
-
-
-
     <filter>
         <filter-name>SessionAttributeFilter</filter-name>
         <filter-class>edu.gorb.musicstudio.controller.filter.SessionAttributeFilter</filter-class>
@@ -70,19 +74,16 @@
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
-
     <filter>
         <filter-name>PreviousCommandFilter</filter-name>
         <filter-class>edu.gorb.musicstudio.controller.filter.SaveCurrentPageFilter</filter-class>
     </filter>
-
 
     <filter-mapping>
         <filter-name>PreviousCommandFilter</filter-name>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/static_pages/*</url-pattern>
     </filter-mapping>
-
 
     <filter>
         <filter-name>PageAccessFilter</filter-name>
@@ -102,7 +103,6 @@
         <listener-class>edu.gorb.musicstudio.controller.listener.ServletContextListenerImpl</listener-class>
     </listener>
 
-
     <jsp-config>
         <taglib>
             <taglib-uri>customtags</taglib-uri>
@@ -110,16 +110,14 @@
         </taglib>
     </jsp-config>
 
-    <!--    TODO uncomment-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/static_pages/error_404.jsp</location>
+    </error-page>
 
-    <!--    <error-page>-->
-    <!--        <error-code>404</error-code>-->
-    <!--        <location>error_404.jsp</location>-->
-    <!--    </error-page>-->
-
-    <!--    <error-page>-->
-    <!--        <exception-type>java.lang.Throwable</exception-type >-->
-    <!--        <location>error_500.jsp</location>-->
-    <!--    </error-page>-->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/static_pages/error_500.jsp</location>
+    </error-page>
 
 </web-app>

@@ -65,7 +65,7 @@
             </c:if>
             <c:forEach items="${requestScope.teacher_schedules}" var="schedule">
                 <tr>
-                    <td>${schedule.dayOfWeek}</td>
+                    <td><fmt:message key="day_of_week.${schedule.dayOfWeek}" bundle="${rb}"/></td>
                     <td>${schedule.startTime}</td>
                     <td>${schedule.endTime}</td>
                 </tr>
@@ -126,13 +126,13 @@
                                                                                bundle="${rb}"/>
                 &nbsp;<fmt:message key="teacher.schedule.hours"
                                    bundle="${rb}"/></label>
-            <input name=start_time id="time-start-input" class="form-control" min="0" max="24" type="number"
+            <input name=start_time id="time-start-input" class="form-control" min="0" max="23" type="number"
                    required>
             <label class="form-label mt-4" for="time-start-input"><fmt:message key="teacher.schedule.end_time"
                                                                                bundle="${rb}"/>
                 &nbsp;<fmt:message key="teacher.schedule.hours"
                                    bundle="${rb}"/></label>
-            <input name="end_time" id="time-end-input" class="form-control" min="0" max="24" type="number"
+            <input name="end_time" id="time-end-input" class="form-control" min="0" max="23" type="number"
                    required>
             <button id="submit-btn" class="w-25 btn btn-success mt-4 mb-4" type="submit"><fmt:message
                     key="teacher.schedule.btn" bundle="${rb}"/></button>

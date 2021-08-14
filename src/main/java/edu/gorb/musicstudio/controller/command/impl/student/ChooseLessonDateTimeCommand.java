@@ -75,7 +75,9 @@ public class ChooseLessonDateTimeCommand implements Command {
                 freeTeacherSlots = freeTeacherSlots.stream().filter(s -> s.isAfter(LocalTime.now())).collect(Collectors.toList());
             }
             if (!freeTeacherSlots.contains(time)) {
-                return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
+                session.setAttribute(SessionAttribute.IS_SUBSCRIPTION_TIME_ERROR, true);
+                return new CommandResult(PagePath.CHOOSE_LESSON_TIMEDATE_PAGE_REDIRECT+subscriptionId,
+                        CommandResult.RoutingType.REDIRECT);
             }
 
             boolean isTimeFree = lessonScheduleService.findActiveFutureSchedulesByStudentId(student.getId()).stream()

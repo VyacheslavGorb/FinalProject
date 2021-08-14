@@ -27,7 +27,7 @@ public class TeacherScheduleDaoImpl implements TeacherScheduleDao {
                     "SET day_of_week    =?,\n" +
                     "    interval_start =?,\n" +
                     "    interval_end   =?\n" +
-                    "WHERE id_teacher = ?";
+                    "WHERE id_teacher = ? and day_of_week = ?";
 
     private static final String INSERT_SCHEDULE =
             "INSERT INTO teacher_schedules (id_teacher, day_of_week, interval_start, interval_end) VALUE (?, ?, ?, ?)";
@@ -60,7 +60,8 @@ public class TeacherScheduleDaoImpl implements TeacherScheduleDao {
                 teacherSchedule.getDayOfWeek(),
                 teacherSchedule.getStartTime(),
                 teacherSchedule.getEndTime(),
-                teacherSchedule.getTeacherId());
+                teacherSchedule.getTeacherId(),
+                teacherSchedule.getDayOfWeek());
     }
 
     @Override

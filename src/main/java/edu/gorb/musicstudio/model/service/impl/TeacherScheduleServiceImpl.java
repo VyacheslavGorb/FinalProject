@@ -58,7 +58,6 @@ public class TeacherScheduleServiceImpl implements TeacherScheduleService {
                     teacherId, e.getMessage());
             throw new ServiceException("Error while altering teacher schedule teacher id=" + teacherId, e);
         }
-
         return true;
     }
 

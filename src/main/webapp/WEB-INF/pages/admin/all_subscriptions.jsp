@@ -54,7 +54,7 @@
 
     <c:if test="${requestScope.waiting_for_approve_subscriptions.size() != 0}">
         <div class="d-flex mt-5 align-items-center flex-column mt-4">
-            <h1 class="display-4 fs-2"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
+            <h1 class="display-4 fs-2"><fmt:message key="subscription.request" bundle="${rb}"/></h1>
         </div>
         <table class="table mb-5 w-100 mt-4">
             <thead>
@@ -98,7 +98,7 @@
 
     <c:if test="${requestScope.active_subscriptions.size() != 0}">
         <div class="d-flex mt-5 align-items-center flex-column mt-4">
-            <h1 class="display-4 fs-2"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></h1>
+            <h1 class="display-4 fs-2"><fmt:message key="subscription.subscriptions" bundle="${rb}"/></h1>
         </div>
         <table class="table mb-5 w-100 mt-4">
             <thead>

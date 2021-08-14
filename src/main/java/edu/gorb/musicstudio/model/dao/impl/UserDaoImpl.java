@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
             "       user_status\n" +
             "FROM users\n" +
             "         JOIN user_statuses us on us.id_user_status = users.id_user_status\n" +
-            "         JOIN user_roles ur on ur.id_user_role = users.id_user_role";
+            "         JOIN user_roles ur on ur.id_user_role = users.id_user_role ORDER BY name";
 
     private static final String SELECT_ALL_ACTIVE_TEACHERS =
             "SELECT id_user,\n" +
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
                     "       user_status\n" +
                     "FROM users\n" +
                     "         JOIN user_statuses us on us.id_user_status = users.id_user_status\n" +
-                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role WHERE user_role='TEACHER' and user_status='ACTIVE'";
+                    "         JOIN user_roles ur on ur.id_user_role = users.id_user_role WHERE user_role='TEACHER' and user_status='ACTIVE' ORDER BY name";
 
     private static final String SELECT_USER_BY_ID = "SELECT id_user,\n" +
             "       login,\n" +
@@ -122,7 +122,7 @@ public class UserDaoImpl implements UserDao {
                     "FROM users\n" +
                     "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
                     "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
-                    "WHERE user_role = 'TEACHER' and user_status = 'ACTIVE'\n" +
+                    "WHERE user_role = 'TEACHER' and user_status = 'ACTIVE' ORDER BY name\n" +
                     "LIMIT ?, ?";
 
     private static final String SELECT_ACTIVE_TEACHERS_FOR_PAGE_WITH_SEARCH =
@@ -139,7 +139,7 @@ public class UserDaoImpl implements UserDao {
                     "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
                     "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
                     "WHERE user_role = 'TEACHER' and user_status = 'ACTIVE'\n" +
-                    "  and CONCAT(name, ' ', surname, ' ', patronymic) LIKE CONCAT('%', ?, '%')\n" +
+                    "  and CONCAT(name, ' ', surname, ' ', patronymic) LIKE CONCAT('%', ?, '%') ORDER BY name\n" +
                     "LIMIT ?, ?";
 
     private static final String COUNT_ACTIVE_TEACHERS =
@@ -169,8 +169,8 @@ public class UserDaoImpl implements UserDao {
                     "         JOIN user_roles ur on ur.id_user_role = users.id_user_role\n" +
                     "         JOIN user_statuses us on users.id_user_status = us.id_user_status\n" +
                     "         JOIN teacher_descriptions_has_courses on id_teacher = id_user\n" +
-                    "WHERE user_status = 'ACTIVE'\n" +
-                    "  and id_course = ?";
+                    "WHERE user_status = 'ACTIVE' \n" +
+                    "  and id_course = ? ORDER BY name";
 
     private static final int FIRST_COLUMN_INDEX = 1;
 

@@ -20,7 +20,7 @@ public class FormValidator {
 
     private static final String DAY_OF_WEEK_REGEX = "[1-7]";
     private static final int MIN_VALID_HOUR = 0;
-    private static final int MAX_VALID_HOUR = 24;
+    private static final int MAX_VALID_HOUR = 23;
 
     private static final int MAX_COURSE_NAME_LENGTH = 40;
     private static final int MAX_PRICE_VALUE = 9999;

@@ -22,6 +22,7 @@ public final class BundleKey {
     public static final String TEACHER_HAS_LESSONS = "error.teacher_has_lessons";
     public static final String TEACHER_HAS_COURSES = "error.teacher_has_courses";
     public static final String STUDENT_HAS_SUBSCRIPTIONS = "error.student_has_subscriptions";
+    public static final String CANT_DEACTIVATE_YOURSELF = "error.cant_deactivate_yourself";
 
     private BundleKey() {
     }

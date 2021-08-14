@@ -34,13 +34,13 @@
     </li>
 </ul>
 
-<c:if test="${requestScope.subscriptions_schedule_map.size() == 0}">
-    <div class="min-vh-100 d-flex align-items-center justify-content-center">
-        <p class="display-3"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></p>
-    </div>
-</c:if>
 
 <div class="min-vh-100">
+    <c:if test="${requestScope.subscriptions_schedule_map.size() == 0}">
+        <div class="d-flex align-items-center justify-content-center">
+            <p class="display-1"><fmt:message key="student.subscriptions.no_found" bundle="${rb}"/></p>
+        </div>
+    </c:if>
     <c:forEach items="${requestScope.subscriptions_schedule_map}" var="entry">
         <div class="d-flex justify-content-center flex-column align-items-center card m-5 bg-light">
             <div class="d-flex w-100 mt-4 flex-column justify-content-between align-items-center">
@@ -100,7 +100,8 @@
                     <p class="mt-0 mb-0 fs-4">
                         <fmt:message key="subscription.select_lessons" bundle="${rb}"/>: ${entry.key.lessonCount}
                     </p>
-                    <a href="${pageContext.request.contextPath}/controller?command=choose_lesson_datetime_page&subscription_id=${entry.key.subscriptionId}" class="btn btn-success fs-5"><fmt:message key="subscription.add_lesson" bundle="${rb}"/></a>
+                    <a href="${pageContext.request.contextPath}/controller?command=choose_lesson_datetime_page&subscription_id=${entry.key.subscriptionId}"
+                       class="btn btn-success fs-5"><fmt:message key="subscription.add_lesson" bundle="${rb}"/></a>
                 </div>
             </c:if>
 
