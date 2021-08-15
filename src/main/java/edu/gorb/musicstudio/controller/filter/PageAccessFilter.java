@@ -29,7 +29,7 @@ public class PageAccessFilter implements Filter {
     private EnumSet<CommandType> teacherWithoutDescriptionOnlyAvailableCommands;
 
     /**
-     * Initializes command for each role
+     * Initializes commands for each role
      *
      * @param filterConfig Not used
      */
@@ -49,23 +49,20 @@ public class PageAccessFilter implements Filter {
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE));
 
         availableCommands.put(UserRole.STUDENT,
-                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
-                        GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
+                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE,
                         COURSES, COURSE_PAGE, POST_COMMENT, TEACHERS, TEACHER_PAGE,
                         SUBSCRIPTION_PAGE, SEND_SUBSCRIPTION_REQUEST, PERSONAL_SUBSCRIPTIONS,
                         CHOOSE_LESSON_DATETIME_PAGE, CHOOSE_LESSON_DATETIME, STUDENT_LESSON_SCHEDULE,
                         STUDENT_CANCEL_LESSON));
 
         availableCommands.put(UserRole.TEACHER,
-                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
-                        GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
+                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE,
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, TEACHER_INIT, TEACHER_LESSON_SCHEDULE,
                         SEND_TEACHER_INIT_DESCRIPTION, TEACHER_SCHEDULE, ALTER_TEACHER_SCHEDULE, TEACHER_PERSONAL_INFO,
                         UPDATE_TEACHER_DESCRIPTION));
 
         availableCommands.put(UserRole.ADMIN,
-                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE, CONFIRM_EMAIL,
-                        GO_TO_SEND_EMAIL_AGAIN_PAGE, SEND_EMAIL_AGAIN,
+                List.of(CHANGE_LANGUAGE, LOGOUT, DEFAULT, HOME_PAGE,
                         COURSES, COURSE_PAGE, TEACHERS, TEACHER_PAGE, MANAGE_USERS_PAGE, ACTIVATE_USER, DEACTIVATE_USER,
                         ALL_LESSONS_PAGE, ADMIN_CANCEL_LESSON, ALL_SUBSCRIPTIONS_PAGE, ADMIN_APPROVE_SUBSCRIPTION,
                         ADMIN_CANCEL_SUBSCRIPTION, ALL_COURSES_PAGE, ADD_COURSE_PAGE, ADD_COURSE, ACTIVATE_COURSE,
