@@ -4,7 +4,7 @@ import edu.gorb.musicstudio.entity.UserToken;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.model.dao.JdbcHelper;
 import edu.gorb.musicstudio.model.dao.UserTokenDao;
-import edu.gorb.musicstudio.model.dao.mapper.impl.UserTokenRowMapper;
+import edu.gorb.musicstudio.model.dao.mapper.impl.UserTokenRowMapperImpl;
 import edu.gorb.musicstudio.model.pool.ConnectionPool;
 
 import java.sql.Timestamp;
@@ -26,7 +26,7 @@ public class UserTokenDaoImpl implements UserTokenDao {
     private final JdbcHelper<UserToken> jdbcHelper;
 
     public UserTokenDaoImpl() {
-        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new UserTokenRowMapper());
+        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new UserTokenRowMapperImpl());
     }
 
     @Override

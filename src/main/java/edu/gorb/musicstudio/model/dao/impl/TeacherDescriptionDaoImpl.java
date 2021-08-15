@@ -4,7 +4,7 @@ import edu.gorb.musicstudio.entity.TeacherDescription;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.model.dao.JdbcHelper;
 import edu.gorb.musicstudio.model.dao.TeacherDescriptionDao;
-import edu.gorb.musicstudio.model.dao.mapper.impl.TeacherDescriptionRowMapper;
+import edu.gorb.musicstudio.model.dao.mapper.impl.TeacherDescriptionRowMapperImpl;
 import edu.gorb.musicstudio.model.pool.ConnectionPool;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class TeacherDescriptionDaoImpl implements TeacherDescriptionDao {
     private final JdbcHelper<TeacherDescription> jdbcHelper;
 
     public TeacherDescriptionDaoImpl() {
-        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new TeacherDescriptionRowMapper());
+        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new TeacherDescriptionRowMapperImpl());
     }
 
     @Override

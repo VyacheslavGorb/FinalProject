@@ -18,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Filter checks if session is valid
+ */
 public class SessionValidationFilter implements Filter {
     Logger logger = LogManager.getLogger();
 
@@ -40,7 +43,7 @@ public class SessionValidationFilter implements Filter {
                 return;
             }
 
-            if (optionalUser.isEmpty() || optionalUser.get().getStatus() == UserStatus.INACTIVE){
+            if (optionalUser.isEmpty() || optionalUser.get().getStatus() == UserStatus.INACTIVE) {
                 session.invalidate();
                 httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + PagePath.HOME_PAGE_REDIRECT);
                 return;

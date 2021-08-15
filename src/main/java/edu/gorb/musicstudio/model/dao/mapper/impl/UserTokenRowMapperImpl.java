@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public class UserTokenRowMapper implements RowMapper<UserToken> {
+public class UserTokenRowMapperImpl implements RowMapper<UserToken> {
     @Override
     public UserToken mapRow(ResultSet resultSet) throws SQLException {
         long userId = resultSet.getLong(ColumnName.TOKEN_USER_ID);

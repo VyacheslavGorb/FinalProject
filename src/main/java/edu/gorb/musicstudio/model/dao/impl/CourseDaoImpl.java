@@ -5,7 +5,7 @@ import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.DatabaseConnectionException;
 import edu.gorb.musicstudio.model.dao.CourseDao;
 import edu.gorb.musicstudio.model.dao.JdbcHelper;
-import edu.gorb.musicstudio.model.dao.mapper.impl.CourseRowMapper;
+import edu.gorb.musicstudio.model.dao.mapper.impl.CourseRowMapperImpl;
 import edu.gorb.musicstudio.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -75,7 +75,7 @@ public class CourseDaoImpl implements CourseDao {
     private final JdbcHelper<Course> jdbcHelper;
 
     public CourseDaoImpl() {
-        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new CourseRowMapper());
+        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new CourseRowMapperImpl());
     }
 
     @Override

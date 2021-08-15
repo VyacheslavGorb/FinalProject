@@ -14,7 +14,7 @@ public class DateUtil {
      * @param end end date
      * @return list of {@link LocalDate} representing range
      */
-    public static List<LocalDate> generateDateRage(LocalDate start, LocalDate end){
+    public static List<LocalDate> generateDateRange(LocalDate start, LocalDate end){
         List<LocalDate> dates = new ArrayList<>();
         LocalDate date = start;
         while (!date.isAfter(end)) {

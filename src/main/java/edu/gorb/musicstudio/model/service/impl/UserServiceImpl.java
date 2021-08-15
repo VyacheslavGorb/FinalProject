@@ -353,7 +353,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<LocalDate> findAllAvailableDatesForTeachersForPeriod(List<User> teachers, LocalDate startDate, LocalDate endDate)
             throws ServiceException {
-        List<LocalDate> allSubscriptionAvailableDates = DateUtil.generateDateRage(startDate, endDate);
+        List<LocalDate> allSubscriptionAvailableDates = DateUtil.generateDateRange(startDate, endDate);
         List<LocalDate> courseAvailableDates = new ArrayList<>();
         LocalTime minimalTodayAvailableTime = LocalTime.now().plusHours(ENROLLMENT_DELAY_HOURS);
         LocalDate dateNow = LocalDate.now();

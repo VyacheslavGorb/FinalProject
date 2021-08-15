@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CourseRowMapper implements RowMapper<Course> {
+public class CourseRowMapperImpl implements RowMapper<Course> {
 
     @Override
     public Course mapRow(ResultSet resultSet) throws SQLException {

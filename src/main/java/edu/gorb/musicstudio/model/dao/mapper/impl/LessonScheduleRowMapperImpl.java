@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class LessonScheduleRowMapper implements RowMapper<LessonSchedule> {
+public class LessonScheduleRowMapperImpl implements RowMapper<LessonSchedule> {
     @Override
     public LessonSchedule mapRow(ResultSet resultSet) throws SQLException {
         long scheduleId = resultSet.getLong(ColumnName.LESSON_ID);

@@ -7,7 +7,7 @@ import edu.gorb.musicstudio.model.dao.mapper.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TeacherDescriptionRowMapper implements RowMapper<TeacherDescription> {
+public class TeacherDescriptionRowMapperImpl implements RowMapper<TeacherDescription> {
 
     @Override
     public TeacherDescription mapRow(ResultSet resultSet) throws SQLException {

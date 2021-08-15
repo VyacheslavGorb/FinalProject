@@ -4,7 +4,7 @@ import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.model.dao.JdbcHelper;
 import edu.gorb.musicstudio.model.dao.LessonScheduleDao;
-import edu.gorb.musicstudio.model.dao.mapper.impl.LessonScheduleRowMapper;
+import edu.gorb.musicstudio.model.dao.mapper.impl.LessonScheduleRowMapperImpl;
 import edu.gorb.musicstudio.model.pool.ConnectionPool;
 
 import java.time.LocalDate;
@@ -80,7 +80,7 @@ public class LessonScheduleDaoImpl implements LessonScheduleDao {
     private final JdbcHelper<LessonSchedule> jdbcHelper;
 
     public LessonScheduleDaoImpl() {
-        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new LessonScheduleRowMapper());
+        jdbcHelper = new JdbcHelper<>(ConnectionPool.getInstance(), new LessonScheduleRowMapperImpl());
     }
 
     @Override
