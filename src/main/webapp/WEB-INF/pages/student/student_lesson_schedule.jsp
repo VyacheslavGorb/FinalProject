@@ -75,7 +75,8 @@
                             <form method="post" action="${pageContext.request.contextPath}/controller">
                                 <input type="hidden" name="command" value="student_cancel_lesson">
                                 <input type="hidden" name="lesson_id" value="${lessonSchedule.scheduleId}">
-                                <button type="submit" class="btn btn-outline-danger"><fmt:message key="lesson.cancel" bundle="${rb}"/></button>
+                                <button type="submit" class="btn btn-outline-danger"><fmt:message key="lesson.cancel"
+                                                                                                  bundle="${rb}"/></button>
                             </form>
                         </c:if>
                     </td>

@@ -18,7 +18,6 @@ public class PostCommentCommand implements Command {
         String content = request.getParameter(RequestParameter.CONTENT);
         String courseIdParameter = request.getParameter(RequestParameter.COURSE_ID);
 
-
         if (!IntegerNumberValidator.isNonNegativeIntegerNumber(courseIdParameter) || content == null) {
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.INVALID_REQUEST);
             return new CommandResult(PagePath.ERROR_PAGE, CommandResult.RoutingType.REDIRECT);
@@ -29,7 +28,6 @@ public class PostCommentCommand implements Command {
 
         CommentService commentService = ServiceProvider.getInstance().getCommentService();
         CourseService courseService = ServiceProvider.getInstance().getCourseService();
-
         try {
             if (courseService.findCourseById(courseId).isEmpty()) {
                 session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.INVALID_REQUEST);

@@ -22,7 +22,7 @@ public class ChangeCoursePageCommand implements Command {
         Course course;
         try {
             Optional<Course> optionalCourse = courseService.findCourseById(courseId);
-            if(optionalCourse.isEmpty()){
+            if (optionalCourse.isEmpty()) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
             course = optionalCourse.get();

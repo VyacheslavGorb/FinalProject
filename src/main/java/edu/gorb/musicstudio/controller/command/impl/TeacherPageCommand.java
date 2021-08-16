@@ -15,24 +15,24 @@ public class TeacherPageCommand implements Command {
     public CommandResult execute(HttpServletRequest request) {
         String teacherIdParameter = request.getParameter(RequestParameter.TEACHER_ID);
 
-        if(!IntegerNumberValidator.isNonNegativeIntegerNumber(teacherIdParameter)){
+        if (!IntegerNumberValidator.isNonNegativeIntegerNumber(teacherIdParameter)) {
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         long teacherId = Long.parseLong((teacherIdParameter));
 
         UserService userService = ServiceProvider.getInstance().getUserService();
         Optional<Teacher> optionalTeacher;
-        try{
+        try {
             optionalTeacher = userService.findTeacherById(teacherId);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
-        if(optionalTeacher.isEmpty()){
+        if (optionalTeacher.isEmpty()) {
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         Teacher teacher = optionalTeacher.get();
 
-        if(!teacher.isDescriptionProvided()){
+        if (!teacher.isDescriptionProvided()) {
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 

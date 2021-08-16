@@ -9,8 +9,8 @@ submitBtn.addEventListener("click", (event) => {
     console.log(startTime.value);
     console.log(endTime.value);
     let startHour = parseInt(startTime.value);
-    let endHour=parseInt(endTime.value);
-    if(startHour >= endHour){
+    let endHour = parseInt(endTime.value);
+    if (startHour >= endHour) {
         event.preventDefault();
         errorMessage.style.display = "flex";
     }

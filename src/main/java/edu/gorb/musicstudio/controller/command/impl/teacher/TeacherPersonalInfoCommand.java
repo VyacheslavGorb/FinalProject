@@ -20,15 +20,15 @@ public class TeacherPersonalInfoCommand implements Command {
 
         UserService userService = ServiceProvider.getInstance().getUserService();
         Optional<Teacher> optionalTeacher;
-        try{
+        try {
             optionalTeacher = userService.findTeacherById(user.getId());
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 
         Teacher teacher = optionalTeacher.get(); //Description presence is checked in filter
 
-        if(!teacher.isDescriptionProvided()){
+        if (!teacher.isDescriptionProvided()) {
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 

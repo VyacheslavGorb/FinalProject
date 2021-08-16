@@ -19,7 +19,7 @@ public class AllCoursesPageCommand implements Command {
         List<Course> allCourses;
         try {
             allCourses = courseService.findAllCourses();
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         request.setAttribute(RequestAttribute.COURSES, allCourses);

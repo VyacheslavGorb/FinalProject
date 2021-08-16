@@ -29,10 +29,11 @@ public class Controller extends HttpServlet {
 
     /**
      * Executes command from request parameter and forwards request or sends redirect
-     * @param req http request
+     *
+     * @param req  http request
      * @param resp http response
      * @throws ServletException is thrown when forward exception occurs
-     * @throws IOException is thrown when send redirect exception occurs
+     * @throws IOException      is thrown when send redirect exception occurs
      */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandString = req.getParameter(RequestParameter.COMMAND);

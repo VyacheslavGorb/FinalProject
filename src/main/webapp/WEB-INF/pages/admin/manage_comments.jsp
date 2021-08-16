@@ -56,7 +56,8 @@
                             <input type="hidden" name="command" value="remove_comment">
                             <input type="hidden" name="course_id" value="${requestScope.course}">
                             <input type="hidden" name="comment_id" value="${comment.commentId}">
-                            <button type="submit" class="btn btn-outline-danger"><fmt:message key="comment.remove_comment" bundle="${rb}"/></button>
+                            <button type="submit" class="btn btn-outline-danger"><fmt:message
+                                    key="comment.remove_comment" bundle="${rb}"/></button>
                         </form>
                     </td>
                 </tr>
@@ -64,7 +65,8 @@
             </tbody>
         </table>
     </c:if>
-    <a class="btn btn-success mt-5" href="${pageContext.request.contextPath}/controller?command=all_courses_page"><fmt:message
+    <a class="btn btn-success mt-5"
+       href="${pageContext.request.contextPath}/controller?command=all_courses_page"><fmt:message
             key="course.go_to_page" bundle="${rb}"/></a>
 </div>
 

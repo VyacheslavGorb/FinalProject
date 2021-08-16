@@ -25,8 +25,8 @@
     <div class="d-flex justify-content-center align-items-center flex-column vh-100">
         <h1 class="display-1"><fmt:message key="courses.not_found" bundle="${rb}"/></h1>
         <a class="mt-4 first-page-link fs-3"
-           href="${pageContext.request.contextPath}/controller?command=courses&page=1">
-            <fmt:message key="courses.go_to_first_page" bundle="${rb}"/></a>
+           href="${pageContext.request.contextPath}/controller?command=home_page">
+            <fmt:message key="error.return_to_home" bundle="${rb}"/></a>
     </div>
 </c:if>
 

@@ -25,7 +25,7 @@ public class ActivateUserCommand implements Command {
         try {
             long userId = Long.parseLong(userIdParameter);
             Optional<User> optionalUser = userService.findUserById(userId);
-            if(optionalUser.isEmpty()){
+            if (optionalUser.isEmpty()) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
             userService.updateUserStatus(userId, UserStatus.ACTIVE);

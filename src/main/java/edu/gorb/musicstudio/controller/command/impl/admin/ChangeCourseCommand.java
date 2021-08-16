@@ -30,7 +30,7 @@ public class ChangeCourseCommand implements Command {
                     .filter(part -> part.getName().equals(RequestParameter.IMAGE) && part.getSize() > 0)
                     .collect(Collectors.toList());
 
-            if(!IntegerNumberValidator.isNonNegativeIntegerNumber(courseIdParameter)){
+            if (!IntegerNumberValidator.isNonNegativeIntegerNumber(courseIdParameter)) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
 

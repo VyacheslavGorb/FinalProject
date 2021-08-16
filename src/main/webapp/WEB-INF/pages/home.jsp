@@ -33,7 +33,9 @@
             <div class="carousel-caption d-none d-md-block">
                 <h5 class="fs-1 mb-4"><fmt:message key="slide.first.label" bundle="${ rb }"/></h5>
                 <p class="fs-5"><fmt:message key="slide.first.content" bundle="${ rb }"/></p>
-                <a class="btn btn-success w-50" href="${pageContext.request.contextPath}/static_pages/aboutus.jsp"><fmt:message key="header.aboutus" bundle="${rb}"/></a>
+                <a class="btn btn-success w-50"
+                   href="${pageContext.request.contextPath}/static_pages/aboutus.jsp"><fmt:message key="header.aboutus"
+                                                                                                   bundle="${rb}"/></a>
             </div>
         </div>
 

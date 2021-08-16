@@ -27,7 +27,7 @@ public class SendSubscriptionRequestCommand implements Command {
         long courseId = Long.parseLong(courseIdParameter);
 
         HttpSession session = request.getSession();
-        if(!IntegerNumberValidator.isNonNegativeIntegerNumber(lessonCountParameter)){
+        if (!IntegerNumberValidator.isNonNegativeIntegerNumber(lessonCountParameter)) {
             session.setAttribute(SessionAttribute.IS_SUBSCRIPTION_ERROR, true);
             return new CommandResult(PagePath.SUBSCRIPTION_PAGE_REDIRECT + courseId,
                     CommandResult.RoutingType.REDIRECT);

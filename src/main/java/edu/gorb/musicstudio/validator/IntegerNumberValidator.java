@@ -8,11 +8,12 @@ public class IntegerNumberValidator {
 
     /**
      * Validates if <code>line</code> is integer non-negative number representation
+     *
      * @param line line to be validated
      * @return if <code>line</code> is integer non-negative number representation
      */
     public static boolean isNonNegativeIntegerNumber(String line) {
-        if(line == null || !line.matches(NUMBER_REGEX)){
+        if (line == null || !line.matches(NUMBER_REGEX)) {
             return false;
         }
         long number;
@@ -21,6 +22,6 @@ public class IntegerNumberValidator {
         } catch (NumberFormatException e) {
             return false;
         }
-        return number >= 0 ;
+        return number >= 0;
     }
 }

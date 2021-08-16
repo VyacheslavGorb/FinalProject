@@ -1,11 +1,11 @@
 package edu.gorb.musicstudio.controller.command.impl.student;
 
 import edu.gorb.musicstudio.controller.command.*;
-import edu.gorb.musicstudio.entity.dto.LessonScheduleDto;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.entity.User;
 import edu.gorb.musicstudio.entity.UserRole;
+import edu.gorb.musicstudio.entity.dto.LessonScheduleDto;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.LessonScheduleService;
 import edu.gorb.musicstudio.model.service.ServiceProvider;
@@ -47,7 +47,8 @@ public class ChooseLessonDateTimeCommand implements Command {
         HttpSession session = request.getSession();
         User student = (User) session.getAttribute(SessionAttribute.USER);
         try {
-            Optional<Subscription> optionalSubscription = subscriptionService.findContinuingActiveSubscriptionById(subscriptionId);
+            Optional<Subscription> optionalSubscription =
+                    subscriptionService.findContinuingActiveSubscriptionById(subscriptionId);
             if (optionalSubscription.isEmpty()) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
@@ -71,29 +72,32 @@ public class ChooseLessonDateTimeCommand implements Command {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
             List<LocalTime> freeTeacherSlots = userService.findTeacherFreeSlotsForDate(teacherId, date);
-            if(date.isEqual(LocalDate.now())){
-                freeTeacherSlots = freeTeacherSlots.stream().filter(s -> s.isAfter(LocalTime.now())).collect(Collectors.toList());
+            if (date.isEqual(LocalDate.now())) {
+                freeTeacherSlots = freeTeacherSlots.stream()
+                        .filter(s -> s.isAfter(LocalTime.now()))
+                        .collect(Collectors.toList());
             }
             if (!freeTeacherSlots.contains(time)) {
                 session.setAttribute(SessionAttribute.IS_SUBSCRIPTION_TIME_ERROR, true);
-                return new CommandResult(PagePath.CHOOSE_LESSON_TIMEDATE_PAGE_REDIRECT+subscriptionId,
+                return new CommandResult(PagePath.CHOOSE_LESSON_TIMEDATE_PAGE_REDIRECT + subscriptionId,
                         CommandResult.RoutingType.REDIRECT);
             }
 
             boolean isTimeFree = lessonScheduleService.findActiveFutureSchedulesByStudentId(student.getId()).stream()
-                    .filter(l -> l.getStartDateTime().isEqual(LocalDateTime.of(date,time))).findAny().isEmpty();
+                    .filter(l -> l.getStartDateTime().isEqual(LocalDateTime.of(date, time))).findAny().isEmpty();
 
-            if(!isTimeFree){
+            if (!isTimeFree) {
                 session.setAttribute(SessionAttribute.IS_SUBSCRIPTION_TIME_ERROR, true);
-                return new CommandResult(PagePath.CHOOSE_LESSON_TIMEDATE_PAGE_REDIRECT+subscriptionId,
+                return new CommandResult(PagePath.CHOOSE_LESSON_TIMEDATE_PAGE_REDIRECT + subscriptionId,
                         CommandResult.RoutingType.REDIRECT);
             }
 
             lessonScheduleService.saveNewLessonSchedule(student.getId(), teacherId, subscription.getCourseId(),
                     subscriptionId, LocalDateTime.of(date, time), LessonSchedule.LessonStatus.NORMAL);
 
-            List<LessonScheduleDto> lessonSchedules = lessonScheduleService.findLessonSchedulesBySubscriptionId(subscriptionId);
-            if(lessonSchedules.size() == subscription.getLessonCount()){
+            List<LessonScheduleDto> lessonSchedules =
+                    lessonScheduleService.findLessonSchedulesBySubscriptionId(subscriptionId);
+            if (lessonSchedules.size() == subscription.getLessonCount()) {
                 subscriptionService.updateStatus(subscriptionId, Subscription.SubscriptionStatus.ACTIVATED);
             }
 

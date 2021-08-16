@@ -13,7 +13,8 @@
 
 .card-img-top {
     object-fit: cover;
-    height: 40vh; !important;
+    height: 40vh;
+!important;
 }
 
 .card {
@@ -23,20 +24,20 @@
 }
 
 
-.img-fluid{
+.img-fluid {
     object-fit: contain;
     max-height: 40vh;
 }
 
-.page-item{
+.page-item {
     margin-top: 1rem;
 }
 
-.page-link{
+.page-link {
     color: #198754;
 }
 
-.form-select{
+.form-select {
     width: 30vh;
 }
 
@@ -45,6 +46,6 @@
     border-color: #198754;
 }
 
-.first-page-link{
+.first-page-link {
     color: #198754;
 }

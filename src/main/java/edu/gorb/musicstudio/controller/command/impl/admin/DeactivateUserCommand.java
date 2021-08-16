@@ -1,9 +1,12 @@
 package edu.gorb.musicstudio.controller.command.impl.admin;
 
 import edu.gorb.musicstudio.controller.command.*;
+import edu.gorb.musicstudio.entity.Course;
+import edu.gorb.musicstudio.entity.User;
+import edu.gorb.musicstudio.entity.UserRole;
+import edu.gorb.musicstudio.entity.UserStatus;
 import edu.gorb.musicstudio.entity.dto.LessonScheduleDto;
 import edu.gorb.musicstudio.entity.dto.SubscriptionDto;
-import edu.gorb.musicstudio.entity.*;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.*;
 import edu.gorb.musicstudio.validator.IntegerNumberValidator;
@@ -24,7 +27,7 @@ public class DeactivateUserCommand implements Command {
         LessonScheduleService lessonScheduleService = ServiceProvider.getInstance().getLessonScheduleService();
         CourseService courseService = ServiceProvider.getInstance().getCourseService();
         SubscriptionService subscriptionService = ServiceProvider.getInstance().getScheduleService();
-            HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         User currentAdminUser = (User) session.getAttribute(SessionAttribute.USER);
         try {
             long userId = Long.parseLong(userIdParameter);
@@ -36,7 +39,7 @@ public class DeactivateUserCommand implements Command {
             User user = optionalUser.get();
 
             if (user.getRole() == UserRole.ADMIN) {
-                if(currentAdminUser.getId() == userId){
+                if (currentAdminUser.getId() == userId) {
                     session.setAttribute(SessionAttribute.IS_USER_MANAGE_ERROR, true);
                     session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.CANT_DEACTIVATE_YOURSELF);
                     return new CommandResult(PagePath.MANAGE_USERS_REDIRECT, CommandResult.RoutingType.REDIRECT);

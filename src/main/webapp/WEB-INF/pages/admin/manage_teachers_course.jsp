@@ -51,7 +51,8 @@
                             <input type="hidden" name="command" value="remove_teacher_from_course">
                             <input type="hidden" name="course_id" value="${requestScope.course.id}">
                             <input type="hidden" name="teacher_id" value="${teacher.id}">
-                            <button type="submit" class="btn btn-outline-danger"><fmt:message key="course.remove" bundle="${rb}"/></button>
+                            <button type="submit" class="btn btn-outline-danger"><fmt:message key="course.remove"
+                                                                                              bundle="${rb}"/></button>
                         </form>
                     </td>
                 </tr>
@@ -83,7 +84,8 @@
                             <input type="hidden" name="command" value="add_teacher_to_course">
                             <input type="hidden" name="course_id" value="${requestScope.course.id}">
                             <input type="hidden" name="teacher_id" value="${teacher.id}">
-                            <button type="submit" class="btn btn-outline-success"><fmt:message key="add" bundle="${rb}"/></button>
+                            <button type="submit" class="btn btn-outline-success"><fmt:message key="add"
+                                                                                               bundle="${rb}"/></button>
                         </form>
                     </td>
                 </tr>
@@ -91,7 +93,8 @@
             </tbody>
         </table>
     </c:if>
-    <a class="btn btn-success" href="${pageContext.request.contextPath}/controller?command=all_courses_page"><fmt:message
+    <a class="btn btn-success"
+       href="${pageContext.request.contextPath}/controller?command=all_courses_page"><fmt:message
             key="course.go_to_page" bundle="${rb}"/></a>
 </div>
 

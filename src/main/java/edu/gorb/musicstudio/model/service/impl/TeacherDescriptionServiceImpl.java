@@ -37,7 +37,7 @@ public class TeacherDescriptionServiceImpl implements TeacherDescriptionService 
             properties.load(classLoader.getResourceAsStream(PICTURE_PROPERTIES));
             basePicturePath = properties.getProperty(BASE_PATH_PROPERTY);
             teacherFolderPath = properties.getProperty(TEACHER_FOLDER_PROPERTY);
-            if(basePicturePath == null || teacherFolderPath == null){
+            if (basePicturePath == null || teacherFolderPath == null) {
                 basePicturePath = DEFAULT_BASE_PATH;
                 teacherFolderPath = DEFAULT_TEACHER_PATH;
             }

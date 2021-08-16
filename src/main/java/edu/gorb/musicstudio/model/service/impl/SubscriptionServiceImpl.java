@@ -1,10 +1,10 @@
 package edu.gorb.musicstudio.model.service.impl;
 
-import edu.gorb.musicstudio.entity.dto.SubscriptionDto;
 import edu.gorb.musicstudio.entity.Course;
 import edu.gorb.musicstudio.entity.LessonSchedule;
 import edu.gorb.musicstudio.entity.Subscription;
 import edu.gorb.musicstudio.entity.User;
+import edu.gorb.musicstudio.entity.dto.SubscriptionDto;
 import edu.gorb.musicstudio.exception.DaoException;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.dao.*;
@@ -153,7 +153,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
 
     private List<SubscriptionDto> createSubscriptionDtosFromSubscriptions(List<Subscription> subscriptions)
-            throws ServiceException{
+            throws ServiceException {
         UserDao userDao = DaoProvider.getInstance().getUserDao();
         CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
         List<SubscriptionDto> subscriptionDtos = new ArrayList<>();
@@ -168,7 +168,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                             + subscription.getId());
                 }
                 SubscriptionDto subscriptionDto =
-                        createSubscription(subscription,optionalStudent.get(), optionalCourse.get());
+                        createSubscription(subscription, optionalStudent.get(), optionalCourse.get());
                 subscriptionDtos.add(subscriptionDto);
             } catch (DaoException e) {
                 logger.log(Level.ERROR, "Error while searching for entity by id. {}", e.getMessage());
@@ -179,7 +179,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
 
-    private SubscriptionDto createSubscription(Subscription subscription, User student, Course course){
+    private SubscriptionDto createSubscription(Subscription subscription, User student, Course course) {
         return new SubscriptionDto.Builder()
                 .setSubscriptionId(subscription.getId())
                 .setCourseId(course.getId())

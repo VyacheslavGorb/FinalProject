@@ -1,8 +1,8 @@
 package edu.gorb.musicstudio.controller.command.impl;
 
 import edu.gorb.musicstudio.controller.command.*;
-import edu.gorb.musicstudio.entity.dto.CommentDto;
 import edu.gorb.musicstudio.entity.Course;
+import edu.gorb.musicstudio.entity.dto.CommentDto;
 import edu.gorb.musicstudio.exception.ServiceException;
 import edu.gorb.musicstudio.model.service.CommentService;
 import edu.gorb.musicstudio.model.service.CourseService;

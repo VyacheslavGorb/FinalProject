@@ -20,14 +20,14 @@
     color: rgba(255, 255, 255, 0.8);
 }
 
-#illegal-file-type{
+#illegal-file-type {
     display: none;
 }
 
-#illegal-datetime{
+#illegal-datetime {
     display: none;
 }
 
-#illegal-request{
+#illegal-request {
     display: none;
 }

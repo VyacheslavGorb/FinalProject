@@ -40,7 +40,7 @@
         </div>
 
         <a href="${pageContext.request.contextPath}/controller?command=home_page"
-           class="btn btn-outline-success w-25 mb-4 display-1 fs-4">На главную</a>
+           class="btn btn-outline-success w-25 mb-4 display-1 fs-4"><fmt:message key="header.home" bundle="${rb}"/></a>
     </div>
 </div>
 <jsp:include page="../WEB-INF/pages/parts/footer.jsp"/>

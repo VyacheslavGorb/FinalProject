@@ -63,7 +63,7 @@ public class SignUpCommand implements Command {
         try {
             if (!userService.isEmailAvailableForNewUser(email)) {
                 logger.log(Level.DEBUG, "Email already exists");
-                session.setAttribute(SessionAttribute.IS_SIGNUP_ERROR , true);
+                session.setAttribute(SessionAttribute.IS_SIGNUP_ERROR, true);
                 session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.SIGNUP_EMAIL_NOT_AVAILABLE);
                 return new CommandResult(PagePath.SIGN_UP_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }

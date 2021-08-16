@@ -174,8 +174,8 @@ public class UserServiceImpl implements UserService {
         try {
             Optional<User> user = userDao.findEntityById(userId);
             if (user.isEmpty()) {
-                logger.log(Level.ERROR, "User with not found, id={}", userId);
-                throw new ServiceException("User with not found, id=" + userId);
+                logger.log(Level.ERROR, "User not found, id={}", userId);
+                throw new ServiceException("User not found, id=" + userId);
             }
             UserStatus updatedStatus =
                     user.get().getRole() == UserRole.STUDENT ? UserStatus.ACTIVE : UserStatus.WAITING_FOR_APPROVEMENT;

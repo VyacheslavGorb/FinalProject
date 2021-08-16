@@ -18,13 +18,10 @@ import java.util.Optional;
 public class SendEmailAgainCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
-
     @Override
     public CommandResult execute(HttpServletRequest request) {
-
-        HttpSession session = request.getSession();
-
         String login = request.getParameter(RequestParameter.LOGIN);
+        HttpSession session = request.getSession();
         if (login == null) {
             session.setAttribute(SessionAttribute.IS_SEND_EMAIL_AGAIN_ERROR, true);
             session.setAttribute(SessionAttribute.ERROR_KEY, BundleKey.INVALID_REQUEST);
@@ -39,7 +36,6 @@ public class SendEmailAgainCommand implements Command {
         try {
             userOptional = userService.findUserByLogin(login);
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error while searching for user {}: {}", login, e.getMessage());
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
 

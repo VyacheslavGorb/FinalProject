@@ -25,8 +25,8 @@
     <div class="d-flex justify-content-center align-items-center flex-column vh-100">
         <h1 class="display-1"><fmt:message key="teachers.not_found" bundle="${rb}"/></h1>
         <a class="mt-4 first-page-link fs-3"
-           href="${pageContext.request.contextPath}/controller?command=teachers&page=1">
-            <fmt:message key="teachers.go_to_first_page" bundle="${rb}"/></a>
+           href="${pageContext.request.contextPath}/controller?command=home_page">
+            <fmt:message key="error.return_to_home" bundle="${rb}"/></a>
     </div>
 </c:if>
 
@@ -71,7 +71,7 @@
                     </c:if>
 
                     <c:if test="${teacher.descriptionProvided == false}">
-                        <div class="card mb-3" >
+                        <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <img src="pic/slide1.jpg" class="img-fluid rounded-start"

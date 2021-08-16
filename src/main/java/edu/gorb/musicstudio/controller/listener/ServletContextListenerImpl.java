@@ -8,6 +8,7 @@ import javax.servlet.ServletContextListener;
 public class ServletContextListenerImpl implements ServletContextListener {
     /**
      * Initializes {@link ConnectionPool}
+     *
      * @param sce servlet context initialization event
      */
     @Override
@@ -17,6 +18,7 @@ public class ServletContextListenerImpl implements ServletContextListener {
 
     /**
      * Destroys {@link ConnectionPool}
+     *
      * @param sce servlet context destroy event
      */
     @Override

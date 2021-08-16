@@ -1,16 +1,16 @@
-.course_page_image{
+.course_page_image {
     height: 50vh;
     object-fit: cover;
     border-radius: 10px;
 }
 
-.comment{
+.comment {
     border-radius: 20px;
     border: solid;
     border-color: #198754;
     border-width: 2px;
 }
 
-.comment-text{
+.comment-text {
     word-wrap: break-word;
 }

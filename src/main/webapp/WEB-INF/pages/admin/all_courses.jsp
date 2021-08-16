@@ -48,7 +48,8 @@
 
     <div class="d-flex align-items-center justify-content-between w-100 mt-4">
         <h1 class="display-4 fs-1"><fmt:message key="course.all.main" bundle="${rb}"/></h1>
-        <a href="${pageContext.request.contextPath}/controller?command=add_course_page" class="btn btn-success"><fmt:message key="course.add" bundle="${rb}"/></a>
+        <a href="${pageContext.request.contextPath}/controller?command=add_course_page"
+           class="btn btn-success"><fmt:message key="course.add" bundle="${rb}"/></a>
     </div>
 
     <c:if test="${requestScope.courses.size() == 0}">
@@ -105,7 +106,8 @@
                     </td>
                     <td>
                         <a class="btn btn-outline-success"
-                           href="${pageContext.request.contextPath}/controller?command=manage_comments&course_id=${course.id}"><fmt:message key="comment.comments" bundle="${rb}"/></a>
+                           href="${pageContext.request.contextPath}/controller?command=manage_comments&course_id=${course.id}"><fmt:message
+                                key="comment.comments" bundle="${rb}"/></a>
                     </td>
                 </tr>
             </c:forEach>

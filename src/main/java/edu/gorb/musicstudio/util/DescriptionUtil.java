@@ -9,6 +9,7 @@ public class DescriptionUtil {
 
     /**
      * Trims description for preview
+     *
      * @param description description to be trimmed
      * @return trimmed description
      */

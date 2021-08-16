@@ -127,7 +127,8 @@
                         <form method="post" action="${pageContext.request.contextPath}/controller">
                             <input type="hidden" name="command" value="admin_cancel_subscription">
                             <input type="hidden" name="subscription_id" value="${subscription.subscriptionId}">
-                            <button type="submit" class="btn btn-outline-danger"><fmt:message key="lesson.cancel" bundle="${rb}"/></button>
+                            <button type="submit" class="btn btn-outline-danger"><fmt:message key="lesson.cancel"
+                                                                                              bundle="${rb}"/></button>
                         </form>
                     </td>
                 </tr>

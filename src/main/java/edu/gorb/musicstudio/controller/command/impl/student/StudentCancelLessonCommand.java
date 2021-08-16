@@ -16,7 +16,7 @@ public class StudentCancelLessonCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
         String lessonIdParameter = request.getParameter(RequestParameter.LESSON_ID);
-        if(!IntegerNumberValidator.isNonNegativeIntegerNumber(lessonIdParameter)){
+        if (!IntegerNumberValidator.isNonNegativeIntegerNumber(lessonIdParameter)) {
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         long lessonId = Long.parseLong(lessonIdParameter);
@@ -25,9 +25,9 @@ public class StudentCancelLessonCommand implements Command {
         User student = (User) session.getAttribute(SessionAttribute.USER);
         LessonScheduleService scheduleService = ServiceProvider.getInstance().getLessonScheduleService();
         try {
-            Optional<LessonSchedule> scheduleOptional =  scheduleService.findEntityById(lessonId);
-            if(scheduleOptional.isEmpty() || scheduleOptional.get().getStudentId() != student.getId()
-            ||scheduleOptional.get().getStatus() == LessonSchedule.LessonStatus.CANCELLED){
+            Optional<LessonSchedule> scheduleOptional = scheduleService.findEntityById(lessonId);
+            if (scheduleOptional.isEmpty() || scheduleOptional.get().getStudentId() != student.getId()
+                    || scheduleOptional.get().getStatus() == LessonSchedule.LessonStatus.CANCELLED) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
             scheduleService.updateStatus(scheduleOptional.get().getId(), LessonSchedule.LessonStatus.CANCELLED);

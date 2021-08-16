@@ -8,8 +8,9 @@ public class PageValidator {
 
     /**
      * Validates if <code>pageParameter</code> is correct
+     *
      * @param pageParameter page parameter
-     * @param pageCount total page count
+     * @param pageCount     total page count
      * @return if <code>pageParameter</code> is correct
      */
     public static boolean isValidPageParameter(String pageParameter, int pageCount) {

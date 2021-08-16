@@ -1,6 +1,6 @@
 package edu.gorb.musicstudio.entity;
 
-public class TeacherDescription extends AbstractEntity{
+public class TeacherDescription extends AbstractEntity {
     private String description;
     private int experience;
     private String picturePath;

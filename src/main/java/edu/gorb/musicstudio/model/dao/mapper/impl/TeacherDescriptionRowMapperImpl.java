@@ -15,6 +15,6 @@ public class TeacherDescriptionRowMapperImpl implements RowMapper<TeacherDescrip
         String description = resultSet.getString(ColumnName.TEACHER_SELF_DESCRIPTION);
         int experience = resultSet.getInt(ColumnName.TEACHER_EXPERIENCE);
         String picturePath = resultSet.getString(ColumnName.TEACHER_PICTURE_PATH);
-        return new TeacherDescription(id,description,experience,picturePath);
+        return new TeacherDescription(id, description, experience, picturePath);
     }
 }

@@ -16,8 +16,9 @@
                 <a class="nav-link active" aria-current="page"
                    href="${pageContext.request.contextPath}/controller?command=home_page"><fmt:message key="header.home"
                                                                                                        bundle="${ rb }"/></a>
-                <a class="nav-link " aria-current="page" href="${pageContext.request.contextPath}/static_pages/aboutus.jsp"><fmt:message key="header.aboutus"
-                                                                               bundle="${ rb }"/></a>
+                <a class="nav-link " aria-current="page"
+                   href="${pageContext.request.contextPath}/static_pages/aboutus.jsp"><fmt:message key="header.aboutus"
+                                                                                                   bundle="${ rb }"/></a>
                 <a class="nav-link " aria-current="page"
                    href="${pageContext.request.contextPath}/controller?command=courses&page=1"><fmt:message
                         key="header.courses"
@@ -47,8 +48,10 @@
                             <fmt:message key="header.profile" bundle="${ rb }"/></a>
                     </c:when>
                     <c:when test="${sessionScope.user.role eq UserRole.ADMIN}">
-                        <a class="nav-link " aria-current="page" href="${pageContext.request.contextPath}/controller?command=all_lessons_page"><fmt:message key="header.profile"
-                                                                                       bundle="${ rb }"/></a>
+                        <a class="nav-link " aria-current="page"
+                           href="${pageContext.request.contextPath}/controller?command=all_lessons_page"><fmt:message
+                                key="header.profile"
+                                bundle="${ rb }"/></a>
                     </c:when>
                 </c:choose>
                 <c:if test="${sessionScope.user != null}">

@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public final class CommandResult {
 
-    private RoutingType routingType;
-    private String page;
+    private final RoutingType routingType;
+    private final String page;
 
     public CommandResult(String page, RoutingType routingType) {
         this.routingType = routingType;

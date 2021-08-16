@@ -13,7 +13,7 @@ public class EncodingFilter implements Filter {
     @Override
     public void init(FilterConfig fConfig) {
         encoding = fConfig.getInitParameter("encoding");
-        if(encoding == null){
+        if (encoding == null) {
             encoding = DEFAULT_ENCODING;
         }
     }

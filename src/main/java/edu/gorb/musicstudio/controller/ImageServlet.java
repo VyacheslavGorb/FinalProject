@@ -41,7 +41,8 @@ public class ImageServlet extends HttpServlet {
 
     /**
      * Uploads requested image
-     * @param req http request
+     *
+     * @param req  http request
      * @param resp http response
      * @throws IOException ist thrown when send redirect exception occurs
      */

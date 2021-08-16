@@ -98,6 +98,7 @@ public class ConnectionPool {
 
     /**
      * Returns instance of connection pool
+     *
      * @return instance of connection pool
      */
     public static ConnectionPool getInstance() {
@@ -111,6 +112,7 @@ public class ConnectionPool {
 
     /**
      * Acquires connection
+     *
      * @return database connection
      * @throws DatabaseConnectionException is thrown if thread is interrupted
      */
@@ -134,6 +136,7 @@ public class ConnectionPool {
 
     /**
      * Returns connection back to connection pool
+     *
      * @param connection connection to be returned
      * @return true if connection returned successfully
      */

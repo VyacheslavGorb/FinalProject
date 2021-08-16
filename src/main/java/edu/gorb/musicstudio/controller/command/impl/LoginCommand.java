@@ -63,11 +63,11 @@ public class LoginCommand implements Command {
                 return new CommandResult(PagePath.TEACHER_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
-            if(userRole == UserRole.STUDENT){
+            if (userRole == UserRole.STUDENT) {
                 return new CommandResult(PagePath.STUDENT_LESSON_SCHEDULE_PAGE_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 
-            if(userRole == UserRole.ADMIN){
+            if (userRole == UserRole.ADMIN) {
                 return new CommandResult(PagePath.ALL_LESSONS_REDIRECT, CommandResult.RoutingType.REDIRECT);
             }
 

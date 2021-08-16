@@ -13,6 +13,7 @@ public class HttpSessionListenerImpl implements HttpSessionListener {
 
     /**
      * Sets default session attributes when session is created
+     *
      * @param sessionEvent session creation event
      */
     @Override

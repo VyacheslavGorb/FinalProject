@@ -17,20 +17,20 @@ public class DeactivateCourseCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request) {
         String courseIdParameter = request.getParameter(RequestParameter.COURSE_ID);
-        if(!IntegerNumberValidator.isNonNegativeIntegerNumber(courseIdParameter)){
+        if (!IntegerNumberValidator.isNonNegativeIntegerNumber(courseIdParameter)) {
             return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         long courseId = Long.parseLong(courseIdParameter);
         CourseService courseService = ServiceProvider.getInstance().getCourseService();
         try {
             Optional<Course> courseOptional = courseService.findCourseById(courseId);
-            if(courseOptional.isEmpty()){
+            if (courseOptional.isEmpty()) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
             Course course = courseOptional.get();
             course.setActive(false);
             courseService.updateCourse(course);
-        }catch (ServiceException e){
+        } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }
         return new CommandResult(PagePath.ALL_COURSES_REDIRECT, CommandResult.RoutingType.REDIRECT);

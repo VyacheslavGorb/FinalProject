@@ -79,7 +79,7 @@ public class CommentServiceImpl implements CommentService {
             return commentDao.findEntityById(commentId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for comment by id={}. {}", commentId, e.getMessage());
-            throw new ServiceException("Error while searching for comment by id="+commentId, e);
+            throw new ServiceException("Error while searching for comment by id=" + commentId, e);
         }
     }
 
@@ -90,7 +90,7 @@ public class CommentServiceImpl implements CommentService {
             commentDao.deactivateComment(commentId);
         } catch (DaoException e) {
             logger.log(Level.ERROR, "Error while searching for comment by id={}. {}", commentId, e.getMessage());
-            throw new ServiceException("Error while searching for comment by id="+commentId, e);
+            throw new ServiceException("Error while searching for comment by id=" + commentId, e);
         }
     }
 }
