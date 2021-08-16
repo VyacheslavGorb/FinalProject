@@ -6,9 +6,7 @@
 
 .comment {
     border-radius: 20px;
-    border: solid;
-    border-color: #198754;
-    border-width: 2px;
+    border: 2px solid #198754;
 }
 
 .comment-text {

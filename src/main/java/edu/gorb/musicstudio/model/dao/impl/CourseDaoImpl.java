@@ -40,6 +40,11 @@ public class CourseDaoImpl implements CourseDao {
             "    is_active=?\n" +
             "WHERE id_course = ?";
 
+    private static final String UPDATE_COURSE_STATUS =
+            "UPDATE courses\n" +
+                    "SET is_active=?\n" +
+                    "WHERE id_course = ?";
+
     private static final String SELECT_COURSES_WITH_SEARCH_FOR_PAGE =
             "SELECT id_course, name, description, picture_path, price_per_hour, is_active\n" +
                     "FROM courses\n" +
@@ -164,5 +169,10 @@ public class CourseDaoImpl implements CourseDao {
     @Override
     public void removeTeacherFromCourse(long courseId, long teacherId) throws DaoException {
         jdbcHelper.executeUpdate(REMOVE_TEACHER_FROM_COURSE, teacherId, courseId);
+    }
+
+    @Override
+    public void updateStatus(long courseId, boolean isActive) throws DaoException {
+        jdbcHelper.executeUpdate(UPDATE_COURSE_STATUS, isActive, courseId);
     }
 }

@@ -88,7 +88,7 @@
                             <td><fmt:message key="user.role.${user.role}" bundle="${rb}"/></td>
                             <td><fmt:message key="user.status.${user.status}" bundle="${rb}"/></td>
                             <td>
-                                <c:if test="${user.status.name() == 'INACTIVE'}">
+                                <c:if test="${user.status.name() != 'ACTIVE'}">
                                     <form method="POST" action="${pageContext.request.contextPath}/controller">
                                         <input type="hidden" name="command" value="activate_user">
                                         <input type="hidden" name="user_id" value="${user.id}">
@@ -97,7 +97,7 @@
                                                 bundle="${rb}"/></button>
                                     </form>
                                 </c:if>
-                                <c:if test="${user.status.name() != 'INACTIVE'}">
+                                <c:if test="${user.status.name() == 'ACTIVE'}">
                                     <form method="POST" action="${pageContext.request.contextPath}/controller">
                                         <input type="hidden" name="command" value="deactivate_user">
                                         <input type="hidden" name="user_id" value="${user.id}">

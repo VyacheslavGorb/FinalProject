@@ -211,6 +211,17 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
+    @Override
+    public void updateStatus(long courseId, boolean isActive) throws ServiceException {
+        CourseDao courseDao = DaoProvider.getInstance().getCourseDao();
+        try {
+            courseDao.updateStatus(courseId, isActive);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error while changing course status id={}. {}", courseId, e.getMessage());
+            throw new ServiceException("Error while changing course status id=" + courseId, e);
+        }
+    }
+
     private void savePicture(String relativePath, List<Part> imageParts) throws ServiceException {
         String absolutePath = basePicturePath + relativePath;
         try (FileOutputStream fileOutputStream = new FileOutputStream(absolutePath)) {

@@ -93,7 +93,7 @@
             </tbody>
         </table>
     </c:if>
-    <a class="btn btn-success"
+    <a class="btn btn-success mt-4"
        href="${pageContext.request.contextPath}/controller?command=all_courses_page"><fmt:message
             key="course.go_to_page" bundle="${rb}"/></a>
 </div>

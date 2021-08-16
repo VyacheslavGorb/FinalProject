@@ -27,9 +27,7 @@ public class DeactivateCourseCommand implements Command {
             if (courseOptional.isEmpty()) {
                 return new CommandResult(PagePath.ERROR_404_PAGE, CommandResult.RoutingType.REDIRECT);
             }
-            Course course = courseOptional.get();
-            course.setActive(false);
-            courseService.updateCourse(course);
+            courseService.updateStatus(courseId, false);
         } catch (ServiceException e) {
             return new CommandResult(PagePath.ERROR_500_PAGE, CommandResult.RoutingType.REDIRECT);
         }

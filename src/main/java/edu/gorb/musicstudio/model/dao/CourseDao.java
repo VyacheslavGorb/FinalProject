@@ -74,4 +74,12 @@ public interface CourseDao extends BaseDao<Course> {
      * @throws DaoException is thrown when error while query execution occurs
      */
     void removeTeacherFromCourse(long courseId, long teacherId) throws DaoException;
+
+    /**
+     * Updates course status
+     *
+     * @param courseId id of course to be updated
+     * @param isActive new status
+     */
+    void updateStatus(long courseId, boolean isActive) throws DaoException;
 }

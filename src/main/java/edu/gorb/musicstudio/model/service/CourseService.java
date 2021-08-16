@@ -113,4 +113,12 @@ public interface CourseService {
      */
     void removeTeacherFromCourse(long courseId, long teacherId) throws ServiceException;
 
+
+    /**
+     * Updates course status
+     *
+     * @param courseId id of the course to be updated
+     * @param isActive new status
+     */
+    void updateStatus(long courseId, boolean isActive) throws ServiceException;
 }
