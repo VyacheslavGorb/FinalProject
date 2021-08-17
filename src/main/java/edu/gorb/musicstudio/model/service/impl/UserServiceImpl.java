@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public Optional<User> findRegisteredUser(String login, String password) throws ServiceException {
         if (login == null || password == null) {
             return Optional.empty();
@@ -374,6 +375,7 @@ public class UserServiceImpl implements UserService {
         return courseAvailableDates;
     }
 
+    @Override
     public Map<User, List<LocalTime>> findFreeSlotsForTeachersForDate(List<User> teachers, LocalDate date)
             throws ServiceException {
         LocalDate dateNow = LocalDate.now();
