@@ -50,6 +50,7 @@ public class ImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String path = req.getParameter(RequestParameter.PATH);
         if (path == null) {
+            logger.log(Level.ERROR, "Property file contains invalid parameters: path");
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }

@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
     private static final int LINK_EXPIRE_TIMEOUT_MINUTES = 10;
-    private static final int ITEMS_ON_PAGE_COUNT = 1;
+    private static final int ITEMS_ON_PAGE_COUNT = 2;
     private static final int MIN_PAGE_COUNT = 1;
     private static final int DEFAULT_SUBSCRIPTION_LENGTH_DAYS = 30;
     private static final int ENROLLMENT_DELAY_HOURS = 2;

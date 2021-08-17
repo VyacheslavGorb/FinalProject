@@ -21,7 +21,7 @@
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
 
-<div class="d-flex justify-content-center mt-4 vh-100">
+<div class="d-flex justify-content-center mt-4 min-vh-100">
 
     <c:if test="${requestScope.max_available_lesson_count == 0}">
         <div class="d-flex align-items-center justify-content-center flex-column">

@@ -43,7 +43,7 @@
 </ul>
 
 
-<div class="w-100 d-flex align-items-center flex-column vh-100">
+<div class="w-100 d-flex align-items-center flex-column min-vh-100">
 
     <c:if test="${requestScope.lesson_schedule_dates.size() == 0}">
         <div class="d-flex mt-5 align-items-center flex-column">

@@ -44,7 +44,7 @@
     </li>
 </ul>
 
-<div class="w-100 d-flex align-items-center flex-column vh-100 p-4">
+<div class="w-100 d-flex align-items-center flex-column min-vh-100 p-4">
 
     <c:if test="${requestScope.active_subscriptions.size() == 0 && requestScope.waiting_for_approve_subscriptions.size() == 0}">
         <div class="d-flex mt-5 align-items-center flex-column">

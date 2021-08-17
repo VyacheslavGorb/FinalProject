@@ -22,7 +22,7 @@
 <jsp:include page="parts/header.jsp" flush="true"/>
 
 <c:if test="${requestScope.nothing_found != null}">
-    <div class="d-flex justify-content-center align-items-center flex-column vh-100">
+    <div class="d-flex justify-content-center align-items-center flex-column min-vh-100">
         <h1 class="display-1"><fmt:message key="teachers.not_found" bundle="${rb}"/></h1>
         <a class="mt-4 first-page-link fs-3"
            href="${pageContext.request.contextPath}/controller?command=home_page">
@@ -74,7 +74,7 @@
                         <div class="card mb-3">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img src="pic/slide1.jpg" class="img-fluid rounded-start"
+                                    <img src="pic/profile_stub.jpeg" class="img-fluid rounded-start"
                                          alt="${teacher.name}">
                                 </div>
                                 <div class="col-md-8">

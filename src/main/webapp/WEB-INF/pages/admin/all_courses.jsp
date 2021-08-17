@@ -44,7 +44,7 @@
     </li>
 </ul>
 
-<div class="w-100 d-flex align-items-center flex-column vh-100 p-4">
+<div class="w-100 d-flex align-items-center flex-column min-vh-100 p-4">
 
     <div class="d-flex align-items-center justify-content-between w-100 mt-4">
         <h1 class="display-4 fs-1"><fmt:message key="course.all.main" bundle="${rb}"/></h1>

@@ -22,7 +22,7 @@
 <jsp:include page="parts/header.jsp" flush="true"/>
 
 <div class="w-100 d-flex align-items-center justify-content-center">
-    <div class="d-flex flex-column  align-items-center w-75 vh-100">
+    <div class="d-flex flex-column  align-items-center w-75 min-vh-100">
         <div class="d-flex align-items-center justify-content-between w-100">
             <h1 class="display-3 mt-4">${requestScope.teacher.name} ${requestScope.teacher.surname}</h1>
             <span class="display-1 fs-2 mt-4"><fmt:message key="teacher.work_experience"

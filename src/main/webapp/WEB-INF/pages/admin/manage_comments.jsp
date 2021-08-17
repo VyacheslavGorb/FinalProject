@@ -21,7 +21,7 @@
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
 
-<div class="w-100 d-flex align-items-center flex-column vh-100 p-4">
+<div class="w-100 d-flex align-items-center flex-column min-vh-100 p-4">
 
 
     <c:if test="${requestScope.comments.size() == 0}">

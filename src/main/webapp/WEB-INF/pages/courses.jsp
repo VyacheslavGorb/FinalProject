@@ -22,7 +22,7 @@
 <jsp:include page="parts/header.jsp" flush="true"/>
 
 <c:if test="${requestScope.nothing_found != null}">
-    <div class="d-flex justify-content-center align-items-center flex-column vh-100">
+    <div class="d-flex justify-content-center align-items-center flex-column min-vh-100">
         <h1 class="display-1"><fmt:message key="courses.not_found" bundle="${rb}"/></h1>
         <a class="mt-4 first-page-link fs-3"
            href="${pageContext.request.contextPath}/controller?command=home_page">

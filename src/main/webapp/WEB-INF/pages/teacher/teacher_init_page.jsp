@@ -21,7 +21,7 @@
 <body>
 <jsp:include page="../parts/header.jsp" flush="true"/>
 
-<div class="w-100 d-flex flex-column align-items-center vh-100">
+<div class="w-100 d-flex flex-column align-items-center min-vh-100">
     <p class="display-4 fs-1 mt-4"><fmt:message key="teacher_init.main" bundle="${rb}"/></p>
 
     <c:if test="${sessionScope.is_teacher_init_error != null}">
