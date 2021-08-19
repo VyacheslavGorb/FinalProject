@@ -69,7 +69,7 @@
                        pattern="[0-9a-zA-Z]{8,20}"
                        title="<fmt:message key="login_page.password_hint" bundle='${rb}'/>">
             </div>
-            <button type="submit" class="btn btn-success mt-2"><fmt:message key="login_page.login_btn"
+            <button id="login_btn" type="submit" class="btn btn-success mt-2"><fmt:message key="login_page.login_btn"
                                                                             bundle='${rb}'/></button>
             <a href="${pageContext.request.contextPath}/controller?command=go_to_sign_up_page" type="button"
                class="btn btn-outline-secondary mt-3"><fmt:message key="login_page.signup_btn"
@@ -82,4 +82,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+<script src="script/login.js"></script>
 </html>
