@@ -48,7 +48,7 @@ class ConnectionFactory {
             logger.log(Level.FATAL, "Error while reading property file");
             throw new RuntimeException("Error while reading property file");
         } catch (ClassNotFoundException e) {
-            logger.log(Level.FATAL, "Driver class not found: {}", e.getMessage());
+            logger.log(Level.FATAL, "Driver class not found", e);
             throw new RuntimeException("Driver class not found: " + e.getMessage());
         }
     }
