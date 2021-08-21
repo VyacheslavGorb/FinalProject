@@ -3,6 +3,7 @@ let email = document.getElementById("email");
 let name = document.getElementById("name");
 let surname = document.getElementById("surname");
 let patronymic = document.getElementById("patronymic");
+let roleSelect = document.getElementById("role_select");
 let password1 = document.getElementById("password1");
 let password2 = document.getElementById("password2");
 let signupBtn = document.getElementById("signup_btn");
@@ -16,18 +17,20 @@ signupBtn.addEventListener("click", (event) => {
         window.scrollTo(0, 0);
         return;
     }
-    localStorage.setItem("login", login.value)
-    localStorage.setItem("email", email.value)
-    localStorage.setItem("name", name.value)
-    localStorage.setItem("surname", surname.value)
-    localStorage.setItem("patronymic", patronymic.value)
+    sessionStorage.setItem("login", login.value)
+    sessionStorage.setItem("email", email.value)
+    sessionStorage.setItem("name", name.value)
+    sessionStorage.setItem("surname", surname.value)
+    sessionStorage.setItem("patronymic", patronymic.value)
+    sessionStorage.setItem("role_select", roleSelect.value)
 });
 
-let storedLogin = localStorage.getItem("login");
-let storedEmail = localStorage.getItem("email");
-let storedName = localStorage.getItem("name");
-let storedSurname = localStorage.getItem("surname");
-let storedPatronymic = localStorage.getItem("patronymic");
+let storedLogin = sessionStorage.getItem("login");
+let storedEmail = sessionStorage.getItem("email");
+let storedName = sessionStorage.getItem("name");
+let storedSurname = sessionStorage.getItem("surname");
+let storedPatronymic = sessionStorage.getItem("patronymic");
+let storedSelect = sessionStorage.getItem("role_select");
 
 if(storedLogin !== null){
     login.value = storedLogin;
@@ -47,4 +50,8 @@ if(storedSurname != null){
 
 if(storedPatronymic !== null){
     patronymic.value = storedPatronymic;
+}
+
+if(storedSelect !== null){
+    roleSelect.value = storedSelect;
 }

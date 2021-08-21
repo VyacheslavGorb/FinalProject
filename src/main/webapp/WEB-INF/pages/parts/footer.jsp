@@ -55,11 +55,17 @@
             </div>
         </div>
         <div class="navbar-nav">
-            <a class="nav-link fw-bold" aria-current="page"
-               href="${pageContext.request.contextPath}/controller?command=change_language&lang=en">En</a>
+            <form method="post" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="change_language">
+                <input type="hidden" name="lang" value="en">
+                <button class="btn nav-link fw-bold" type="submit">En</button>
+            </form>
             <span class="nav-link disabled"> | </span>
-            <a class="nav-link ml-5 fw-bold" aria-current="page"
-               href="${pageContext.request.contextPath}/controller?command=change_language&lang=ru">Рус</a>
+            <form method="post" action="${pageContext.request.contextPath}/controller">
+                <input type="hidden" name="command" value="change_language">
+                <input type="hidden" name="lang" value="ru">
+                <button class="btn nav-link fw-bold" type="submit">Рус</button>
+            </form>
         </div>
         <div>
             <span class="copyright"> &#169 2021 Copyright: MuzShock.com </span>
