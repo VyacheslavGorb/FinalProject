@@ -24,7 +24,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class ConnectionPool {
     private static final Logger logger = LogManager.getLogger();
-    private static final int DEFAULT_POOL_SIZE = 32;
+    private static final int DEFAULT_POOL_SIZE = 8;
     private static final int DEFAULT_MILLISECONDS_DELAY = 1000;
     private static final int DEFAULT_MILLISECONDS_INTERVAL = 1000;
     private static final boolean DEFAULT_IS_VALIDATION_TASK_USED = false;
@@ -40,6 +40,7 @@ public class ConnectionPool {
     private Lock connectionLock;
     private Condition freeConnectionCondition;
 
+    private Timer timer;
     private int poolSize;
     private int timerDelay;
     private int timerInterval;
@@ -157,19 +158,22 @@ public class ConnectionPool {
     }
 
     /**
-     * Destroys pool. Closes all connections.
+     * Destroys pool. Closes all connections. Stops timer task if specified
      */
     public void destroyPool() {
         connectionLock.lock();
         try {
+            if (isValidationTaskUsed) {
+                timer.cancel();
+            }
             freeConnections.forEach(ProxyConnection::reallyClose);
             givenAwayConnections.forEach(ProxyConnection::reallyClose);
             freeConnections.clear();
             givenAwayConnections.clear();
+            deregisterDrivers();
         } finally {
             connectionLock.unlock();
         }
-        deregisterDrivers();
     }
 
 
@@ -191,7 +195,7 @@ public class ConnectionPool {
     }
 
     private void setConnectionAmountValidationTask() {
-        Timer timer = new Timer();
+        timer = new Timer();
         ConnectionAmountValidationTask validationTask =
                 new ConnectionAmountValidationTask(connectionLock, freeConnections, givenAwayConnections, poolSize);
         timer.schedule(validationTask, timerDelay, timerInterval);
