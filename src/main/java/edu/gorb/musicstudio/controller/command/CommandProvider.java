@@ -95,5 +95,4 @@ public class CommandProvider {
     private static class CommandProviderHolder {
         private static final CommandProvider instance = new CommandProvider();
     }
-
 }

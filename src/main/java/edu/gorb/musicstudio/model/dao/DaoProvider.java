@@ -19,7 +19,7 @@ public class DaoProvider {
     }
 
     public static DaoProvider getInstance() {
-        return DataProviderHolder.instance;
+        return DaoProviderHolder.instance;
     }
 
     public UserDao getUserDao() {
@@ -54,7 +54,7 @@ public class DaoProvider {
         return subscriptionDao;
     }
 
-    private static class DataProviderHolder {
+    private static class DaoProviderHolder {
         private static final DaoProvider instance = new DaoProvider();
     }
 }

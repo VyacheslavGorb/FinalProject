@@ -42,10 +42,6 @@ public class ServiceProvider {
         return teacherDescriptionService;
     }
 
-    private static class ServiceProviderHolder {
-        private static final ServiceProvider instance = new ServiceProvider();
-    }
-
     public TeacherScheduleService getTeacherScheduleService() {
         return teacherScheduleService;
     }
@@ -56,5 +52,9 @@ public class ServiceProvider {
 
     public SubscriptionService getScheduleService() {
         return scheduleService;
+    }
+
+    private static class ServiceProviderHolder {
+        private static final ServiceProvider instance = new ServiceProvider();
     }
 }
