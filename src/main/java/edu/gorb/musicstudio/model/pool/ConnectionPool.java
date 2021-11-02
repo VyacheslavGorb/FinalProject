@@ -33,7 +33,7 @@ public class ConnectionPool {
     private static final String TASK_DELAY_PROPERTY = "task_delay";
     private static final String TASK_INTERVAL_PROPERTY = "task_interval";
     private static final String POOL_SIZE_PROPERTY = "pool_size";
-    private static ConnectionPool instance;
+    private static volatile ConnectionPool instance;
     private static AtomicBoolean isInitialised = new AtomicBoolean(false);
     private Deque<ProxyConnection> freeConnections;
     private Deque<ProxyConnection> givenAwayConnections;

@@ -6,13 +6,12 @@
 
     <groupId>edu.gorb.musicstudio</groupId>
     <artifactId>FinalProject</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>FinalProject</name>
     <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -22,6 +21,7 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -89,9 +89,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.26</version>
         </dependency>
-
-
-
     </dependencies>
 
     <build>
