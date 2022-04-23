@@ -9,13 +9,6 @@ SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
         'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema music_studio
--- -----------------------------------------------------
-
--- -----------------------------------------------------
 -- Schema music_studio
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `music_studio` DEFAULT CHARACTER SET utf8;
@@ -283,3 +276,18 @@ CREATE TABLE IF NOT EXISTS `music_studio`.`user_tokens`
 SET SQL_MODE = @OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+
+INSERT INTO user_roles(id_user_role, user_role)
+VALUES (0, 'ADMIN'),
+       (1, 'TEACHER'),
+       (2, 'STUDENT');
+
+INSERT INTO lesson_statuses
+VALUES (0, 'NORMAL'),
+       (1, 'CANCELLED');
+
+INSERT INTO user_statuses
+VALUES (0, 'WAITING_FOR_APPROVEMENT'),
+       (1, 'ACTIVE'),
+       (2, 'INACTIVE'),
+       (3, 'EMAIL_NOT_CONFIRMED');
